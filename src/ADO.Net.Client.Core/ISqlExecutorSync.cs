@@ -210,123 +210,20 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction
         /// </summary>
+        /// <param name="parameters">The query database parameters that are associated with a query</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns the number of rows affected by this query</returns>
-        int ExecuteNonQuery(CommandType queryCommandType, string query);
-        /// <summary>
-        /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction
-        /// </summary>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="connectionString">The connection string used to query a data store</param>
-        /// <returns>Returns the number of rows affected by this query</returns>
-        int ExecuteNonQuery(CommandType queryCommandType, string query, string connectionString);
-        /// <summary>
-        /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction
-        /// </summary>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="connection">An instance of the DbConnection object to use to query a data store</param>
-        /// <returns>Returns the number of rows affected by this query</returns>
-        int ExecuteNonQuery(CommandType queryCommandType, string query, DbConnection connection);
-        /// <summary>
-        /// Utility method for executing batches of queries or stored procedures in a SQL transaction
-        /// </summary>
-        /// <param name="commands">The list of query database parameters that are associated with a query</param>
-        /// <param name="connectionString">The connection string used to query a data store</param>
-        /// <returns>Returns the number of rows affected by all queries passed in</returns>
-        List<int> ExecuteBatchedNonQuery(string connectionString, IEnumerable<SQLQuery> commands);
-        /// <summary>
-        /// Utility method for executing batches of queries or stored procedures in a SQL transaction
-        /// </summary>
-        /// <param name="commands">The list of query database parameters that are associated with a query</param>
-        /// <returns>Returns the number of rows affected by all queries passed in, assuming all are succesful</returns>
-        List<int> ExecuteBatchedNonQuery(IEnumerable<SQLQuery> commands);
-        /// <summary>
-        /// Utility method for executing batches of queries or stored procedures in a SQL transaction
-        /// </summary>
-        /// <param name="commands">The list of query database parameters that are associated with a query</param>
-        /// <param name="connection">An instance of a DbConnection object to use to query a datastore</param>
-        /// <returns>Returns the number of rows affected by all queries passed in, assuming all are succesful</returns>
-        List<int> ExecuteBatchedNonQuery(IEnumerable<SQLQuery> commands, DbConnection connection);
-        /// <summary>
-        /// Utility method for executing batches of queries or stored procedures in a SQL transaction
-        /// </summary>
-        /// <param name="commands">The list of query database parameters that are associated with a query</param>
-        /// <returns>Returns the number of rows affected by all queries passed in, assuming all are succesful</returns>
-        List<int> ExecuteTransactedBatchedNonQuery(IEnumerable<SQLQuery> commands);
-        /// <summary>
-        /// Utility method for executing batches of queries or stored procedures in a SQL transaction
-        /// </summary>
-        /// <param name="connectionString">The connection string used to query a data store</param>
-        /// <param name="commands">The list of query database parameters that are associated with a query</param>
-        /// <returns>Returns the number of rows affected by all queries passed in, assuming all are succesful</returns>
-        List<int> ExecuteTransactedBatchedNonQuery(string connectionString, IEnumerable<SQLQuery> commands);
-        /// <summary>
-        /// Utility method for executing batches of queries or stored procedures in a SQL transaction
-        /// </summary>
-        /// <param name="connection">An instance of a DbConnection object to use to query a datastore</param>
-        /// <param name="commands">The list of query database parameters that are associated with a query</param>
-        /// <returns>Returns the number of rows affected by all queries passed in, assuming all are succesful</returns>
-        List<int> ExecuteTransactedBatchedNonQuery(IEnumerable<SQLQuery> commands, DbConnection connection);
-        /// <summary>
-        /// Utility method for executing batches of queries or stored procedures in a SQL transaction
-        /// </summary>
-        /// <param name="commands">The list of query database parameters that are associated with a query</param>
-        /// <param name="transact">An instance of a DbTransaction class</param>
-        /// <returns>Returns the number of rows affected by all queries passed in, assuming all are succesful</returns>
-        List<int> ExecuteTransactedBatchedNonQuery(IEnumerable<SQLQuery> commands, DbTransaction transact);
-        /// <summary>
-        /// Utility method for executing batches of queries or stored procedures in a SQL transaction
-        /// </summary>
-        /// <param name="commands">The list of query database parameters that are associated with a query</param>
-        /// <param name="connection">An instance of the DbConnection object to use to query a data store</param>
-        /// <param name="transact">An instance of a DbTransaction class</param>
-        /// <returns>Returns the number of rows affected by all queries passed in, assuming all are succesful</returns>
-        List<int> ExecuteTransactedBatchedNonQuery(IEnumerable<SQLQuery> commands, DbConnection connection, DbTransaction transact);
+        int ExecuteNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters);
         /// <summary>
         /// Utility method for executing a query or stored procedure in a SQL transaction
         /// </summary>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <param name="parameters">The query database parameters that are associated with a query</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the number of rows affected by this query</returns>
-        int ExecuteTransactedNonQuery(CommandType queryCommandType, string query);
-        /// <summary>
-        /// Utility method for executing a query or stored procedure in a SQL transaction
-        /// </summary>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
+        /// <param name="transaction">An instance of a DbTransaction class</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="connectionString">The connection string used to query a data store</param>
         /// <returns>Returns the number of rows affected by this query</returns>
-        int ExecuteTransactedNonQuery(CommandType queryCommandType, string query, string connectionString);
-        /// <summary>
-        /// Utility method for executing a query or stored procedure in a SQL transaction
-        /// </summary>
-        /// <param name="connection">An instance of a DbConnection object to use to query a datastore</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the number of rows affected by this query</returns>
-        int ExecuteTransactedNonQuery(CommandType queryCommandType, string query, DbConnection connection);
-        /// <summary>
-        /// Utility method for executing a query or stored procedure in a SQL transaction
-        /// </summary>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="transact">An instance of a DbTransaction class</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="commitTransaction">Whether or not to commit the transaction that is passed in if succesful</param>
-        /// <returns>Returns the number of rows affected by this query</returns>
-        int ExecuteTransactedNonQuery(CommandType queryCommandType, DbTransaction transact, string query, bool commitTransaction);
-        /// <summary>
-        /// Utility method for executing a query or stored procedure in a SQL transaction
-        /// </summary>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="transact">An instance of a DbTransaction class</param>
-        /// <param name="connection">An instance of a DbConnection object to use to query a datastore</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="commitTransaction">Whether or not to commit the transaction that is passed in if succesful</param>
-        /// <returns>Returns the number of rows affected by this query</returns>
-        int ExecuteTransactedNonQuery(CommandType queryCommandType, DbConnection connection, DbTransaction transact, string query, bool commitTransaction);
+        int ExecuteTransactedNonQuery(string query, CommandType queryCommandType, DbTransaction transaction, IEnumerable<DbParameter> parameters);
         #endregion
     }
 }

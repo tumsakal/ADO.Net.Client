@@ -121,15 +121,32 @@ namespace ADO.Net.Client
             return await ExecuteSQL.GetScalarValueAsync(QueryCommandType, query, token).ConfigureAwait(false);
         }
         #endregion
-        #region Data Modification
-        public Task<int> ExecuteNonQueryAsync(string query, CancellationToken token = default)
+        #region Data Modification        
+        /// <summary>
+        /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction
+        /// </summary>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>
+        /// Returns the number of rows affected by this query as a <see cref="T:System.Threading.Tasks.Task`1" />
+        /// </returns>
+        public async Task<int> ExecuteNonQueryAsync(ISqlQuery query, CancellationToken token = default)
         {
-            throw new System.NotImplementedException();
+            return await _executor.ExecuteNonQueryAsync(query.QueryText, query.QueryType, query.Parameters, token).ConfigureAwait(false);
         }
-#if !NET461 && !NETSTANDARD2_0
-        public Task<int> ExecuteTransactedNonQueryAsync(string query, DbTransaction transact, bool commitTransaction = false, CancellationToken token = default)
+#if !NET461 && !NETSTANDARD2_0        
+        /// <summary>
+        /// Utility method for executing an Ad-Hoc query or stored procedure with a transaction
+        /// </summary>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <param name="transact">An instance of a <see cref="T:System.Data.Common.DbTransaction" /> class</param>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>
+        /// Returns the number of rows affected by this query as a <see cref="T:System.Threading.Tasks.Task`1" />
+        /// </returns>
+        public async Task<int> ExecuteTransactedNonQueryAsync(ISqlQuery query, DbTransaction transact, CancellationToken token = default)
         {
-            throw new System.NotImplementedException();
+            return await _executor.ExecuteTransactedNonQueryAsync(query.QueryText, query.QueryType, transact, query.Parameters, token).ConfigureAwait(false);
         }
 #endif
         #endregion

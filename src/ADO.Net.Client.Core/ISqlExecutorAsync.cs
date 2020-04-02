@@ -202,69 +202,26 @@ namespace ADO.Net.Client.Core
         #endregion
         #region Data Modification
         /// <summary>
-        /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction
+        /// Utility method for executing an Ad-Hoc query or stored procedure
         /// </summary>
+        /// <param name="parameters">The query database parameters that are associated with a query</param>
         /// <param name="token">Propagates notification that operations should be canceled</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the number of rows affected by this query as a <see cref="Task{Int32}"/></returns>
-        Task<int> ExecuteNonQueryAsync(CommandType queryCommandType, string query, CancellationToken token);
-        /// <summary>
-        /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction
-        /// </summary>
-        /// <param name="token">Propagates notification that operations should be canceled</param>
-        /// <param name="connectionString">The connection string used to query a data store</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the number of rows affected by this query as a <see cref="Task{Int32}"/></returns>
-        Task<int> ExecuteNonQueryAsync(CommandType queryCommandType, string query, string connectionString, CancellationToken token);
-        /// <summary>
-        /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction
-        /// </summary>
-        /// <param name="token">Propagates notification that operations should be canceled</param>
-        /// <param name="connection">An instance of a <see cref="DbConnection"/> object to use to query a datastore</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the number of rows affected by this query as a <see cref="Task{Int32}"/></returns>
-        Task<int> ExecuteNonQueryAsync(CommandType queryCommandType, string query, DbConnection connection, CancellationToken token);
-#if NETSTANDARD2_1
+        /// <returns>Returns the number of rows affected by this query as a <see cref="Task"/></returns>
+        Task<int> ExecuteNonQueryAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, CancellationToken token = default);
+#if !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Utility method for executing a query or stored procedure in a SQL transaction
         /// </summary>
+        /// <param name="parameters">The query database parameters that are associated with a query</param>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the number of rows affected by this query</returns>
-        Task<int> ExecuteTransactedNonQueryAsync(CommandType queryCommandType, string query, CancellationToken token = default);
-        /// <summary>
-        /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction
-        /// </summary>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <param name="connectionString">The connection string used to query a data store</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the number of rows affected by this query as a <see cref="Task{Int32}"/></returns>
-        Task<int> ExecuteTransactedNonQueryAsync(CommandType queryCommandType, string query, string connectionString, CancellationToken token = default);
-        /// <summary>
-        /// Utility method for executing a query or stored procedure in a SQL transaction
-        /// </summary>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <param name="connection">An instance of a <see cref="DbConnection"/> object to use to query a datastore</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the number of rows affected by this query</returns>
-        Task<int> ExecuteTransactedNonQueryAsync(CommandType queryCommandType, string query, DbConnection connection, CancellationToken token = default);
-        /// <summary>
-        /// Utility method for executing a query or stored procedure in a SQL transaction
-        /// </summary>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <param name="commitTransaction">Whether or not to commit this transaction after it was completed successfully</param>
         /// <param name="transact">An instance of a <see cref="DbTransaction"/> class</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the number of rows affected by this query</returns>
-        Task<int> ExecuteTransactedNonQueryAsync(CommandType queryCommandType, DbTransaction transact, string query, bool commitTransaction = true, CancellationToken token = default);
+        /// <returns>Returns the number of rows affected by this query as a <see cref="Task"/></returns>
+        Task<int> ExecuteTransactedNonQueryAsync(string query, CommandType queryCommandType, DbTransaction transact, IEnumerable<DbParameter> parameters, CancellationToken token = default);
 #endif
-        #endregion
+#endregion
     }
 }

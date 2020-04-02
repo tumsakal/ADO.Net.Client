@@ -64,5 +64,7 @@ namespace ADO.Net.Client.Implementation
             Parameters = list;
         }
         #endregion
+        #region Utility Methods
+        #endregion
     }
 }

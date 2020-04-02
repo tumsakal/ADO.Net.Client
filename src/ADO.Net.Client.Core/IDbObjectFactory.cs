@@ -50,7 +50,7 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Provides a mechanism for enumerating all available instances of database servers within the local network
         /// </summary>
-        /// <returns>Returns a new instance of <see cref="DbDataSourceEnumerator"/> created by the current <see cref="DbProviderFactory"/></returns>
+        /// <returns>Returns a new instance of <see cref="DbDataSourceEnumerator"/>/returns>
         DbDataSourceEnumerator GetDataSourceEnumerator();
         /// <summary>
         /// Gets a <see cref="DbCommandBuilder"/> based on the provider the <see cref="DbObjectFactory"/> is utilizing
@@ -106,31 +106,31 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Instantiates a new instance of a <see cref="DbTransaction"/> subclass based on the provider passed into class constructor
         /// </summary>
-        /// <param name="connection">An instance of the <see cref="DbConnection"/> class</param>
-        /// <returns>An instance of the DbTransaction class</returns>
+        /// <param name="connection">An instance of the <see cref="DbConnection"/> class to create a <see cref="DbTransaction"/></param>
+        /// <returns>An instance of the <see cref="DbTransaction"/> class</returns>
         DbTransaction GetDbTransaction(DbConnection connection);
         /// <summary>
-        /// Gets an instace of the <see cref="DbTransaction"/> object based on the <see cref="DbConnection"/> object passed in
+        /// Instantiates a new instance of a <see cref="DbTransaction"/> subclass based on the provider passed into class constructor
         /// </summary>
+        /// <param name="connection">An instance of the <see cref="DbConnection"/> class to create a <see cref="DbTransaction"/></param>
         /// <param name="level">The transaction locking level for the passed in <paramref name="connection"/></param>
-        /// <param name="connection">An instance of <see cref="DbConnection"/></param>
         /// <returns>An instance of the <see cref="DbTransaction"/> object</returns>
         DbTransaction GetDbTransaction(DbConnection connection, IsolationLevel level);
 #if NETSTANDARD2_1
         /// <summary>
-        /// 
+        /// Asynchronously gets an instace of the <see cref="DbTransaction"/> object based on the <see cref="DbConnection"/> object passed in
         /// </summary>
-        /// <param name="connection"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        /// <param name="connection">An instance of <see cref="DbConnection"/></param>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>An instance of the <see cref="DbTransaction"/> object</returns>
         ValueTask<DbTransaction> GetDbTransactionAsync(DbConnection connection, CancellationToken token = default);
         /// <summary>
-        /// 
+        /// Asynchronously gets an instace of the <see cref="DbTransaction"/> object based on the <see cref="DbConnection"/> object passed in
         /// </summary>
-        /// <param name="connection"></param>
-        /// <param name="level"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        /// <param name="level">The transaction locking level for the passed in <paramref name="connection"/></param>
+        /// <param name="connection">An instance of <see cref="DbConnection"/></param>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>An instance of the <see cref="DbTransaction"/> object</returns>
         ValueTask<DbTransaction> GetDbTransactionAsync(DbConnection connection, IsolationLevel level, CancellationToken token = default);
 #endif
         /// <summary>

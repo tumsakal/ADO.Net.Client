@@ -21,9 +21,11 @@ namespace ADO.Net.Client.Core
         /// </summary>
         string QueryText { get; }
         /// <summary>
-        /// The atabase parameters that are associated with a query
+        /// The database parameters that are associated with a query
         /// </summary>
         IEnumerable<DbParameter> Parameters { get; }
+        #endregion
+        #region Utility Methods
         #endregion
     }
 }

@@ -53,7 +53,7 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// The character symbol to use when binding a variable in a given providers SQL query
         /// </summary>
-        public string VariableBinder { get; set; } = "";
+        public string VariableBinder { get; set; } = "@";
 
         /// <summary>
         /// Whether or not the passed in provider is capable of creating a data source enumerator
@@ -63,7 +63,7 @@ namespace ADO.Net.Client.Core
             get
             {
                 //Return this back to the caller
-                return this._dbProviderFactory.CanCreateDataSourceEnumerator;
+                return _dbProviderFactory.CanCreateDataSourceEnumerator;
             }
         }
         /// <summary>
@@ -130,7 +130,7 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Provides a mechanism for enumerating all available instances of database servers within the local network
         /// </summary>
-        /// <returns>Returns a new instance of <see cref="DbDataSourceEnumerator"/> created by the current <see cref="DbProviderFactory"/></returns>
+        /// <returns>Returns a new instance of <see cref="DbDataSourceEnumerator"/></returns>
         public DbDataSourceEnumerator GetDataSourceEnumerator()
         {
             //Return this back to the caller
@@ -162,12 +162,7 @@ namespace ADO.Net.Client.Core
         public DbConnectionStringBuilder GetDbConnectionStringBuilder(string connectionString)
         {
             DbConnectionStringBuilder builder = GetDbConnectionStringBuilder();
-
-            //Don't set if empty
-            if (!string.IsNullOrEmpty(connectionString) || connectionString.Trim() != string.Empty)
-            {
-                builder.ConnectionString = connectionString;
-            }
+            builder.ConnectionString = connectionString;
 
             //Return this back to the caller
             return builder;
@@ -416,7 +411,7 @@ namespace ADO.Net.Client.Core
             }
 
             //Check db parameter has been set
-            if(ParamterFormatter != null)
+            if (ParamterFormatter != null)
             {
                 //Now get the RDBMS mapped data type to the .net data type
                 parameter.DbType = ParamterFormatter.GetDbType(parameter.Value);
