@@ -31,7 +31,7 @@ using System.Data.Common;
 
 namespace ADO.Net.Client
 {
-    public partial class DbClient : ISynchronousClient
+    public partial class DbClient
     {
         #region Data Retrieval
         /// <summary>
@@ -168,22 +168,21 @@ namespace ADO.Net.Client
         /// </summary>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns the amount of records affected by the passed in query</returns>
-        public int ExecuteNonQuery(string query)
+        public override int ExecuteNonQuery(ISqlQuery query)
         {
             //Return this back to the caller
-            return _executor.ExecuteNonQuery(QueryCommandType, query);
+            return _executor.ExecuteNonQuery(query.QueryText, query.QueryType, query.Parameters);
         }
         /// <summary>
         /// Utility method for executing a query or stored procedure in a SQL transaction
         /// </summary>
         /// <param name="transact">An instance of a <see cref="DbTransaction"/> class</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="commitTransaction">Whether or not to commit the transaction that was passed in if successful</param>
         /// <returns>Returns the number of rows affected by this query</returns>
-        public int ExecuteTransactedNonQuery(string query, DbTransaction transact, bool commitTransaction = true)
+        public override int ExecuteTransactedNonQuery(ISqlQuery query, DbTransaction transact)
         {
             //Return this back to the caller
-            return _executor.ExecuteTransactedNonQuery(QueryCommandType, transact, query, commitTransaction);
+            return _executor.ExecuteTransactedNonQuery(query.QueryText, query.QueryType, transact, query.Parameters);
         }
         #endregion
     }

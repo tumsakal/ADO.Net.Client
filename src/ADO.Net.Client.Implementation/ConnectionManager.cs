@@ -1,6 +1,7 @@
 ﻿#region Using Statements
 using ADO.Net.Client.Core;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +18,14 @@ namespace ADO.Net.Client.Implementation
         #region Fields/Properties
         private readonly DbConnection _connection;
         private readonly DbConnectionStringBuilder _builder;
+
+        public bool IsOpen
+        {
+            get
+            {
+                return (_connection.State == ConnectionState.Open);
+            }
+        }
         #endregion
         #region Constructors		        
         /// <summary>

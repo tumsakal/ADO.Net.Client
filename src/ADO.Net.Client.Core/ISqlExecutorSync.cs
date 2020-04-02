@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -39,25 +38,9 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Gets an instance of <see cref="DataSet"/>
         /// </summary>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="connection">An instance of <see cref="DbConnection"/></param>
         /// <param name="query">SQL query to use to build a <see cref="DataSet"/></param>
         /// <returns>Returns an instance of <see cref="DataSet"/> based on the <paramref name="query"/> passed into the routine</returns>
-        DataSet GetDataSet(CommandType queryCommandType, string query, DbConnection connection);
-        /// <summary>
-        /// Gets an instance of <see cref="DataSet"/>
-        /// </summary>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="query">SQL query to use to build a <see cref="DataSet"/></param>
-        /// <returns>Returns an instance of <see cref="DataSet"/> based on the <paramref name="query"/> passed into the routine</returns>
-        DataSet GetDataSet(CommandType queryCommandType, string query);
-        /// <summary>
-        /// Gets an instance of <see cref="DataTable"/>
-        /// </summary>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="query">SQL query to use to build a result set</param>
-        /// <returns>Returns an instance of <see cref="DataTable"/></returns>
-        DataTable GetDataTable(CommandType queryCommandType, string query);
+        DataSet GetDataSet(ISqlQuery query);
         /// <summary>
         /// Gets an instance of <see cref="DataTable"/>
         /// </summary>
@@ -66,23 +49,6 @@ namespace ADO.Net.Client.Core
         /// <param name="query">SQL query to use to build a result set</param>
         /// <returns>Returns an instance of <see cref="DataTable"/></returns>
         DataTable GetDataTable(CommandType queryCommandType, string query, DbConnection connection);
-        /// <summary>
-        /// Gets a single instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine
-        /// </summary>
-        /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns an instance of the <typeparamref name="T"/> based on the fields in the passed in query.  Returns the default value for the type if a record is not found</returns>
-        T GetDataObject<T>(CommandType queryCommandType, string query) where T : class;
-        /// <summary>
-        /// Gets a single instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine
-        /// </summary>
-        /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="connectionString">The connection string used to query a data store</param>
-        /// <returns>Returns an instance of the <typeparamref name="T"/> based on the fields in the passed in query.  Returns the default value for the type if a record is not found</returns>
-        T GetDataObject<T>(CommandType queryCommandType, string query, string connectionString) where T : class;
         /// <summary>
         /// Gets a single instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine
         /// </summary>
@@ -98,43 +64,9 @@ namespace ADO.Net.Client.Core
         /// <typeparam name="T">An instance of the type caller wants created from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns a <see cref="List{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        List<T> GetDataObjectList<T>(CommandType queryCommandType, string query);
-        /// <summary>
-        /// Gets a <see cref="List{T}"/> of the type parameter object that creates an object based on the query passed into the routine
-        /// </summary>
-        /// <typeparam name="T">An instance of the type caller wants created from the query passed into procedure</typeparam>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="connectionString">The connection string used to query a data store</param>
-        /// <returns>Returns a <see cref="List{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        List<T> GetDataObjectList<T>(CommandType queryCommandType, string query, string connectionString);
-        /// <summary>
-        /// Gets a <see cref="List{T}"/> of the type parameter object that creates an object based on the query passed into the routine
-        /// </summary>
-        /// <typeparam name="T">An instance of the type caller wants created from the query passed into procedure</typeparam>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="connection">An instance of a <see cref="DbConnection"/> object to use to query a datastore</param>
         /// <returns>Returns a <see cref="List{T}"/> based on the results of the passed in <paramref name="query"/></returns>
         List<T> GetDataObjectList<T>(CommandType queryCommandType, string query, DbConnection connection);
-        /// <summary>
-        /// Gets a <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
-        /// </summary>
-        /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passedin <paramref name="query"/></returns>
-        IEnumerable<T> GetDataObjectEnumerable<T>(CommandType queryCommandType, string query);
-        /// <summary>
-        /// Gets a <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
-        /// </summary>
-        /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="connectionString">The connection string used to query a data store</param>
-        /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        IEnumerable<T> GetDataObjectEnumerable<T>(CommandType queryCommandType, string query, string connectionString);
         /// <summary>
         /// Gets a <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
@@ -145,25 +77,6 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
         IEnumerable<T> GetDataObjectEnumerable<T>(CommandType queryCommandType, string query, DbConnection connection);
         /// <summary>
-        /// Utility method for returning a <see cref="DbDataReader"/>
-        /// </summary>
-        /// <param name="transact">An instance of <see cref="DbTransaction"/></param>
-        /// <param name="behavior">Provides a description of the results of the query and its effect on the database.  Defaults to <see cref="CommandBehavior.Default"/></param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <returns>An instance of <see cref="DbDataReader"/></returns>
-        DbDataReader GetDbDataReader(CommandType queryCommandType, string query, CommandBehavior behavior = CommandBehavior.Default, DbTransaction transact = null);
-        /// <summary>
-        /// Utility method for returning a <see cref="DbDataReader"/>
-        /// </summary>
-        /// <param name="transact">An instance of <see cref="DbTransaction"/></param>
-        /// <param name="behavior">Provides a description of the results of the query and its effect on the database.  Defaults to <see cref="CommandBehavior.Default"/></param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="connection">An instance of the DbConnection class</param>
-        /// <returns>An instance of <see cref="DbDataReader"/></returns>
-        DbDataReader GetDbDataReader(CommandType queryCommandType, string query, DbConnection connection, CommandBehavior behavior = CommandBehavior.Default, DbTransaction transact = null);
-        /// <summary>
         /// Utility method for returning a DataReader object
         /// </summary>
         /// <param name="behavior">Provides a description of the results of the query and its effect on the database.  Defaults to <see cref="CommandBehavior.Default"/></param>
@@ -173,14 +86,6 @@ namespace ADO.Net.Client.Core
         /// <returns>An instance of <see cref="DbDataReader"/> object</returns>
         DbDataReader GetDbDataReader(CommandType queryCommandType, string connectionString, string query, CommandBehavior behavior = CommandBehavior.Default);
         /// <summary>
-        /// Utility method for acting on a <see cref="DbDataReader"/>
-        /// </summary>
-        /// <param name="act">Action methods that takes in a <see cref="DbDataReader"/></param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <returns>A <see cref="DbDataReader"/> object, the caller is responsible for handling closing the <see cref="DbDataReader"/>.  Once the data reader is closed, the database connection will be closed as well</returns>
-        void GetDbDataReader(CommandType queryCommandType, string query, Action<DbDataReader> act);
-        /// <summary>
         /// Utility method for returning a scalar value from the database
         /// </summary>
         /// <param name="transact">An instance of <see cref="DbTransaction"/></param>
@@ -188,23 +93,6 @@ namespace ADO.Net.Client.Core
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns the value of the first column in the first row returned from the passed in query as an object</returns>
         object GetScalarValue(CommandType queryCommandType, string query, DbTransaction transact = null);
-        /// <summary>
-        /// Utility method for returning a scalar value from the database
-        /// </summary>
-        /// <param name="connectionString">The connection string used to query a data store</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the value of the first column in the first row as an object</returns>
-        object GetScalarValue(CommandType queryCommandType, string query, string connectionString);
-        /// <summary>
-        /// Utility method for returning a scalar value from the database
-        /// </summary>
-        /// <param name="transact">An instance of <see cref="DbTransaction"/></param>
-        /// <param name="connection">An instanace of the DbConnection object used to query a data store</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the value of the first column in the first row as an object</returns>
-        object GetScalarValue(CommandType queryCommandType, string query, DbConnection connection, DbTransaction transact = null);
         #endregion
         #region Data Modification
         /// <summary>

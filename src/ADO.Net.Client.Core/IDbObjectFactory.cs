@@ -50,7 +50,7 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Provides a mechanism for enumerating all available instances of database servers within the local network
         /// </summary>
-        /// <returns>Returns a new instance of <see cref="DbDataSourceEnumerator"/>/returns>
+        /// <returns>Returns a new instance of <see cref="DbDataSourceEnumerator"/></returns>
         DbDataSourceEnumerator GetDataSourceEnumerator();
         /// <summary>
         /// Gets a <see cref="DbCommandBuilder"/> based on the provider the <see cref="DbObjectFactory"/> is utilizing
@@ -102,7 +102,7 @@ namespace ADO.Net.Client.Core
         /// <param name="query">The SQL command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns an instantiated formatted <see cref="DbCommand"/> object based off the provider passed into the class</returns>
-        DbCommand GetDbCommand(CommandType queryCommandType, string query, IEnumerable<DbParameter> parameters, DbConnection connection, int commandTimeout, DbTransaction transact = null);
+        DbCommand GetDbCommand(CommandType queryCommandType, string query, IEnumerable<DbParameter> parameters, DbConnection connection, int commandTimeout, DbTransaction transact);
         /// <summary>
         /// Instantiates a new instance of a <see cref="DbTransaction"/> subclass based on the provider passed into class constructor
         /// </summary>

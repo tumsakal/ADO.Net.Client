@@ -21,35 +21,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
-#region Using Declarations
-using ADO.Net.Client.Core;
-using System.Data.Common;
+#region Using Statements
 #endregion
 
-namespace ADO.Net.Client
+namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Represents the base class for all <see cref="DbClient"/> classes
+    /// Contract class for all DbProvider based classes
     /// </summary>
-    /// <seealso cref="DbProvider"/>
-    /// <remarks>
-    /// DbClient is a utility class that encompasses both a <see cref="DbConnection"/> and a <see cref="DbCommand"/>
-    /// to help query a database with minimal coding to focus on the users SQL
-    /// </remarks>
-    public partial class DbClient : DbProvider
+    public interface IDbProvider : IAsynchronousClient, ISynchronousClient
     {
-        #region Fields/Properties
-        private readonly ISqlExecutor _executor;
-        #endregion
-        #region Constructors
-        /// <summary>
-        /// Instantiates a new instance of <see cref="DbClient"/> with an instance of <see cref="ISqlExecutor"/>
-        /// </summary>
-        /// <param name="executor">An instance of <see cref="ISqlExecutor"/></param>
-        public DbClient(ISqlExecutor executor)
-        {
-            _executor = executor;
-        }
-        #endregion
+
     }
 }

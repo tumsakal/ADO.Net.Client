@@ -33,7 +33,7 @@ using System.Threading.Tasks;
 
 namespace ADO.Net.Client
 {
-    public partial class DbClient : IAsynchronousClient
+    public partial class DbClient
     {
         #region Data Retrieval
         /// <summary>
@@ -42,15 +42,11 @@ namespace ADO.Net.Client
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <param name="query">SQL query to use to build a <see cref="DataTable"/></param>
         /// <returns>Returns a <see cref="Task{DataTable}"/> of datatable</returns>
-        public virtual async Task<DataTable> GetDataTableAsync(string query, CancellationToken token = default)
+        public override async Task<DataTable> GetDataTableAsync(ISqlQuery query, CancellationToken token = default)
         {
             DataTable dt = new DataTable();
 
-            //Wrap this in a using statement to automatically dispose of resources
-            using (DbDataReader reader = await GetDbDataReaderAsync(query, token).ConfigureAwait(false))
-            {
-                dt.Load(reader);
-            }
+            dt.Load(await GetDbDataReaderAsync(query, CommandBehavior.SingleResult, token).ConfigureAwait(false);
 
             //Return this back to the caller
             return dt;
@@ -64,7 +60,7 @@ namespace ADO.Net.Client
         /// <returns>Gets an instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine.
         /// Or the default value of <typeparamref name="T"/> if there are no search results
         /// </returns>
-        public virtual async Task<T> GetDataObjectAsync<T>(string query, CancellationToken token = default) where T : class
+        public override async Task<T> GetDataObjectAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class
         {
             //Return this back to the caller
             return await ExecuteSQL.GetDataObjectAsync<T>(QueryCommandType, query, token).ConfigureAwait(false);
@@ -76,7 +72,7 @@ namespace ADO.Net.Client
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Returns a <see cref="List{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        public virtual async Task<List<T>> GetDataObjectListAsync<T>(string query, CancellationToken token = default) where T : class
+        public override async Task<List<T>> GetDataObjectListAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class
         {
             //Return this back to the caller
             return await ExecuteSQL.GetDataObjectListAsync<T>(QueryCommandType, query, token).ConfigureAwait(false);
@@ -88,10 +84,10 @@ namespace ADO.Net.Client
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Returns a <see cref="IAsyncEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        public virtual async IAsyncEnumerable<T> GetDataObjectEnumerableAsync<T>(string query, [EnumeratorCancellation] CancellationToken token = default) where T : class
+        public override async IAsyncEnumerable<T> GetDataObjectEnumerableAsync<T>(ISqlQuery query, [EnumeratorCancellation] CancellationToken token = default) where T : class
         {
             //Return this back to the caller
-            await foreach (T type in ExecuteSQL.GetDataObjectEnumerableAsync<T>(QueryCommandType, query, token).ConfigureAwait(false))
+            await foreach (T type in _executor.GetDataObjectEnumerableAsync<T>(QueryCommandType, query, token).ConfigureAwait(false))
             {
                 yield return type;
             }
@@ -99,15 +95,14 @@ namespace ADO.Net.Client
         /// <summary>
         /// Utility method for returning a <see cref="Task{DbDataReader}"/> object created from the passed in query
         /// </summary>
-        /// <param name="transact">An instance of <see cref="DbTransaction"/></param>
         /// <param name="behavior">Provides a description of the results of the query and its effect on the database.  Defaults to <see cref="CommandBehavior.Default"/></param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>A <see cref="Task{DbDataReader}"/> object, the caller is responsible for handling closing the <see cref="DbDataReader"/>.  Once the data reader is closed, the database connection will be closed as well</returns>
-        public virtual async Task<DbDataReader> GetDbDataReaderAsync(string query, CancellationToken token = default, CommandBehavior behavior = CommandBehavior.Default, DbTransaction transact = null)
+        public override async Task<DbDataReader> GetDbDataReaderAsync(ISqlQuery query, CommandBehavior behavior = CommandBehavior.Default, CancellationToken token = default)
         {
             //Return this back to the caller
-            return await ExecuteSQL.GetDbDataReaderAsync(QueryCommandType, query, token, behavior, transact).ConfigureAwait(false);
+            return await _executor.GetDbDataReaderAsync(query.QueryText, query.QueryType, query.Parameters, behavior, token).ConfigureAwait(false);
         }
         /// <summary>
         /// Utility method for returning a <see cref="Task{Object}"/> value from the database
@@ -115,10 +110,10 @@ namespace ADO.Net.Client
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Returns the value of the first column in the first row as <see cref="Task"/></returns>
-        public virtual async Task<object> GetScalarValueAsync(string query, CancellationToken token = default)
+        public override async Task<object> GetScalarValueAsync(ISqlQuery query, CancellationToken token = default)
         {
             //Return this back to the caller
-            return await ExecuteSQL.GetScalarValueAsync(QueryCommandType, query, token).ConfigureAwait(false);
+            return await _executor.GetScalarValueAsync(query.QueryText, query.QueryType, query.Parameters, token).ConfigureAwait(false);
         }
         #endregion
         #region Data Modification        
@@ -130,7 +125,7 @@ namespace ADO.Net.Client
         /// <returns>
         /// Returns the number of rows affected by this query as a <see cref="T:System.Threading.Tasks.Task`1" />
         /// </returns>
-        public async Task<int> ExecuteNonQueryAsync(ISqlQuery query, CancellationToken token = default)
+        public override async Task<int> ExecuteNonQueryAsync(ISqlQuery query, CancellationToken token = default)
         {
             return await _executor.ExecuteNonQueryAsync(query.QueryText, query.QueryType, query.Parameters, token).ConfigureAwait(false);
         }
@@ -144,7 +139,7 @@ namespace ADO.Net.Client
         /// <returns>
         /// Returns the number of rows affected by this query as a <see cref="T:System.Threading.Tasks.Task`1" />
         /// </returns>
-        public async Task<int> ExecuteTransactedNonQueryAsync(ISqlQuery query, DbTransaction transact, CancellationToken token = default)
+        public override async Task<int> ExecuteTransactedNonQueryAsync(ISqlQuery query, DbTransaction transact, CancellationToken token = default)
         {
             return await _executor.ExecuteTransactedNonQueryAsync(query.QueryText, query.QueryType, transact, query.Parameters, token).ConfigureAwait(false);
         }

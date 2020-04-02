@@ -91,7 +91,7 @@ namespace ADO.Net.Client.Implementation
             }
         }
         /// <summary>
-        /// Adds an <see cref="IEnumerable{T}"" /> objects to the helpers underlying db parameter collection
+        /// Adds an <see cref="IEnumerable{T}" /> objects to the helpers underlying db parameter collection
         /// </summary>
         /// <param name="dbParams">An <see cref="IEnumerable{T}" /> to add to the underlying db parameter collection for the connection</param>
         public void AddParameterRange(IEnumerable<DbParameter> dbParams)

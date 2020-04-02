@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 #endregion
@@ -34,11 +35,16 @@ namespace ADO.Net.Client.Core
     /// <seealso cref="IConnectionStringUtility"/>
     public interface IConnectionManager : IConnectionStringUtility
     {
+        #region Fields/Properties
+        bool IsOpen { get; }
+        #endregion
+        #region Utility Methods
         void Open();
         void Close();
         Task OpenAsync(CancellationToken token = default);
 #if NETSTANDARD2_1
         Task CloseAsync();
 #endif
+        #endregion
     }
 }
