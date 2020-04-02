@@ -41,7 +41,7 @@ namespace ADO.Net.Client.Implementation
     /// <seealso cref="IDisposable"/>
     public class MultiResultReader : IMultiResultReaderAsync, IMultiResultReaderSync, IDisposable
 #if NETSTANDARD2_1
-        //, IAsyncDisposable
+        //,IAsyncDisposable
 #endif
     {
         #region Variables
@@ -189,14 +189,6 @@ namespace ADO.Net.Client.Implementation
                 disposedValue = true;
             }
         }
-
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~MultiResultReader()
-        // {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
-
         /// <summary>
         /// 
         /// </summary>

@@ -31,7 +31,7 @@ using System.Threading;
 using System.Threading.Tasks;
 #endregion
 
- namespace ADO.Net.Client
+namespace ADO.Net.Client
 {
     public partial class DbClient : IAsynchronousClient
     {
@@ -120,6 +120,18 @@ using System.Threading.Tasks;
             //Return this back to the caller
             return await ExecuteSQL.GetScalarValueAsync(QueryCommandType, query, token).ConfigureAwait(false);
         }
+        #endregion
+        #region Data Modification
+        public Task<int> ExecuteNonQueryAsync(string query, CancellationToken token = default)
+        {
+            throw new System.NotImplementedException();
+        }
+#if !NET461 && !NETSTANDARD2_0
+        public Task<int> ExecuteTransactedNonQueryAsync(string query, DbTransaction transact, bool commitTransaction = false, CancellationToken token = default)
+        {
+            throw new System.NotImplementedException();
+        }
+#endif
         #endregion
     }
 }

@@ -31,14 +31,13 @@ namespace ADO.Net.Client
     /// <summary>
     /// Represents the base class for all <see cref="DbClient"/> classes
     /// </summary>
-    /// <seealso cref="DbProvider"/>
     /// <seealso cref="ISynchronousClient"/>
     /// <seealso cref="IAsynchronousClient"/>
     /// <remarks>
     /// DbClient is a utility class that encompasses both a <see cref="DbConnection"/> and a <see cref="DbCommand"/>
     /// to help query a database with minimal coding to focus on the users SQL
     /// </remarks>
-    public partial class DbClient : DbProvider
+    public partial class DbClient
     {
         #region Fields/Properties
         /// <summary>

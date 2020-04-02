@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADO.Net.Client.Core", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADO.Net.Client.Implementation", "src\ADO.Net.Client.Implementation\ADO.Net.Client.Implementation.csproj", "{277511C4-23F1-4AE9-9533-FF43908775FC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADO.Net.Client.Core.Tests", "test\ADO.Net.Client.Core.Tests\ADO.Net.Client.Core.Tests.csproj", "{437081BE-D942-49FC-B7D0-5E74E4F6161F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{277511C4-23F1-4AE9-9533-FF43908775FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{277511C4-23F1-4AE9-9533-FF43908775FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{277511C4-23F1-4AE9-9533-FF43908775FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{437081BE-D942-49FC-B7D0-5E74E4F6161F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{437081BE-D942-49FC-B7D0-5E74E4F6161F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{437081BE-D942-49FC-B7D0-5E74E4F6161F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{437081BE-D942-49FC-B7D0-5E74E4F6161F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

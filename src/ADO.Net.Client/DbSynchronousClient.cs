@@ -171,27 +171,7 @@ namespace ADO.Net.Client
         public int ExecuteNonQuery(string query)
         {
             //Return this back to the caller
-            return ExecuteSQL.ExecuteNonQuery(QueryCommandType, query);
-        }
-        /// <summary>
-        /// Utility method for executing batches of queries or stored procedures in a SQL transaction
-        /// </summary>
-        /// <param name="commands">The list of query database parameters that are associated with a query</param>
-        /// <returns>Returns the number of rows affected by all queries passed in, assuming all are succesful</returns>
-        public List<int> ExecuteBatchedNonQuery(IEnumerable<SQLQuery> commands)
-        {
-            //Return this back to the caller
-            return ExecuteSQL.ExecuteBatchedNonQuery(commands);
-        }
-        /// <summary>
-        /// Utility method for executing a query or stored procedure in a SQL transaction
-        /// </summary>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <returns>Returns the number of rows affected by this query</returns>
-        public int ExecuteTransactedNonQuery(string query)
-        {
-            //Return this back to the caller
-            return ExecuteSQL.ExecuteTransactedNonQuery(QueryCommandType, query);
+            return _executor.ExecuteNonQuery(QueryCommandType, query);
         }
         /// <summary>
         /// Utility method for executing a query or stored procedure in a SQL transaction
@@ -203,28 +183,7 @@ namespace ADO.Net.Client
         public int ExecuteTransactedNonQuery(string query, DbTransaction transact, bool commitTransaction = true)
         {
             //Return this back to the caller
-            return ExecuteSQL.ExecuteTransactedNonQuery(QueryCommandType, transact, query, commitTransaction);
-        }
-        /// <summary>
-        /// Utility method for executing batches of queries or stored procedures in a SQL transaction
-        /// </summary>
-        /// <param name="commands">The list of query database parameters that are associated with a query</param>
-        /// <returns>Returns the number of rows affected by all queries passed in, assuming all are succesful</returns>
-        public List<int> ExecuteTransactedBatchedNonQuery(IEnumerable<SQLQuery> commands)
-        {
-            //Return this back to the caller
-            return ExecuteSQL.ExecuteBatchedNonQuery(commands);
-        }
-        /// <summary>
-        /// Utility method for executing batches of queries or stored procedures in a SQL transaction
-        /// </summary>
-        /// <param name="commands">The list of query database parameters that are associated with a query</param>
-        /// <param name="transact">An instance of a DbTransaction class</param>
-        /// <returns>Returns the number of rows affected by all queries passed in, assuming all are succesful</returns>
-        public List<int> ExecuteTransactedBatchedNonQuery(IEnumerable<SQLQuery> commands, DbTransaction transact)
-        {
-            //Return this back to the caller
-            return ExecuteSQL.ExecuteTransactedBatchedNonQuery(commands, transact);
+            return _executor.ExecuteTransactedNonQuery(QueryCommandType, transact, query, commitTransaction);
         }
         #endregion
     }
