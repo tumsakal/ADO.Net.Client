@@ -22,8 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Declarations
-using ADONetHelper.Core;
-using System.Data;
+using ADO.Net.Client.Core;
 using System.Data.Common;
 #endregion
 
@@ -41,93 +40,21 @@ namespace ADO.Net.Client
     /// </remarks>
     public partial class DbClient : DbProvider
     {
-        #region Variables
+        #region Fields/Properties
         /// <summary>
         /// Variable To detect redundant calls of dispose
         /// </summary>
-        protected bool disposedValue = false;
+        protected bool _disposed = false;
+        private readonly ISqlExecutor _executor;
         #endregion
         #region Constructors
-#if !NETSTANDARD2_0
-        /// <summary>
-        /// Instantiates a new instance of <see cref="DbClient"/> with the passed in <paramref name="row"/> and <paramref name="connectionString"/>
-        /// </summary>
-        /// <param name="row">An instance of <see cref="DataRow"/> that contains the information to configure a <see cref="DbProviderFactory"/></param>
-        /// <param name="connectionString">The connection string to be used to query a data store</param>
-        public DbClient(DataRow row, string connectionString) : base(row, connectionString)
-        {
-        }
-#endif
         /// <summary>
         /// Instantiates a new instance of <see cref="DbClient"/> with an instance of <see cref="ISqlExecutor"/>
         /// </summary>
         /// <param name="executor">An instance of <see cref="ISqlExecutor"/></param>
-        public DbClient(ISqlExecutor executor) : base(executor)
+        public DbClient(ISqlExecutor executor)
         {
-        }
-        /// <summary>
-        /// Instantiates a new instance of <see cref="DbClient"/> with the passed in <paramref name="connectionString"/>, and <paramref name="queryCommandType"/>, and <paramref name="factory"/>
-        /// </summary>
-        /// <param name="factory">An instance of a <see cref="DbProviderFactory"/> client class</param>
-        /// <param name="connectionString">The connection string used to query a data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        public DbClient(string connectionString, CommandType queryCommandType, DbProviderFactory factory) : base(connectionString, queryCommandType, factory)
-        {
-        }
-        /// <summary>
-        /// Instantiates a new instance of <see cref="DbClient"/> with the passed in <paramref name="connectionString"/> and <paramref name="factory"/>
-        /// </summary>
-        /// <param name="factory">An instance of the <see cref="DbProviderFactory"/> client class</param>
-        /// <param name="connectionString">The connection string used to query a data store</param>
-        public DbClient(string connectionString, DbProviderFactory factory) : base(connectionString, factory)
-        {
-        }
-        /// <summary>
-        /// Instantiates a new instance of <see cref="DbClient"/> with the passed in with the passed in <paramref name="connectionString"/>, <paramref name="providerName"/>, and <paramref name="queryCommandType"/>
-        /// </summary>
-        /// <param name="providerName">The name of the data provider that the should be used to query a data store</param>
-        /// <param name="connectionString">The connection string used to query a data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        public DbClient(string connectionString, string providerName, CommandType queryCommandType) : base(connectionString, providerName, queryCommandType)
-        {
-        }
-        /// <summary>
-        /// Instantiates a new instance of <see cref="DbClient"/> with the passed in <paramref name="connectionString"/> and <paramref name="providerName"/>
-        /// </summary>
-        /// <param name="providerName">The name of the data provider that the should be used to query a data store</param>
-        /// <param name="connectionString">The connection string used to query a data store</param>
-        public DbClient(string connectionString, string providerName) : base(connectionString, providerName)
-        {
-        }
-        /// <summary>
-        /// Instantiates a new instance of <see cref="DbClient"/> with the passed in <paramref name="providerName"/>
-        /// </summary>
-        /// <param name="providerName">The name of the data provider that the should be used to query a data store</param>
-        public DbClient(string providerName) : base(providerName)
-        {
-        }
-        /// <summary>
-        /// Instantiates a new instance of <see cref="DbClient"/> using an existing <see cref="DbConnection"/> to initialize the <paramref name="connection"/>
-        /// </summary>
-        /// <param name="connection">An instance of <see cref="DbConnection"/> to use to query a database </param>
-        public DbClient(DbConnection connection) : base(connection)
-        {
-        }
-        /// <summary>
-        /// Instantiates a new instance of <see cref="DbClient"/> using an existing <see cref="DbConnection"/> to initialize the <paramref name="connection"/>
-        /// </summary>
-        /// <param name="commandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="connection">An instance of <see cref="DbConnection"/> to use to query a database </param>
-        public DbClient(DbConnection connection, CommandType commandType) : base(connection, commandType)
-        {
-        }
-        /// <summary>
-        /// Instantiates a new instance of <see cref="DbClient"/> using the passed in <paramref name="connectionString"/> and <paramref name="factory"/>
-        /// </summary>
-        /// <param name="connectionString">The connection string used to query a database</param>
-        /// <param name="factory">An instance of <see cref="IDbObjectFactory"/> to create the objects needed to help query a database</param>
-        public DbClient(string connectionString, IDbObjectFactory factory) : base(connectionString, factory)
-        {
+            _executor = executor;
         }
         #endregion
     }

@@ -34,7 +34,7 @@ namespace ADO.Net.Client.Core
     /// Contract class that defines synchronous operations to be performed against a data store
     /// </summary>
     /// <seealso cref="IDisposable" />
-    public interface ISynchronousClient : IDisposable
+    public interface ISynchronousClient
     {
         #region Data Retrieval
         /// <summary>

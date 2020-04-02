@@ -1,6 +1,32 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net461;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;netstandard2.0;net461;</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <Version>1.0.0</Version>
+    <PackageTags>ORM ADO.NET ADO SQL .NET Database RDBMS Generic DAL ANSI</PackageTags>
+    <Authors>Robert Garrison</Authors>
+    <Company>Robert Garrison</Company>
+    <Product>ADO.Net.Client</Product>
+    <Title>ADO.NET.Client</Title>
+    <PackageId>ADO.Net.Client</PackageId>
+    <Description>ADO.Net driver client functionality API objects for ADO.Net.Client based libraries</Description>
+    <PackageReleaseNotes>
+      Initial releas of package
+    </PackageReleaseNotes>
+    <IncludeSource>true</IncludeSource>
+    <IncludeSymbols>true</IncludeSymbols>
+    <AssemblyName>ADO.Net.Client</AssemblyName>
+    <RootNamespace>ADO.Net.Client</RootNamespace>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\ADO.Net.Client.xml</DocumentationFile>
+    <NeutralLanguage>en-us</NeutralLanguage>
+    <DefineConstants>TRACE;</DefineConstants>
+    <Prefer32Bit>false</Prefer32Bit>
+    <Copyright>Copyright © Robert Garrison 2020</Copyright>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <DebugSymbols>true</DebugSymbols>

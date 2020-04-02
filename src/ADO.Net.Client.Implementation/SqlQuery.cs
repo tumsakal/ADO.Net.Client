@@ -22,31 +22,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using ADO.Net.Client.Core;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 #endregion
 
-namespace ADO.Net.Client.Core
+namespace ADO.Net.Client.Implementation
 {
     /// <summary>
     /// Transfer object that contains the information about a query to use when querying a datastore
     /// </summary>
-    public class SQLQuery
+    /// <seealso cref="ISqlQuery"/>
+    public class SQLQuery : ISqlQuery
     {
         #region Fields/Properties
         /// <summary>
         /// Represents how a command should be interpreted by the data provider
         /// </summary>
-        public CommandType QueryType { get; set; }
+        public CommandType QueryType { get; private set; }
         /// <summary>
         /// The query command text or name of stored procedure to execute against the data store
         /// </summary>
-        public string QueryText { get; set; }
+        public string QueryText { get; private set; }
         /// <summary>
-        /// The list of query database parameters that are associated with a query
+        /// The query database parameters that are associated with a query
         /// </summary>
-        public List<DbParameter> ParameterList { get; set; }
+        public IEnumerable<DbParameter> Parameters { get; private set; }
         #endregion
         #region Constructors
         /// <summary>
@@ -55,29 +57,12 @@ namespace ADO.Net.Client.Core
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="type">Represents how a command should be interpreted by the data provider</param>
         /// <param name="list">The list of query database parameters that are associated with a query</param>
-        public SQLQuery(string query, CommandType type, List<DbParameter> list)
+        public SQLQuery(string query, CommandType type, IEnumerable<DbParameter> list)
         {
             QueryText = query;
             QueryType = type;
-            ParameterList = list;
-        }
-        /// <summary>
-        /// Instantiates the SQL Query with text, and command type
-        /// </summary>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="type">Represents how a command should be interpreted by the data provider</param>
-        public SQLQuery(string query, CommandType type)
-        {
-            QueryText = query;
-            QueryType = type;
-        }
-        /// <summary>
-        /// Empty constructor to instantiate object
-        /// </summary>
-        public SQLQuery()
-        {
+            Parameters = list;
         }
         #endregion
     }
 }
-

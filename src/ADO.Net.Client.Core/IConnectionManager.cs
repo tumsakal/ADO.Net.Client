@@ -1,6 +1,6 @@
 ﻿#region Licenses
 /*MIT License
-Copyright(c) 2018
+Copyright(c) 2020
 Robert Garrison
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,17 +22,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
-using System;
+using System.Threading;
+using System.Threading.Tasks;
 #endregion
 
-namespace ADO.Net.Client
+namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Attribute class that a nested object within a query
+    /// 
     /// </summary>
-    /// <seealso cref="Attribute"/>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class DbObject : Attribute
+    /// <seealso cref="IConnectionStringUtility"/>
+    public interface IConnectionManager : IConnectionStringUtility
     {
+        void Open();
+        void Close();
+        Task OpenAsync(CancellationToken token = default);
+#if NETSTANDARD2_1
+        Task CloseAsync();
+#endif
     }
 }

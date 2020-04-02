@@ -504,7 +504,7 @@ namespace ADO.Net.Client.Implementation
                     //Set query information for this query
                     command.CommandType = query.QueryType;
                     command.CommandText = query.QueryText;
-                    command.Parameters.AddRange(query.ParameterList.ToArray());
+                    command.Parameters.AddRange(query.Parameters.ToArray());
 
                     //Now execute the query
                     returnList.Add(command.ExecuteNonQuery());
@@ -727,7 +727,7 @@ namespace ADO.Net.Client.Implementation
                         //Set query information for this query
                         command.CommandType = query.QueryType;
                         command.CommandText = query.QueryText;
-                        command.Parameters.AddRange(query.ParameterList.ToArray());
+                        command.Parameters.AddRange(query.Parameters.ToArray());
 
                         //Check if we need to prepare the command
                         if (commandPrepared == false)

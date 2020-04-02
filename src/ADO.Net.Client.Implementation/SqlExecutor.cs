@@ -43,7 +43,7 @@ namespace ADO.Net.Client.Implementation
     {
         #region Fields/Properties
         private readonly IDbObjectFactory _factory;
-        private DbConnection _connection;
+        private readonly IConnectionManager _manager;
 
         /// <summary>
         /// An instance of the database object factory to create database object instances
@@ -57,26 +57,6 @@ namespace ADO.Net.Client.Implementation
             }
         }
         /// <summary>
-        /// Gets the connection.
-        /// </summary>
-        /// <value>
-        /// The connection.
-        /// </value>
-        public DbConnection Connection
-        {
-            get
-            {
-                //Check if this has been set
-                if(_connection == null)
-                {
-                    _connection = _factory.GetDbConnection();
-                }
-
-                return _connection;
-            }
-        }
-        public string ConnectionString { get; set; }
-        /// <summary>
         /// Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.
         /// </summary>
         public int CommandTimeout { get; set; } = 30;
@@ -85,13 +65,15 @@ namespace ADO.Net.Client.Implementation
         /// </summary>
         public string VariableBinder { get; set; }
         #endregion
-        #region Constructors
+        #region Constructors        
         /// <summary>
-        /// Initializes a new instance with an instance of <see cref="IDbObjectFactory"/>
+        /// Initializes a new instance of the <see cref="SqlExecutor"/> class.
         /// </summary>
-        /// <param name="factory">An instance of <see cref="IDbObjectFactory"/></param>
-        public SqlExecutor(IDbObjectFactory factory)
+        /// <param name="factory">The factory.</param>
+        /// <param name="manager">The manager.</param>
+        public SqlExecutor(IDbObjectFactory factory, IConnectionManager manager)
         {
+            _manager = manager;
             _factory = factory;
         }
         #endregion

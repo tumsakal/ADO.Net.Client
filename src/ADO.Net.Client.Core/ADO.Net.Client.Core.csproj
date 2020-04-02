@@ -15,7 +15,7 @@
     <PackageId>ADO.Net.Client.Core</PackageId>
     <Description>Core functionality API objects for ADO.Net.Client based libraries</Description>
     <PackageReleaseNotes>
-      Initial releas of package
+      Initial release of package
     </PackageReleaseNotes>
     <IncludeSource>true</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>

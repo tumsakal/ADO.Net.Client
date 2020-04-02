@@ -23,8 +23,6 @@ SOFTWARE.*/
 #endregion
 #region Using statements
 using System;
-using System.Collections.Generic;
-using System.Data.Common;
 #endregion
 
 namespace ADO.Net.Client.Core
@@ -42,13 +40,6 @@ namespace ADO.Net.Client.Core
         /// Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.
         /// </summary>
         int CommandTimeout { get; set; }
-        /// <summary>
-        /// Gets the connection.
-        /// </summary>
-        /// <value>
-        /// The connection.
-        /// </value>
-        DbConnection Connection { get; }
         #endregion
     }
 }

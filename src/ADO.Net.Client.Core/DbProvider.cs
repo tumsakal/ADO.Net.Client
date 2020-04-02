@@ -34,9 +34,7 @@ namespace ADO.Net.Client.Core
     /// Base class that implements the basic functionality of an ADO.NET driver
     /// </summary>
     /// <seealso cref="IDbProvider"/>
-    /// <seealso cref="IConnectionStringUtility"/>
-    /// <seealso cref="IDbParameterUtility"/>
-    public abstract class DbProvider : IDbProvider, IConnectionStringUtility
+    public abstract class DbProvider : IDbProvider
     {
         #region Events        
         /// <summary>
@@ -75,6 +73,7 @@ namespace ADO.Net.Client.Core
         /// Gets a string that represents the version of the server to which the object is connected
         /// </summary>
         public abstract string ServerVersion { get; }
+        /// <summary>
         /// The current <see cref="ConnectionState"/> of the <see cref="DbConnection"/>
         /// </summary>
         public abstract ConnectionState State { get; }
