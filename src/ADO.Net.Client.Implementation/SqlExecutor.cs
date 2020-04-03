@@ -23,9 +23,6 @@ SOFTWARE.*/
 #endregion
 #region Using Declarations
 using ADO.Net.Client.Core;
-using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Common;
 #endregion
 
@@ -45,17 +42,6 @@ namespace ADO.Net.Client.Implementation
         private readonly IDbObjectFactory _factory;
         private readonly IConnectionManager _manager;
 
-        /// <summary>
-        /// An instance of the database object factory to create database object instances
-        /// </summary>
-        private IDbObjectFactory Factory
-        {
-            get
-            {
-                //Return this back to the caller
-                return _factory;
-            }
-        }
         /// <summary>
         /// Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.
         /// </summary>

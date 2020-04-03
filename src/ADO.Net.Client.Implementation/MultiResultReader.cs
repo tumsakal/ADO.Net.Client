@@ -38,9 +38,6 @@ namespace ADO.Net.Client.Implementation
     /// </summary>
     /// <seealso cref="IMultiResultReader"/>
     public class MultiResultReader : IMultiResultReader
-#if NETSTANDARD2_1
-        //,IAsyncDisposable
-#endif
     {
         #region Variables
         private bool disposedValue = false; // To detect redundant calls

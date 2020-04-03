@@ -126,7 +126,7 @@ namespace ADO.Net.Client.Implementation
         public async Task<DbDataReader> GetDbDataReaderAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, CommandBehavior behavior = CommandBehavior.Default, CancellationToken token = default)
         {
             //Wrap this in a using statement to handle disposing of resources
-            using (DbCommand command = Factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))
             {
                 //Get the data reader
                 return await command.ExecuteReaderAsync(behavior, token).ConfigureAwait(false);
@@ -143,7 +143,7 @@ namespace ADO.Net.Client.Implementation
         public async Task<object> GetScalarValueAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, CancellationToken token = default)
         {
             //Wrap this in a using statement to handle disposing of resources
-            using (DbCommand command = Factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))
             {
                 //Return this back to the caller
                 return await command.ExecuteScalarAsync(token).ConfigureAwait(false);
@@ -162,7 +162,7 @@ namespace ADO.Net.Client.Implementation
         public async Task<int> ExecuteNonQueryAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, CancellationToken token = default)
         {
             //Wrap this in a using statement to automatically handle disposing of resources
-            using (DbCommand command = Factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))
             {
                 //Return this back to the caller
                 return await command.ExecuteNonQueryAsync(token).ConfigureAwait(false);
@@ -181,7 +181,7 @@ namespace ADO.Net.Client.Implementation
         public async Task<int> ExecuteTransactedNonQueryAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, DbTransaction transact, CancellationToken token = default)
         {
             //Wrap this in a using statement to automatically dispose of resources
-            using (DbCommand command = Factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout, transact))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout, transact))
             {
                 //Get the number of records affected by this query
                 return await command.ExecuteNonQueryAsync(token).ConfigureAwait(false);

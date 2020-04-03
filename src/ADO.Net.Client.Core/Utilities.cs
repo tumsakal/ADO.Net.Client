@@ -145,20 +145,6 @@ namespace ADO.Net.Client.Core
                 return null;
             }
         }
-        /// <summary>
-        /// Opens the passed in <see cref="DbConnection"/> if the <see cref="DbConnection.State"/> is <see cref="ConnectionState.Closed"/>
-        /// </summary>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <param name="connection">An instance of the <see cref="DbConnection"/> class</param>
-        public async static Task OpenDbConnectionAsync(DbConnection connection, CancellationToken token = default)
-        {
-            //Check if we need to open the passed in connection
-            if (connection.State == ConnectionState.Closed)
-            {
-                //Await the task
-                await connection.OpenAsync(token).ConfigureAwait(false);
-            }
-        }
         #endregion
         #region Sync Methods
         /// <summary>
@@ -386,18 +372,6 @@ namespace ADO.Net.Client.Core
 
             //Return this back to the caller
             return (T)returnType;
-        }
-        /// <summary>
-        /// Opens the passed in <see cref="DbConnection"/> if the <see cref="DbConnection.State"/> is <see cref="ConnectionState.Closed"/>
-        /// </summary>
-        /// <param name="connection">An instance of the <see cref="DbConnection"/> class</param>
-        public static void OpenDbConnection(DbConnection connection)
-        {
-            //Check if we need to open the passed in connection
-            if (connection.State == ConnectionState.Closed)
-            {
-                connection.Open();
-            }
         }
         #endregion
         #region Helper Methods

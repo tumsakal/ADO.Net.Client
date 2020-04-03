@@ -44,10 +44,10 @@ namespace ADO.Net.Client.Implementation
         public DataSet GetDataSet(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters)
         {
             //Wrap this automatically to dispose of resources
-            using (DbDataAdapter adap = Factory.GetDbDataAdapter())
+            using (DbDataAdapter adap = _factory.GetDbDataAdapter())
             {
                 //Wrap this automatically to dispose of resources
-                using (DbCommand command = Factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))
+                using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))
                 {
                     DataSet set = new DataSet();
 
@@ -165,7 +165,7 @@ namespace ADO.Net.Client.Implementation
         public DbDataReader GetDbDataReader(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, CommandBehavior behavior = CommandBehavior.CloseConnection)
         {
             //Wrap this in a using statement to handle disposing of resources
-            using (DbCommand command = Factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))
             {
                 //Return this back to the caller
                 return command.ExecuteReader(behavior);
@@ -181,7 +181,7 @@ namespace ADO.Net.Client.Implementation
         public object GetScalarValue(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters)
         {
             //Wrap this in a using statement to handle disposing of resources
-            using (DbCommand command = Factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))
             {
                 //Return this back to the caller
                 return command.ExecuteScalar();
@@ -199,7 +199,7 @@ namespace ADO.Net.Client.Implementation
         public int ExecuteNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters)
         {
             //Wrap this in a using statement to automatically handle disposing of resources
-            using (DbCommand command = Factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))
             {
                 //Return the amount of records affected by this query back to the caller
                 return command.ExecuteNonQuery();
@@ -216,7 +216,7 @@ namespace ADO.Net.Client.Implementation
         public int ExecuteTransactedNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, DbTransaction transact)
         {
             //Wrap this in a using statement to automatically handle disposing of resources
-            using (DbCommand command = Factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout, transact))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout, transact))
             {
                 //Now execute the query
                 return command.ExecuteNonQuery();
