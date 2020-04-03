@@ -117,14 +117,13 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Utility method for returning a <see cref="Task{DbDataReader}"/> object
         /// </summary>
-        /// <param name="transact">An instance of <see cref="DbTransaction"/></param>
         /// <param name="behavior">Provides a description of the results of the query and its effect on the database.  Defaults to <see cref="CommandBehavior.Default"/></param>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <param name="parameters">The database parameters associated with a query</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns an instance of <see cref="DbDataReader"/> object, the caller is responsible for handling closing the DataReader</returns>
-        public async Task<DbDataReader> GetDbDataReaderAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, CommandBehavior behavior = CommandBehavior.Default, CancellationToken token)
+        public async Task<DbDataReader> GetDbDataReaderAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, CommandBehavior behavior = CommandBehavior.Default, CancellationToken token = default)
         {
             //Wrap this in a using statement to handle disposing of resources
             using (DbCommand command = Factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))

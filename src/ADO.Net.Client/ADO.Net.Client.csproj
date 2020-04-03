@@ -15,7 +15,7 @@
     <PackageId>ADO.Net.Client</PackageId>
     <Description>ADO.Net driver client functionality API objects for ADO.Net.Client based libraries</Description>
     <PackageReleaseNotes>
-      Initial releas of package
+      Initial release of package
     </PackageReleaseNotes>
     <IncludeSource>true</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>

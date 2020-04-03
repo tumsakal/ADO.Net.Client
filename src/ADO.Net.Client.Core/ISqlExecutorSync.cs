@@ -110,6 +110,7 @@ namespace ADO.Net.Client.Core
         /// <param name="parameters">The query database parameters that are associated with a query</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <param name="transact"></param>
         /// <returns>Returns the number of rows affected by this query</returns>
         int ExecuteTransactedNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, DbTransaction transact);
         #endregion
