@@ -46,7 +46,7 @@ namespace ADO.Net.Client
         {
             DataTable dt = new DataTable();
 
-            dt.Load(await GetDbDataReaderAsync(query, CommandBehavior.SingleResult, token).ConfigureAwait(false);
+            dt.Load(await GetDbDataReaderAsync(query, CommandBehavior.SingleResult, token).ConfigureAwait(false));
 
             //Return this back to the caller
             return dt;
@@ -141,7 +141,7 @@ namespace ADO.Net.Client
         /// </returns>
         public override async Task<int> ExecuteTransactedNonQueryAsync(ISqlQuery query, DbTransaction transact, CancellationToken token = default)
         {
-            return await _executor.ExecuteTransactedNonQueryAsync(query.QueryText, query.QueryType, transact, query.Parameters, token).ConfigureAwait(false);
+            return await _executor.ExecuteTransactedNonQueryAsync(query.QueryText, query.QueryType, query.Parameters, transact, token).ConfigureAwait(false);
         }
 #endif
         #endregion

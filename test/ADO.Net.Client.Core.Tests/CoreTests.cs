@@ -1,13 +1,16 @@
 #region Using Statements
-using 
+using ADO.Net.Client.Core;
+using MySqlConnector;
+using NUnit;
+using NUnit.Framework;
 #endregion
 
 namespace ADO.Net.Client.Core.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class CoreTests
     {
-        [TestMethod]
+        [Test]
         public void TestMethod1()
         {
         }

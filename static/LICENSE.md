@@ -1,7 +1,6 @@
-﻿#region Licenses
-/*MIT License
-Copyright(c) 2020
-Robert Garrison
+MIT License
+
+Copyright (c) 2020 Robert Garrison
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,30 +18,4 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.*/
-#endregion
-#region Using Statements
-using System.Data.Common;
-#endregion
-
-namespace ADO.Net.Client.Core
-{
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <seealso cref="IConnectionStringUtility"/>
-    public interface IConnectionManager : IConnectionStringUtility
-    {
-        #region Fields/Properties        
-        /// <summary>
-        /// Gets the connection.
-        /// </summary>
-        /// <value>
-        /// The connection.
-        /// </value>
-        DbConnection Connection { get; }
-        #endregion
-        #region Utility Methods
-        #endregion
-    }
-}
+SOFTWARE.

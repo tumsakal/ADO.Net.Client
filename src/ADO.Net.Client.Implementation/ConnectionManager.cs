@@ -19,11 +19,12 @@ namespace ADO.Net.Client.Implementation
         private readonly DbConnection _connection;
         private readonly DbConnectionStringBuilder _builder;
 
-        public bool IsOpen
+
+        public DbConnection Connection
         {
             get
             {
-                return (_connection.State == ConnectionState.Open);
+                return _connection;
             }
         }
         #endregion
@@ -69,25 +70,5 @@ namespace ADO.Net.Client.Implementation
             throw new System.NotImplementedException();
         }
         #endregion
-        #region Connection Methods
-        public void Open()
-        {
-            _connection.Open();
-        }
-        public void Close()
-        {
-            _connection.Close();
-        }
-        public async Task OpenAsync(CancellationToken token = default)
-        {
-            await _connection.OpenAsync(token).ConfigureAwait(false);
-        }
-#if NETSTANDARD2_1
-        public async Task CloseAsync()
-        {
-            await _connection.CloseAsync().ConfigureAwait(false);
-        }
-#endif
-#endregion
     }
 }

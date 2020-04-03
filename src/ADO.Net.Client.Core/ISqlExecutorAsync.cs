@@ -107,7 +107,7 @@ namespace ADO.Net.Client.Core
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns the number of rows affected by this query as a <see cref="Task"/></returns>
-        Task<int> ExecuteTransactedNonQueryAsync(string query, CommandType queryCommandType, DbTransaction transact, IEnumerable<DbParameter> parameters, CancellationToken token = default);
+        Task<int> ExecuteTransactedNonQueryAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, DbTransaction transact, CancellationToken token = default);
 #endif
 #endregion
     }

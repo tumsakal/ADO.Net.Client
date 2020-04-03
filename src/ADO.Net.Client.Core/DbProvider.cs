@@ -1,5 +1,4 @@
 ﻿#region Using Statements
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -36,6 +35,7 @@ namespace ADO.Net.Client.Core
         /// <param name="transact">The transact.</param>
         /// <returns></returns>
         public abstract int ExecuteTransactedNonQuery(ISqlQuery query, DbTransaction transact);
+#if !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Executes the transacted non query asynchronous.
         /// </summary>
@@ -44,6 +44,7 @@ namespace ADO.Net.Client.Core
         /// <param name="token">The token.</param>
         /// <returns></returns>
         public abstract Task<int> ExecuteTransactedNonQueryAsync(ISqlQuery query, DbTransaction transact, CancellationToken token = default);
+#endif
         #endregion
         #region Data Retrieval        
         /// <summary>
@@ -67,7 +68,7 @@ namespace ADO.Net.Client.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="query">The query.</param>
         /// <returns></returns>
-        public abstract IEnumerable<T> GetDataObjectEnumerable<T>(string query) where T : class;
+        public abstract IEnumerable<T> GetDataObjectEnumerable<T>(ISqlQuery query) where T : class;
         /// <summary>
         /// Gets the data object enumerable asynchronous.
         /// </summary>
