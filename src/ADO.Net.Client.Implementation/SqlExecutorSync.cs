@@ -23,7 +23,6 @@ SOFTWARE.*/
 #endregion
 #region Using Declarations
 using ADO.Net.Client.Core;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -120,7 +119,7 @@ namespace ADO.Net.Client.Implementation
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="parameters">The database parameters associated with a query</param>
         /// <returns>Returns a <see cref="List{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        public List<T> GetDataObjectList<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters)
+        public List<T> GetDataObjectList<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters) where T : class
         {
             //Wrap this to automatically handle disposing of resources
             using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, CommandBehavior.SingleResult))
@@ -137,7 +136,7 @@ namespace ADO.Net.Client.Implementation
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="parameters">The parameters associated with a database query</param>
         /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        public IEnumerable<T> GetDataObjectEnumerable<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters)
+        public IEnumerable<T> GetDataObjectEnumerable<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters) where T : class
         {
             //Wrap this to automatically handle disposing of resources
             using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, CommandBehavior.SingleResult))

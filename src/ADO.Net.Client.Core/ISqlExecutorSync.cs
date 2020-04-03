@@ -67,7 +67,7 @@ namespace ADO.Net.Client.Core
         /// <param name="parameters">The query database parameters that are associated with a query</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param> <returns>Returns a <see cref="List{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        List<T> GetDataObjectList<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters);
+        List<T> GetDataObjectList<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters) where T : class;
         /// <summary>
         /// Gets a <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
@@ -76,7 +76,7 @@ namespace ADO.Net.Client.Core
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        IEnumerable<T> GetDataObjectEnumerable<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters);
+        IEnumerable<T> GetDataObjectEnumerable<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters) where T : class;
         /// <summary>
         /// Utility method for returning a DataReader object
         /// </summary>

@@ -109,6 +109,6 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns the number of rows affected by this query as a <see cref="Task"/></returns>
         Task<int> ExecuteTransactedNonQueryAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, DbTransaction transact, CancellationToken token = default);
 #endif
-#endregion
+        #endregion
     }
 }
