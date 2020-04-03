@@ -43,30 +43,30 @@ namespace ADO.Net.Client.Core
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="connection">An instance of a <see cref="DbConnection"/> object to use to connect to a datastore</param>
+        /// <param name="parameters">The database parameters associated with a query</param>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Gets an instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine</returns>
-        Task<T> GetDataObjectAsync<T>(CommandType queryCommandType, string query, DbConnection connection, CancellationToken token = default) where T : class;
+        Task<T> GetDataObjectAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, CancellationToken token = default) where T : class;
         /// <summary>
         /// Gets a <see cref="IAsyncEnumerable{T}"/> based on the <typeparamref name="T"/> sent into the function to create an object list based on the query passed into the routine
         /// </summary>
         /// <typeparam name="T">An instance of the type the caller wants to create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="connection">An instance of a <see cref="DbConnection"/> object to use to connect to a datastore</param>
+        /// <param name="parameters">The database parameters that are associated with a query</param>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Returns a <see cref="IAsyncEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        IAsyncEnumerable<T> GetDataObjectEnumerableAsync<T>(CommandType queryCommandType, string query, DbConnection connection, CancellationToken token = default) where T : class;
+        IAsyncEnumerable<T> GetDataObjectEnumerableAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, CancellationToken token = default) where T : class;
         /// <summary>
         /// Gets a <see cref="List{T}"/> of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="connection">An instance of a DbConnection object to use to query a datastore</param>
+        /// <param name="parameters">The database parameters that are associated with a query</param>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Returns a <see cref="List{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        Task<List<T>> GetDataObjectListAsync<T>(CommandType queryCommandType, string query, DbConnection connection, CancellationToken token = default) where T : class;
+        Task<List<T>> GetDataObjectListAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, CancellationToken token = default) where T : class;
         /// <summary>
         /// Utility method for returning a <see cref="Task{DbDataReader}"/> object
         /// </summary>

@@ -63,7 +63,7 @@ namespace ADO.Net.Client
         public override async Task<T> GetDataObjectAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class
         {
             //Return this back to the caller
-            return await ExecuteSQL.GetDataObjectAsync<T>(QueryCommandType, query, token).ConfigureAwait(false);
+            return await _executor.GetDataObjectAsync<T>(query.QueryText, query.QueryType, query.Parameters, token).ConfigureAwait(false);
         }
         /// <summary>
         /// Gets a list of the type parameter object that creates an object based on the query passed into the routine
@@ -75,7 +75,7 @@ namespace ADO.Net.Client
         public override async Task<List<T>> GetDataObjectListAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class
         {
             //Return this back to the caller
-            return await ExecuteSQL.GetDataObjectListAsync<T>(QueryCommandType, query, token).ConfigureAwait(false);
+            return await _executor.GetDataObjectListAsync<T>(query.QueryText, query.QueryType, query.Parameters, token).ConfigureAwait(false);
         }
         /// <summary>
         /// Gets a list of the type parameter object that creates an object based on the query passed into the routine
@@ -87,7 +87,7 @@ namespace ADO.Net.Client
         public override async IAsyncEnumerable<T> GetDataObjectEnumerableAsync<T>(ISqlQuery query, [EnumeratorCancellation] CancellationToken token = default) where T : class
         {
             //Return this back to the caller
-            await foreach (T type in _executor.GetDataObjectEnumerableAsync<T>(QueryCommandType, query, token).ConfigureAwait(false))
+            await foreach (T type in _executor.GetDataObjectEnumerableAsync<T>(query.QueryText, query.QueryType, query.Parameters, token).ConfigureAwait(false))
             {
                 yield return type;
             }
