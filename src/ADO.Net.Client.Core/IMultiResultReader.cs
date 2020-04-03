@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
-using System;
 #endregion
 
 namespace ADO.Net.Client.Core
@@ -30,7 +29,6 @@ namespace ADO.Net.Client.Core
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="IDisposable"/>
     /// <see cref="IMultiResultReaderAsync"/>
     /// <see cref="IMultiResultReaderSync"/>
     public interface IMultiResultReader : IMultiResultReaderSync, IMultiResultReaderAsync
