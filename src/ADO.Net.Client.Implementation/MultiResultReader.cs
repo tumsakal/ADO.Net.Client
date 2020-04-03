@@ -36,10 +36,8 @@ namespace ADO.Net.Client.Implementation
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="IMultiResultReaderAsync"/>
-    /// <seealso cref="IMultiResultReaderSync"/>
-    /// <seealso cref="IDisposable"/>
-    public class MultiResultReader : IMultiResultReaderAsync, IMultiResultReaderSync, IDisposable
+    /// <seealso cref="IMultiResultReader"/>
+    public class MultiResultReader : IMultiResultReader
 #if NETSTANDARD2_1
         //,IAsyncDisposable
 #endif

@@ -1,4 +1,4 @@
-﻿#region Licenses
+#region Licenses
 /*MIT License
 Copyright(c) 2020
 Robert Garrison
@@ -23,44 +23,18 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using System;
-using System.Collections.Generic;
 #endregion
 
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class for a reader that performs synchronous read operations against a database
+    /// 
     /// </summary>
-    public interface IMultiResultReaderSync : IDisposable
+    /// <seealso cref="IDisposable"/>
+    /// <see cref="IMultiResultReaderAsync"/>
+    /// <see cref="IMultiResultReaderSync"/>
+    public interface IMultiResultReader : IMultiResultReaderSync, IMultiResultReaderAsync
     {
-        #region Utility Methods
-        /// <summary>
-        /// Reads the object asynchronous.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        IEnumerable<T> ReadObjectEnumerable<T>();
-        /// <summary>
-        /// Reads the object list.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        List<T> ReadObjectList<T>();
-        /// <summary>
-        /// Reads the object.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        T ReadObject<T>();
-        /// <summary>
-        /// Moves to next result.
-        /// </summary>
-        /// <returns></returns>
-        bool MoveToNextResult();
-        /// <summary>
-        /// Closes this instances connection to the database
-        /// </summary>
-        void Close();
-        #endregion
+        
     }
 }
