@@ -58,7 +58,7 @@ namespace ADO.Net.Client.Core
         /// <param name="transact">The transact.</param>
         /// <returns></returns>
         public abstract int ExecuteTransactedNonQuery(ISqlQuery query, DbTransaction transact);
-#if !NET461 && !NETSTANDARD2_0
+#if !NET472 && !NETSTANDARD2_0
         /// <summary>
         /// Executes the transacted non query asynchronous.
         /// </summary>

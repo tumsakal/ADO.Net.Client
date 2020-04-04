@@ -94,7 +94,7 @@ namespace ADO.Net.Client.Core
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns the number of rows affected by this query as a <see cref="Task{Int32}"/></returns>
         Task<int> ExecuteNonQueryAsync(ISqlQuery query, CancellationToken token = default);
-#if !NET461 && !NETSTANDARD2_0
+#if !NET472 && !NETSTANDARD2_0
         /// <summary>
         /// Utility method for executing an Ad-Hoc query or stored procedure with a transaction
         /// </summary>

@@ -97,7 +97,7 @@ namespace ADO.Net.Client.Core
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns the number of rows affected by this query as a <see cref="Task"/></returns>
         Task<int> ExecuteNonQueryAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, CancellationToken token = default);
-#if !NET461 && !NETSTANDARD2_0
+#if !NET472 && !NETSTANDARD2_0
         /// <summary>
         /// Utility method for executing a query or stored procedure in a SQL transaction
         /// </summary>
