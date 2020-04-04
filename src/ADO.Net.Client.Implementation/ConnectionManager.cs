@@ -1,10 +1,7 @@
 ﻿#region Using Statements
 using ADO.Net.Client.Core;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Common;
-using System.Threading;
-using System.Threading.Tasks;
 #endregion
 
 namespace ADO.Net.Client.Implementation
