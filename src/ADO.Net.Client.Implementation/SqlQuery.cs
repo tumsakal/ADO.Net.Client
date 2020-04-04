@@ -57,7 +57,7 @@ namespace ADO.Net.Client.Implementation
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="type">Represents how a command should be interpreted by the data provider</param>
         /// <param name="list">The list of query database parameters that are associated with a query</param>
-        public SQLQuery(string query, CommandType type, IEnumerable<DbParameter> list)
+        internal SQLQuery(string query, CommandType type, IEnumerable<DbParameter> list)
         {
             QueryText = query;
             QueryType = type;

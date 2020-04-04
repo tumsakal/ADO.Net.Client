@@ -44,11 +44,32 @@ namespace ADO.Net.Client.Core
         /// </value>
         IEnumerable<DbParameter> Parameters { get; }
         #endregion
-        #region Utility Methods
-        void ClearSQLQuery();
+        #region Utility Methods        
+        /// <summary>
+        /// Clears the underlying SQL query being created by this instance
+        /// </summary>
+        void ClearSQL();
+        /// <summary>
+        /// Appends the specified SQL to the existing SQL statement being built
+        /// </summary>
+        /// <param name="sql">The SQL statement to append</param>
         void Append(string sql);
+        /// <summary>
+        /// Appends the specified SQL to the existing SQL statement being built
+        /// </summary>
+        /// <param name="sql">The SQL statement to append</param>
+        /// <param name="parameter">The database parameter associated with this SQL statement</param>
         void Append(string sql, DbParameter parameter);
+        /// <summary>
+        /// Appends the specified SQL to the existing SQL statement being built
+        /// </summary>
+        /// <param name="sql">The SQL statement to append</param>
+        /// <param name="parameters">The database parameters associated with this query</param>
         void Append(string sql, IEnumerable<DbParameter> parameters);
+        /// <summary>
+        /// Create an instance of <see cref="ISqlQuery"/> using the existing <see cref="Parameters"/> and built sql query
+        /// </summary>
+        /// <param name="type">Represents how a command should be interpreted by the data provider</param>
         ISqlQuery CreateSQLQuery(CommandType type);
         #endregion
     }

@@ -66,24 +66,45 @@ namespace ADO.Net.Client.Implementation
         }
         #endregion
         #region SQL Methods
-        public void ClearSQLQuery()
+        /// <summary>
+        /// Clears the underlying SQL query being created by this instance
+        /// </summary>
+        public void ClearSQL()
         {
             _sqlQuery.Clear();
         }
+        /// <summary>
+        /// Appends the specified SQL to the existing SQL statement being built
+        /// </summary>
+        /// <param name="sql">The SQL statement to append</param>
         public void Append(string sql)
         {
             _sqlQuery.Append(sql);
         }
+        /// <summary>
+        /// Appends the specified SQL to the existing SQL statement being built
+        /// </summary>
+        /// <param name="sql">The SQL statement to append</param>
+        /// <param name="parameter">The database parameter associated with this SQL statement</param>
         public void Append(string sql, DbParameter parameter)
         {
             Append(sql);
             AddParameter(parameter);
         }
+        /// <summary>
+        /// Appends the specified SQL to the existing SQL statement being built
+        /// </summary>
+        /// <param name="sql">The SQL statement to append</param>
+        /// <param name="parameters">The database parameters associated with this query</param>
         public void Append(string sql, IEnumerable<DbParameter> parameters)
         {
             Append(sql);
             AddParameterRange(parameters);
         }
+        /// <summary>
+        /// Create an instance of <see cref="ISqlQuery"/> using the existing <see cref="Parameters"/> and built sql query
+        /// </summary>
+        /// <param name="type">Represents how a command should be interpreted by the data provider</param>
         public ISqlQuery CreateSQLQuery(CommandType type)
         {
             return new SQLQuery(_sqlQuery.ToString(), type, _parameters);
@@ -151,8 +172,6 @@ namespace ADO.Net.Client.Implementation
         /// <returns>True if this parameter exists in the parameters collection, false otherwise</returns>
         public bool Contains(string parameterName)
         {
-            bool parameterExists = false;
-
             //Check if this even has a name, caller be using a provider that doesn't support named parameters
             if (string.IsNullOrWhiteSpace(parameterName) == true)
             {
@@ -160,18 +179,7 @@ namespace ADO.Net.Client.Implementation
             }
 
             //Return this back to the caller
-            foreach (DbParameter param in _parameters)
-            {
-                //Check for parameter name including the variable binder
-                if (string.Equals(param.ParameterName, parameterName, StringComparison.OrdinalIgnoreCase) == true)
-                {
-                    parameterExists = true;
-                    break;
-                }
-            }
-
-            //Return this back to the caller
-            return parameterExists;
+            return !(_parameters.Find(x => x.ParameterName == parameterName) == null);
         }
         /// <summary>
         /// Checks for a paremeter in the parameters list with the passed in index
@@ -211,19 +219,7 @@ namespace ADO.Net.Client.Implementation
                 throw new ArgumentException(nameof(parameterName) + " is null or empty");
             }
 
-            //Loop through all parameters
-            foreach (DbParameter param in _parameters)
-            {
-                //Check if the name is the same
-                if (string.Equals(param.ParameterName, parameterName, StringComparison.OrdinalIgnoreCase) == true)
-                {
-                    //Return this back to the caller
-                    return param;
-                }
-            }
-
-            //Return this back to the caller
-            return null;
+            return _parameters.Find(x => x.ParameterName == parameterName);
         }
         /// <summary>
         /// Retrieves a <see cref="DbParameter"/> from the parameters collection by using the index of the parameter
@@ -265,7 +261,7 @@ namespace ADO.Net.Client.Implementation
         public void ReplaceParameter(string parameterName, DbParameter param)
         {
             //Get index of this parameter
-            int index = _parameters.FindIndex(i => string.Equals(i.ParameterName, parameterName, StringComparison.OrdinalIgnoreCase) == true);
+            int index = _parameters.FindIndex(i => i.ParameterName == parameterName);
 
             //Do a replace of the parameter
             _parameters[index] = param;
@@ -289,7 +285,7 @@ namespace ADO.Net.Client.Implementation
         public void SetParamaterValue(string parameterName, object value)
         {
             //Get index of this parameter
-            int index = _parameters.FindIndex(i => string.Equals(i.ParameterName, parameterName, StringComparison.OrdinalIgnoreCase) == true);
+            int index = _parameters.FindIndex(i => i.ParameterName == parameterName);
 
             //Change the value
             SetParamaterValue(index, value);
