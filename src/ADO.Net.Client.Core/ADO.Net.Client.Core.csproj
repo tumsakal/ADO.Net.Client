@@ -11,7 +11,7 @@
     <Authors>Robert Garrison</Authors>
     <Company>Robert Garrison</Company>
     <Product>ADO.Net.Client.Core</Product>
-    <Title>ADO.NET.Client.Core</Title>
+    <Title>ADO.Net.Client.Core</Title>
     <PackageId>ADO.Net.Client.Core</PackageId>
     <Description>Core functionality API objects for ADO.Net.Client based libraries</Description>
     <PackageReleaseNotes>

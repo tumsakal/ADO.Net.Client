@@ -25,6 +25,7 @@ SOFTWARE.*/
 using ADO.Net.Client.Core;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Text;
 #endregion
@@ -61,13 +62,39 @@ namespace ADO.Net.Client.Implementation
         public QueryBuilder()
         {
             _parameters = new List<DbParameter>();
+            _sqlQuery = new StringBuilder();
         }
         #endregion
-        #region Utility Methods        
+        #region SQL Methods
+        public void ClearSQLQuery()
+        {
+            _sqlQuery.Clear();
+        }
+        public void Append(string sql)
+        {
+            _sqlQuery.Append(sql);
+        }
+        public void Append(string sql, DbParameter parameter)
+        {
+            Append(sql);
+            AddParameter(parameter);
+        }
+        public void Append(string sql, IEnumerable<DbParameter> parameters)
+        {
+            Append(sql);
+            AddParameterRange(parameters);
+        }
+        public ISqlQuery CreateSQLQuery(CommandType type)
+        {
+            return new SQLQuery(_sqlQuery.ToString(), type, _parameters);
+        }
+        #endregion
+        #region Parameter Methods        
         /// <summary>
         /// Adds the passed in parameter to the parameters collection
         /// </summary>
         /// <param name="param">An instance of the <see cref="T:System.Data.Common.DbParameter" /> object, that is created the by the caller</param>
+        /// <exception cref="ArgumentException">Throws argument exception when there are duplicate parameter names</exception>
         /// <returns>
         /// Returns a <see cref="T:System.Data.Common.DbParameter" />
         /// </returns>
@@ -93,9 +120,20 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Adds an <see cref="IEnumerable{T}" /> objects to the helpers underlying db parameter collection
         /// </summary>
+        /// <exception cref="ArgumentException">Throws argument exception when there are duplicate parameter names</exception>
         /// <param name="dbParams">An <see cref="IEnumerable{T}" /> to add to the underlying db parameter collection for the connection</param>
         public void AddParameterRange(IEnumerable<DbParameter> dbParams)
         {
+            //Check if any of the items in this IEnumerable already exists in the list by checking parameter name
+            foreach (DbParameter dbParam in dbParams)
+            {
+                //Raise exception here if parameter by name already exists
+                if (Contains(dbParam.ParameterName) == true)
+                {
+                    throw new ArgumentException($"Parameter with name {dbParam.ParameterName} already exists");
+                }
+            }
+
             _parameters.AddRange(dbParams);
         }
         /// <summary>

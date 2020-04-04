@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 #endregion
 
@@ -42,6 +43,13 @@ namespace ADO.Net.Client.Core
         /// The parameters associated with a query as a <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/>
         /// </value>
         IEnumerable<DbParameter> Parameters { get; }
+        #endregion
+        #region Utility Methods
+        void ClearSQLQuery();
+        void Append(string sql);
+        void Append(string sql, DbParameter parameter);
+        void Append(string sql, IEnumerable<DbParameter> parameters);
+        ISqlQuery CreateSQLQuery(CommandType type);
         #endregion
     }
 }
