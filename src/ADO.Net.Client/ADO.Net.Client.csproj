@@ -28,6 +28,8 @@
     <Prefer32Bit>false</Prefer32Bit>
     <Copyright>Copyright © Robert Garrison 2020</Copyright>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <DebugSymbols>true</DebugSymbols>
@@ -43,6 +45,9 @@
     <OutputPath>.\bin\Release</OutputPath>
     <DefineConstants>RELEASE;</DefineConstants>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+  </ItemGroup>
   <ItemGroup>
     <None Include="..\..\static\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
     <None Include="..\..\static\CONTRIBUTING.md" Pack="true" PackagePath="CONTRIBUTING.md" />
