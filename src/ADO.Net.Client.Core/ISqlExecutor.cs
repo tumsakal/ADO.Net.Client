@@ -30,7 +30,6 @@ namespace ADO.Net.Client.Core
     /// <summary>
     /// The contract class for a ISqlExecutor based class
     /// </summary>
-    /// <seealso cref="IDisposable"/>
     /// <seealso cref="ISqlExecutorAsync"/>
     /// <seealso cref="ISqlExecutorSync"/>
     public interface ISqlExecutor : ISqlExecutorSync, ISqlExecutorAsync
