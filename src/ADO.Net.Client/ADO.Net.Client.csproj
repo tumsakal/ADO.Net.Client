@@ -43,6 +43,11 @@
     <DefineConstants>RELEASE;</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\..\static\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
+    <None Include="..\..\static\CONTRIBUTING.md" Pack="true" PackagePath="CONTRIBUTING.md" />
+    <None Include="..\..\static\README.md" Pack="true" PackagePath="README.md" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\ADO.Net.Client.Core\ADO.Net.Client.Core.csproj" />
     <ProjectReference Include="..\ADO.Net.Client.Implementation\ADO.Net.Client.Implementation.csproj" />
   </ItemGroup>
