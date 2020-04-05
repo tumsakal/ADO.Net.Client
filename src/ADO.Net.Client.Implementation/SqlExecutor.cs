@@ -41,11 +41,6 @@ namespace ADO.Net.Client.Implementation
         #region Fields/Properties
         private readonly IDbObjectFactory _factory;
         private readonly IConnectionManager _manager;
-
-        /// <summary>
-        /// The character symbol to use when binding a variable in a given providers SQL query
-        /// </summary>
-        public string VariableBinder { get; set; }
         #endregion
         #region Constructors        
         /// <summary>
