@@ -56,6 +56,6 @@
     <ProjectReference Include="..\ADO.Net.Client.Implementation\ADO.Net.Client.Implementation.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="ADO.Net.Client.Implementation" Version="1.0.1" />
+    <PackageReference Include="ADO.Net.Client.Implementation" Version="1.0.2" />
   </ItemGroup>
 </Project>
