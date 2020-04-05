@@ -1,6 +1,9 @@
 ---
 name: Bug report
 about: Create a report to help us improve
+title: ''
+labels: ''
+assignees: ''
 
 ---
 
@@ -21,4 +24,3 @@ If you are using the NuGet package, which version are you using?
 
 **Additional context**
 Add any other context about the problem here.
-
