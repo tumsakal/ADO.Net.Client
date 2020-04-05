@@ -46,7 +46,7 @@ namespace ADO.Net.Client.Core.Tests
             DbConnectionStringBuilder builder = _factory.GetDbConnectionStringBuilder();
 
             Assert.IsNotNull(builder);
-            Assert.AreEqual(typeof(MySqlCommand), builder.GetType());
+            Assert.AreEqual(typeof(MySqlConnectionStringBuilder), builder.GetType());
         }
         [Test]
         [Category("Basic Tests")]
@@ -60,7 +60,6 @@ namespace ADO.Net.Client.Core.Tests
         [Category("Basic Tests")]
         public void CanCreateDbCommand()
         {
-
             DbCommand command = _factory.GetDbCommand();
 
             Assert.IsNotNull(command);
