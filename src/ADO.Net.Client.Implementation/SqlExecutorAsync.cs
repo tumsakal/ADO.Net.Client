@@ -168,7 +168,7 @@ namespace ADO.Net.Client.Implementation
                 return await command.ExecuteNonQueryAsync(token).ConfigureAwait(false);
             }
         }
-#if !NET461 && !NETSTANDARD2_0      
+#if !NET472 && !NETSTANDARD2_0      
         /// <summary>
         /// Utility method for executing a query or stored procedure in a SQL transaction
         /// </summary>

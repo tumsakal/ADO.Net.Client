@@ -129,7 +129,7 @@ namespace ADO.Net.Client
         {
             return await _executor.ExecuteNonQueryAsync(query.QueryText, query.QueryType, query.Parameters, token).ConfigureAwait(false);
         }
-#if !NET461 && !NETSTANDARD2_0        
+#if !NET472 && !NETSTANDARD2_0        
         /// <summary>
         /// Utility method for executing an Ad-Hoc query or stored procedure with a transaction
         /// </summary>
