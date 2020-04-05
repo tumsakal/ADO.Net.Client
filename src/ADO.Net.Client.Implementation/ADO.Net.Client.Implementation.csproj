@@ -22,7 +22,7 @@
     <IncludeSymbols>true</IncludeSymbols>
     <AssemblyName>ADO.Net.Client.Implementation</AssemblyName>
     <RootNamespace>ADO.Net.Client.Implementation</RootNamespace>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\ADO.Net.Client.Implementation.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <NeutralLanguage>en-us</NeutralLanguage>
     <DefineConstants>TRACE;</DefineConstants>
     <Prefer32Bit>false</Prefer32Bit>
