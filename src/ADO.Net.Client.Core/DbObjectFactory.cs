@@ -387,19 +387,6 @@ namespace ADO.Net.Client.Core
 
             parameter.Value = parameterValue ?? DBNull.Value;
 
-            //Check for null reference
-            if (parameter.Value != DBNull.Value)
-            {
-                string parameterString = parameter.Value.ToString();
-
-                //Check if this is a date time value
-                if (parameterString == DateTime.MinValue.ToString() || parameterString == DateTime.MaxValue.ToString())
-                {
-                    //SQL Server cannot handle these values
-                    parameter.Value = DBNull.Value;
-                }
-            }
-
             //Check for null or empty
             if (string.IsNullOrWhiteSpace(VariableBinder) == false)
             {
