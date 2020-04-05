@@ -104,10 +104,11 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Create an instance of <see cref="ISqlQuery"/> using the existing <see cref="Parameters"/> and built sql query
         /// </summary>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <param name="type">Represents how a command should be interpreted by the data provider</param>
-        public ISqlQuery CreateSQLQuery(CommandType type)
+        public ISqlQuery CreateSQLQuery(CommandType type, int? commandTimeout)
         {
-            return new SQLQuery(_sqlQuery.ToString(), type, _parameters);
+            return new SQLQuery(_sqlQuery.ToString(), type, _parameters) { CommandTimeout = (commandTimeout == null) ? 30 : commandTimeout.Value};
         }
         #endregion
         #region Parameter Methods        

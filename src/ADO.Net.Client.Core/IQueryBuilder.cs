@@ -69,8 +69,9 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Create an instance of <see cref="ISqlQuery"/> using the existing <see cref="Parameters"/> and built sql query
         /// </summary>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <param name="type">Represents how a command should be interpreted by the data provider</param>
-        ISqlQuery CreateSQLQuery(CommandType type);
+        ISqlQuery CreateSQLQuery(CommandType type, int? commandTimeout);
         #endregion
     }
 }

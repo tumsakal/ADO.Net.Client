@@ -36,17 +36,18 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Gets an instance of <see cref="DataSet"/>
         /// </summary>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="parameters">The parameters that are associated with a database query</param>
         /// <param name="query">SQL query to use to build a <see cref="DataSet"/></param>
         /// <returns>Returns an instance of <see cref="DataSet"/> based on the <paramref name="query"/> passed into the routine</returns>
-        public DataSet GetDataSet(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters)
+        public DataSet GetDataSet(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout)
         {
             //Wrap this automatically to dispose of resources
             using (DbDataAdapter adap = _factory.GetDbDataAdapter())
             {
                 //Wrap this automatically to dispose of resources
-                using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))
+                using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout))
                 {
                     DataSet set = new DataSet();
 
@@ -62,14 +63,15 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Gets an instance of <see cref="DataTable"/>
         /// </summary>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <param name="parameters">The database parameters associated with a query</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">SQL query to use to build a result set</param>
         /// <returns>Returns an instance of <see cref="DataTable"/></returns>
-        public DataTable GetDataTable(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters)
+        public DataTable GetDataTable(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout)
         {
             //Return this back to the caller
-            using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters))
+            using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, commandTimeout))
             {
                 DataTable dt = new DataTable();
 
@@ -83,15 +85,16 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Gets a single instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine
         /// </summary>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <typeparam name="T">An instance of the type caller wants created from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="parameters">The database parameters associated with a database query</param>
         /// <returns>Returns an instance of the <typeparamref name="T"/> based on the fields in the passed in query.  Returns the default value for the <typeparamref name="T"/> if a record is not found</returns>
-        public T GetDataObject<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters) where T : class
+        public T GetDataObject<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout) where T : class
         {
             //Wrap this to automatically handle disposing of resources
-            using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, CommandBehavior.SingleRow))
+            using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, commandTimeout, CommandBehavior.SingleRow))
             {
                 //Get the field name and value pairs out of this query
                 IEnumerable<IDictionary<string, object>> results = Utilities.GetDynamicResultsEnumerable(reader);
@@ -114,15 +117,16 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Gets a <see cref="List{T}"/> of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <typeparam name="T">An instance of the type caller wants created from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="parameters">The database parameters associated with a query</param>
         /// <returns>Returns a <see cref="List{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        public List<T> GetDataObjectList<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters) where T : class
+        public List<T> GetDataObjectList<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout) where T : class
         {
             //Wrap this to automatically handle disposing of resources
-            using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, CommandBehavior.SingleResult))
+            using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, commandTimeout, CommandBehavior.SingleResult))
             {
                 //Return this back to the caller
                 return Utilities.GetDynamicTypeList<T>(Utilities.GetDynamicResultsList(reader));
@@ -131,15 +135,16 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Gets a list of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <typeparam name="T">An instance of the type caller wants created from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="parameters">The parameters associated with a database query</param>
         /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        public IEnumerable<T> GetDataObjectEnumerable<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters) where T : class
+        public IEnumerable<T> GetDataObjectEnumerable<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout) where T : class
         {
             //Wrap this to automatically handle disposing of resources
-            using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, CommandBehavior.SingleResult))
+            using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, commandTimeout, CommandBehavior.SingleResult))
             {
                 //Get the field name and value pairs out of this query
                 IEnumerable<IDictionary<string, object>> results = Utilities.GetDynamicResultsEnumerable(reader);
@@ -156,15 +161,16 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Utility method for returning a <see cref="DbDataReader"/> object
         /// </summary>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <param name="behavior">Provides a description of the results of the query and its effect on the database.  Defaults to <see cref="CommandBehavior.CloseConnection"/></param>
         /// <param name="parameters">The database parameters associated with a query</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns an instance of <see cref="DbDataReader"/> object, the caller is responsible for handling closing the DataReader</returns>
-        public DbDataReader GetDbDataReader(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, CommandBehavior behavior = CommandBehavior.CloseConnection)
+        public DbDataReader GetDbDataReader(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, CommandBehavior behavior = CommandBehavior.CloseConnection)
         {
             //Wrap this in a using statement to handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout))
             {
                 //Return this back to the caller
                 return command.ExecuteReader(behavior);
@@ -173,14 +179,15 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Utility method for returning a scalar value from the database
         /// </summary>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <param name="parameters">The parameters associated with a database query</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns the value of the first column in the first row returned from the passed in query as an object</returns>
-        public object GetScalarValue(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters)
+        public object GetScalarValue(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout)
         {
             //Wrap this in a using statement to handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout))
             {
                 //Return this back to the caller
                 return command.ExecuteScalar();
@@ -191,14 +198,15 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction
         /// </summary>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <param name="parameters">The parameters associated with a database query</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns the number of rows affected by this query</returns>
-        public int ExecuteNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters)
+        public int ExecuteNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout)
         {
             //Wrap this in a using statement to automatically handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout))
             {
                 //Return the amount of records affected by this query back to the caller
                 return command.ExecuteNonQuery();
@@ -207,15 +215,16 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Utility method for executing a query or stored procedure in a SQL transaction
         /// </summary>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <param name="transact">An instance of a <see cref="DbTransaction"/> class</param>
         /// <param name="parameters">The parameters associated with a database query</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns the number of rows affected by this query</returns>
-        public int ExecuteTransactedNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, DbTransaction transact)
+        public int ExecuteTransactedNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, DbTransaction transact)
         {
             //Wrap this in a using statement to automatically handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, CommandTimeout, transact))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, transact))
             {
                 //Now execute the query
                 return command.ExecuteNonQuery();

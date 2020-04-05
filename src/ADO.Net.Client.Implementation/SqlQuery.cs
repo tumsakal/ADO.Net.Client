@@ -49,6 +49,10 @@ namespace ADO.Net.Client.Implementation
         /// The query database parameters that are associated with a query
         /// </summary>
         public IEnumerable<DbParameter> Parameters { get; private set; }
+        /// <summary>
+        /// Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.  Default is 30 seconds
+        /// </summary>
+        public int CommandTimeout { get; set; } = 30;
         #endregion
         #region Constructors
         /// <summary>

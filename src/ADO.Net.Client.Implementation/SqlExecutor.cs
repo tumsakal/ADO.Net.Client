@@ -43,10 +43,6 @@ namespace ADO.Net.Client.Implementation
         private readonly IConnectionManager _manager;
 
         /// <summary>
-        /// Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.
-        /// </summary>
-        public int CommandTimeout { get; set; } = 30;
-        /// <summary>
         /// The character symbol to use when binding a variable in a given providers SQL query
         /// </summary>
         public string VariableBinder { get; set; }

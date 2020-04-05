@@ -47,6 +47,10 @@ namespace ADO.Net.Client.Core
         /// The database parameters that are associated with a query
         /// </summary>
         IEnumerable<DbParameter> Parameters { get; }
+        /// <summary>
+        /// Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.
+        /// </summary>
+        int CommandTimeout { get; set; }
         #endregion
         #region Utility Methods
         #endregion

@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using statements
-using System;
 #endregion
 
 namespace ADO.Net.Client.Core
@@ -35,10 +34,6 @@ namespace ADO.Net.Client.Core
     public interface ISqlExecutor : ISqlExecutorSync, ISqlExecutorAsync
     {
         #region Fields/Properties
-        /// <summary>
-        /// Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.
-        /// </summary>
-        int CommandTimeout { get; set; }
         #endregion
     }
 }

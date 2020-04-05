@@ -63,7 +63,7 @@ namespace ADO.Net.Client
         public override async Task<T> GetDataObjectAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class
         {
             //Return this back to the caller
-            return await _executor.GetDataObjectAsync<T>(query.QueryText, query.QueryType, query.Parameters, token).ConfigureAwait(false);
+            return await _executor.GetDataObjectAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, token).ConfigureAwait(false);
         }
         /// <summary>
         /// Gets a list of the type parameter object that creates an object based on the query passed into the routine
@@ -75,7 +75,7 @@ namespace ADO.Net.Client
         public override async Task<List<T>> GetDataObjectListAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class
         {
             //Return this back to the caller
-            return await _executor.GetDataObjectListAsync<T>(query.QueryText, query.QueryType, query.Parameters, token).ConfigureAwait(false);
+            return await _executor.GetDataObjectListAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, token).ConfigureAwait(false);
         }
         /// <summary>
         /// Gets a list of the type parameter object that creates an object based on the query passed into the routine
@@ -87,7 +87,7 @@ namespace ADO.Net.Client
         public override async IAsyncEnumerable<T> GetDataObjectEnumerableAsync<T>(ISqlQuery query, [EnumeratorCancellation] CancellationToken token = default) where T : class
         {
             //Return this back to the caller
-            await foreach (T type in _executor.GetDataObjectEnumerableAsync<T>(query.QueryText, query.QueryType, query.Parameters, token).ConfigureAwait(false))
+            await foreach (T type in _executor.GetDataObjectEnumerableAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, token).ConfigureAwait(false))
             {
                 yield return type;
             }
@@ -102,7 +102,7 @@ namespace ADO.Net.Client
         public override async Task<DbDataReader> GetDbDataReaderAsync(ISqlQuery query, CommandBehavior behavior = CommandBehavior.Default, CancellationToken token = default)
         {
             //Return this back to the caller
-            return await _executor.GetDbDataReaderAsync(query.QueryText, query.QueryType, query.Parameters, behavior, token).ConfigureAwait(false);
+            return await _executor.GetDbDataReaderAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, behavior, token).ConfigureAwait(false);
         }
         /// <summary>
         /// Utility method for returning a <see cref="Task{Object}"/> value from the database
@@ -113,7 +113,7 @@ namespace ADO.Net.Client
         public override async Task<object> GetScalarValueAsync(ISqlQuery query, CancellationToken token = default)
         {
             //Return this back to the caller
-            return await _executor.GetScalarValueAsync(query.QueryText, query.QueryType, query.Parameters, token).ConfigureAwait(false);
+            return await _executor.GetScalarValueAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, token).ConfigureAwait(false);
         }
         #endregion
         #region Data Modification        
@@ -127,7 +127,7 @@ namespace ADO.Net.Client
         /// </returns>
         public override async Task<int> ExecuteNonQueryAsync(ISqlQuery query, CancellationToken token = default)
         {
-            return await _executor.ExecuteNonQueryAsync(query.QueryText, query.QueryType, query.Parameters, token).ConfigureAwait(false);
+            return await _executor.ExecuteNonQueryAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, token).ConfigureAwait(false);
         }
 #if !NET472 && !NETSTANDARD2_0        
         /// <summary>
@@ -141,7 +141,7 @@ namespace ADO.Net.Client
         /// </returns>
         public override async Task<int> ExecuteTransactedNonQueryAsync(ISqlQuery query, DbTransaction transact, CancellationToken token = default)
         {
-            return await _executor.ExecuteTransactedNonQueryAsync(query.QueryText, query.QueryType, query.Parameters, transact, token).ConfigureAwait(false);
+            return await _executor.ExecuteTransactedNonQueryAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, transact, token).ConfigureAwait(false);
         }
 #endif
         #endregion
