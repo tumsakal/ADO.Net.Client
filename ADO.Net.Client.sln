@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADO.Net.Client.Core", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADO.Net.Client.Implementation", "src\ADO.Net.Client.Implementation\ADO.Net.Client.Implementation.csproj", "{277511C4-23F1-4AE9-9533-FF43908775FC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADO.Net.Client.Core.Tests", "test\ADO.Net.Client.Core.Tests\ADO.Net.Client.Core.Tests.csproj", "{437081BE-D942-49FC-B7D0-5E74E4F6161F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADO.Net.Client.Core.Tests", "tests\ADO.Net.Client.Core.Tests\ADO.Net.Client.Core.Tests.csproj", "{437081BE-D942-49FC-B7D0-5E74E4F6161F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADO.Net.Client.Implementation.Tests", "test\ADO.Net.Client.Implementation.Tests\ADO.Net.Client.Implementation.Tests.csproj", "{16D0E9E3-ACE4-4030-A6F5-E4C07FD3105E}"
 EndProject
