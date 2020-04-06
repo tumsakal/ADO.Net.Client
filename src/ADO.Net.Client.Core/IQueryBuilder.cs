@@ -30,7 +30,7 @@ using System.Data.Common;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// 
+    /// Contract class that builds out queries to be exectued against a database
     /// </summary>
     /// <seealso cref="IDbParameterUtility"/>
     public interface IQueryBuilder : IDbParameterUtility
