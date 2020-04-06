@@ -404,9 +404,6 @@ namespace ADO.Net.Client.Core
                 parameter.DbType = ParamterFormatter.GetDbType(parameter.Value);
             }
 
-            //Check if this is nullable
-            parameter.IsNullable = (parameter.Value == DBNull.Value);
-
             //Return this back to the caller
             return parameter;
         }
