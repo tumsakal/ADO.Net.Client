@@ -35,10 +35,10 @@ namespace ADO.Net.Client.Core
     {
         #region Fields/Properties        
         /// <summary>
-        /// Gets the connection.
+        /// Gets the connection that is being used by this instance
         /// </summary>
         /// <value>
-        /// The connection.
+        /// An instance of <see cref="DbConnection"/>
         /// </value>
         DbConnection Connection { get; }
         #endregion

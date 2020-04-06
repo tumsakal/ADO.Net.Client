@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADO.Net.Client.Implementati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADO.Net.Client.Core.Tests", "test\ADO.Net.Client.Core.Tests\ADO.Net.Client.Core.Tests.csproj", "{437081BE-D942-49FC-B7D0-5E74E4F6161F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADO.Net.Client.Implementation.Tests", "test\ADO.Net.Client.Implementation.Tests\ADO.Net.Client.Implementation.Tests.csproj", "{16D0E9E3-ACE4-4030-A6F5-E4C07FD3105E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{437081BE-D942-49FC-B7D0-5E74E4F6161F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{437081BE-D942-49FC-B7D0-5E74E4F6161F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{437081BE-D942-49FC-B7D0-5E74E4F6161F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16D0E9E3-ACE4-4030-A6F5-E4C07FD3105E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16D0E9E3-ACE4-4030-A6F5-E4C07FD3105E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16D0E9E3-ACE4-4030-A6F5-E4C07FD3105E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16D0E9E3-ACE4-4030-A6F5-E4C07FD3105E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

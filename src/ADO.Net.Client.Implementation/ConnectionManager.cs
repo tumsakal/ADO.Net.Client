@@ -39,7 +39,12 @@ namespace ADO.Net.Client.Implementation
         private readonly DbConnection _connection;
         private readonly DbConnectionStringBuilder _builder;
 
-
+        /// <summary>
+        /// Gets the connection that is being used by this instance
+        /// </summary>
+        /// <value>
+        /// An instance of <see cref="T:System.Data.Common.DbConnection" />
+        /// </value>
         public DbConnection Connection
         {
             get
