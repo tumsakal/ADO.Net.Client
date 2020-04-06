@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using MySql.Data.MySqlClient;
 using NUnit.Framework;
 #endregion
 
@@ -32,13 +33,13 @@ namespace ADO.Net.Client.Core.Tests
     /// </summary>
     /// <seealso cref="BaseTests" />
     [TestFixture]
-    [Category("ProviderNameTests")]
-    public class ProviderNameTests : BaseTests
+    [Category("DbProviderFactoryTests")]
+    public class DbProviderFactoryTests : BaseTests
     {
         [OneTimeSetUp]
         public override void OneTimeSetup()
         {
-            _factory = new DbObjectFactory("MySqlConnector");
+            _factory = new DbObjectFactory(MySqlClientFactory.Instance);
         }
     }
 }
