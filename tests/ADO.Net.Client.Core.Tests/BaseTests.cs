@@ -78,6 +78,7 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(typeof(MySqlCommandBuilder), builder.GetType());
         }
         [Test]
+        [Category("DbCommandTests")]
         public void CanCreateDbCommand()
         {
             DbCommand command = _factory.GetDbCommand();
@@ -86,12 +87,37 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(typeof(MySqlCommand), command.GetType());
         }
         [Test]
+        [Category("DbCommandTests")]
+        public void DbCommandTimeoutSame()
+        {
+            int commandTimeout = 10;
+            DbCommand command = _factory.GetDbCommand(commandTimeout);
+
+            Assert.IsNotNull(command);
+            Assert.AreEqual(commandTimeout, command.CommandTimeout);
+            Assert.AreEqual(typeof(MySqlCommand), command.GetType());
+        }
+        [Test]
+        [Category("DbParameterTests")]
         public void CanCreateDbParameter()
         {
             DbParameter parameter = _factory.GetDbParameter();
 
             Assert.IsNotNull(parameter);
             Assert.AreEqual(typeof(MySqlParameter), parameter.GetType());
+        }
+        [Test]
+        [Category("DbParameterTests")]
+        public void CanCreateDbParameterNameValue()
+        {
+            string name = "@ParameterName";
+            object value = 200;
+            DbParameter parameter = _factory.GetDbParameter(name, value);
+
+            Assert.IsNotNull(parameter);
+            Assert.AreEqual(typeof(MySqlParameter), parameter.GetType());
+            Assert.AreEqual(name, parameter.ParameterName);
+            Assert.AreEqual(name, parameter.Value);
         }
         #endregion
     }
