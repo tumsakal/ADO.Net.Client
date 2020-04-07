@@ -38,6 +38,10 @@ namespace ADO.Net.Client.Implementation
     {
         #region Fields/Properties
         /// <summary>
+        /// Indicates if the current <see cref="QueryText"/> needs to be prepared (or compiled) version of the command on the data source.
+        /// </summary>
+        public bool ShouldBePrepared { get; internal set; }
+        /// <summary>
         /// Represents how a command should be interpreted by the data provider
         /// </summary>
         public CommandType QueryType { get; private set; }

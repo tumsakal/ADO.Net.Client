@@ -104,11 +104,12 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Create an instance of <see cref="ISqlQuery"/> using the existing <see cref="Parameters"/> and built sql query
         /// </summary>
+        /// <param name="shouldBePrepared">Indicates if the current sql string needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <param name="type">Represents how a command should be interpreted by the data provider</param>
-        public ISqlQuery CreateSQLQuery(CommandType type, int? commandTimeout)
+        public ISqlQuery CreateSQLQuery(CommandType type, int commandTimeout = 30, bool shouldBePrepared = false)
         {
-            return new SQLQuery(_sqlQuery.ToString(), type, _parameters) { CommandTimeout = (commandTimeout == null) ? 30 : commandTimeout.Value};
+            return new SQLQuery(_sqlQuery.ToString(), type, _parameters) { CommandTimeout = commandTimeout, ShouldBePrepared = shouldBePrepared };
         }
         #endregion
         #region Parameter Methods        
