@@ -51,11 +51,6 @@ namespace ADO.Net.Client.Core
         private readonly DbProviderFactory _dbProviderFactory;
 
         /// <summary>
-        /// The character symbol to use when binding a variable in a given providers SQL query
-        /// </summary>
-        public string VariableBinder { get; set; } = "@";
-
-        /// <summary>
         /// Whether or not the passed in provider is capable of creating a data source enumerator
         /// </summary>
         public bool CanCreateDataSourceEnumerator
@@ -386,16 +381,7 @@ namespace ADO.Net.Client.Core
             DbParameter parameter = GetDbParameter();
 
             parameter.Value = parameterValue ?? DBNull.Value;
-
-            //Check for null or empty
-            if (string.IsNullOrWhiteSpace(VariableBinder) == false)
-            {
-                parameter.ParameterName = VariableBinder + parameterName.Replace(VariableBinder, "");
-            }
-            else
-            {
-                parameter.ParameterName = parameterName;
-            }
+            parameter.ParameterName = parameterName;
 
             //Check db parameter has been set
             if (ParamterFormatter != null)

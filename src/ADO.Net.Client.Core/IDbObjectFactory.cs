@@ -38,10 +38,6 @@ namespace ADO.Net.Client.Core
     {
         #region Fields/Properties
         /// <summary>
-        /// The character symbol to use when binding a variable in a given providers SQL query
-        /// </summary>
-        string VariableBinder { get; set; }
-        /// <summary>
         /// Whether or not the passed in provider is capable of creating a data source enumerator
         /// </summary>
         bool CanCreateDataSourceEnumerator { get; }
