@@ -150,19 +150,6 @@ namespace ADO.Net.Client.Core
             return _dbProviderFactory.CreateCommandBuilder();
         }
         /// <summary>
-        /// Gets a <see cref="DbConnectionStringBuilder"/> based off the provider passed into class using the passed in <paramref name="connectionString"/>
-        /// </summary>
-        /// <param name="connectionString">The connection string that will be used to when building a connection string</param>
-        /// <returns>Returns a <see cref="DbConnectionStringBuilder"/> based off of target .NET framework data provider</returns>
-        public DbConnectionStringBuilder GetDbConnectionStringBuilder(string connectionString)
-        {
-            DbConnectionStringBuilder builder = GetDbConnectionStringBuilder();
-            builder.ConnectionString = connectionString;
-
-            //Return this back to the caller
-            return builder;
-        }
-        /// <summary>
         /// Gets a <see cref="DbConnectionStringBuilder"/> based off the provider passed into class
         /// </summary>
         /// <returns>Returns a <see cref="DbConnectionStringBuilder"/> based off of target .NET framework data provider</returns>
