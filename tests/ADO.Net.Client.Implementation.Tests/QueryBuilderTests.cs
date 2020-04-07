@@ -1,8 +1,14 @@
+#region Using Statements
 using NUnit.Framework;
+#endregion
 
 namespace ADO.Net.Client.Implementation.Tests
 {
-    public class Tests
+    /// <summary>
+    /// 
+    /// </summary>
+    [TestFixture]
+    public class QueryBuilderTests
     {
         [SetUp]
         public void Setup()

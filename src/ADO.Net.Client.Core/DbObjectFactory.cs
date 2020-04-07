@@ -323,29 +323,6 @@ namespace ADO.Net.Client.Core
                 parameter.Size = size.Value;
             }
 
-            //Check if this parameter is a database null value
-            if (parameter.IsNullable == false && parameter.Size <= 0)
-            {
-                //Check the parameter direction
-                if (parameter.Direction == ParameterDirection.Output)
-                {
-                    //Let implementors now that size must be set for output parameters
-                    throw new ArgumentNullException("Parameter size must be set for variable sized data type output parameters");
-                }
-                else
-                {
-                    //Check if this is a string or byte array, we need to set the size of the parameter explicitly
-                    if (parameter.Value is string)
-                    {
-                        parameter.Size = parameter.Value.ToString().Length;
-                    }
-                    else if (parameter.Value is byte[])
-                    {
-                        parameter.Size = ((byte[])parameter.Value).Length;
-                    }
-                }
-            }
-
             //Return this back to the caller
             return parameter;
         }

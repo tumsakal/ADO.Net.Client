@@ -119,7 +119,7 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsNotNull(parameter);
             Assert.AreEqual(typeof(MySqlParameter), parameter.GetType());
             Assert.AreEqual(name, parameter.ParameterName);
-            Assert.AreEqual(name, parameter.Value);
+            Assert.AreEqual(value, parameter.Value);
         }
         [Test]
         [Category("DbParameterTests")]
@@ -134,10 +134,54 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.IsNotNull(parameter);
             Assert.AreEqual(typeof(MySqlParameter), parameter.GetType());
-            Assert.AreEqual(parameter.Direction, direction);
-            Assert.AreEqual(parameter.DbType, dbType);
+            Assert.AreEqual(direction, parameter.Direction);
+            Assert.AreEqual(dbType, parameter.DbType);
             Assert.AreEqual(name, parameter.ParameterName);
-            Assert.AreEqual(name, parameter.Value);
+            Assert.AreEqual(value, parameter.Value);
+        }
+        [Test]
+        [Category("DbParameterTests")]
+        [TestCase(null)]
+        [TestCase(10)]
+        public void CanCreateVariableizeParameter(int? size)
+        {
+            string name = "@ParameterName";
+            string value = "ParameterValue";
+            DbType dbType = DbType.Int32;
+            ParameterDirection direction = ParameterDirection.Input;
+
+            DbParameter parameter = _factory.GetVariableSizeDbParameter(name, value, dbType, size, direction);
+
+            Assert.IsNotNull(parameter);
+            Assert.AreEqual(typeof(MySqlParameter), parameter.GetType());
+            Assert.AreEqual(size ?? 0, parameter.Size);
+            Assert.AreEqual(direction, parameter.Direction);
+            Assert.AreEqual(dbType, parameter.DbType);
+            Assert.AreEqual(name, parameter.ParameterName);
+            Assert.AreEqual(value, parameter.Value);
+        }
+        [Test]
+        [Category("DbParameterTests")]
+        [TestCase(null, 10)]
+        [TestCase(10, null)]
+        [TestCase(10, 10)]
+        public void CanCreateFixedSizeParameter(byte? scale, byte? precision)
+        {
+            string name = "@ParameterName";
+            int value = 200;
+            DbType dbType = DbType.Int32;
+            ParameterDirection direction = ParameterDirection.Input;
+
+            DbParameter parameter = _factory.GetFixedSizeDbParameter(name, value, dbType, scale, precision, direction);
+
+            Assert.IsNotNull(parameter);
+            Assert.AreEqual(typeof(MySqlParameter), parameter.GetType());
+            Assert.AreEqual(scale ?? 0, parameter.Scale);
+            Assert.AreEqual(precision ?? 0, parameter.Precision);
+            Assert.AreEqual(direction, parameter.Direction);
+            Assert.AreEqual(dbType, parameter.DbType);
+            Assert.AreEqual(name, parameter.ParameterName);
+            Assert.AreEqual(value, parameter.Value);
         }
         #endregion
     }
