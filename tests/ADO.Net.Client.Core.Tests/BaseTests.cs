@@ -147,7 +147,7 @@ namespace ADO.Net.Client.Core.Tests
         {
             string name = "@ParameterName";
             string value = "ParameterValue";
-            DbType dbType = DbType.Int32;
+            DbType dbType = DbType.AnsiString;
             ParameterDirection direction = ParameterDirection.Input;
 
             DbParameter parameter = _factory.GetVariableSizeDbParameter(name, value, dbType, size, direction);
