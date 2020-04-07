@@ -26,6 +26,7 @@ using ADO.Net.Client.Core;
 using MySql.Data.MySqlClient;
 using NUnit;
 using NUnit.Framework;
+using System.Data;
 using System.Data.Common;
 #endregion
 
@@ -111,11 +112,30 @@ namespace ADO.Net.Client.Core.Tests
         public void CanCreateDbParameterNameValue()
         {
             string name = "@ParameterName";
-            object value = 200;
+            int value = 200;
+
             DbParameter parameter = _factory.GetDbParameter(name, value);
 
             Assert.IsNotNull(parameter);
             Assert.AreEqual(typeof(MySqlParameter), parameter.GetType());
+            Assert.AreEqual(name, parameter.ParameterName);
+            Assert.AreEqual(name, parameter.Value);
+        }
+        [Test]
+        [Category("DbParameterTests")]
+        public void CanCreateDbType()
+        {
+            string name = "@ParameterName";
+            int value = 200;
+            DbType dbType = DbType.Int32;
+            ParameterDirection direction = ParameterDirection.Input;
+
+            DbParameter parameter = _factory.GetDbParameter(name, value, dbType, direction);
+
+            Assert.IsNotNull(parameter);
+            Assert.AreEqual(typeof(MySqlParameter), parameter.GetType());
+            Assert.AreEqual(parameter.Direction, direction);
+            Assert.AreEqual(parameter.DbType, dbType);
             Assert.AreEqual(name, parameter.ParameterName);
             Assert.AreEqual(name, parameter.Value);
         }
