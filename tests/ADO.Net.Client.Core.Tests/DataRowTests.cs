@@ -27,7 +27,7 @@ namespace ADO.Net.Client.Core.Tests
 #if !NET472
             DbProviderFactories.RegisterFactory("MySqlConnector", MySqlClientFactory.Instance);
 #endif
-            //For regular .NET framework the drive must be installed in the Global Assembly Cache
+            //For regular .NET framework the driver must be installed in the Global Assembly Cache
             DataTable table = DbProviderFactories.GetFactoryClasses();
             DataRow row = (from a in table.Rows.Cast<DataRow>()
                            where a.ItemArray[2].ToString() == "MySqlConnector"
