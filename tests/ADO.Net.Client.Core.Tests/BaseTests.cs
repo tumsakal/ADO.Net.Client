@@ -122,13 +122,16 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(value, parameter.Value);
         }
         [Test]
+        [TestCase(ParameterDirection.Input)]
+        [TestCase(ParameterDirection.Output)]
+        [TestCase(ParameterDirection.InputOutput)]
+        [TestCase(ParameterDirection.ReturnValue)]
         [Category("DbParameterTests")]
-        public void CanCreateDbType()
+        public void CanCreateDbType(ParameterDirection direction)
         {
             string name = "@ParameterName";
             int value = 200;
             DbType dbType = DbType.Int32;
-            ParameterDirection direction = ParameterDirection.Input;
 
             DbParameter parameter = _factory.GetDbParameter(name, value, dbType, direction);
 
@@ -141,14 +144,19 @@ namespace ADO.Net.Client.Core.Tests
         }
         [Test]
         [Category("DbParameterTests")]
-        [TestCase(null)]
-        [TestCase(10)]
-        public void CanCreateVariableizeParameter(int? size)
+        [TestCase(10, ParameterDirection.Input)]
+        [TestCase(10, ParameterDirection.Output)]
+        [TestCase(10, ParameterDirection.InputOutput)]
+        [TestCase(10, ParameterDirection.ReturnValue)]
+        [TestCase(null, ParameterDirection.Input)]
+        [TestCase(null, ParameterDirection.Output)]
+        [TestCase(null, ParameterDirection.InputOutput)]
+        [TestCase(null, ParameterDirection.ReturnValue)]
+        public void CanCreateVariableizeParameter(int? size, ParameterDirection direction)
         {
             string name = "@ParameterName";
             string value = "ParameterValue";
             DbType dbType = DbType.AnsiString;
-            ParameterDirection direction = ParameterDirection.Input;
 
             DbParameter parameter = _factory.GetVariableSizeDbParameter(name, value, dbType, size, direction);
 
@@ -162,15 +170,23 @@ namespace ADO.Net.Client.Core.Tests
         }
         [Test]
         [Category("DbParameterTests")]
-        [TestCase(null, 10)]
-        [TestCase(10, null)]
-        [TestCase(10, 10)]
-        public void CanCreateFixedSizeParameter(byte? scale, byte? precision)
+        [TestCase(null, 10, ParameterDirection.Input)]
+        [TestCase(null, 10, ParameterDirection.Output)]
+        [TestCase(null, 10, ParameterDirection.InputOutput)]
+        [TestCase(null, 10, ParameterDirection.ReturnValue)]
+        [TestCase(10, null, ParameterDirection.Input)]
+        [TestCase(10, null, ParameterDirection.Output)]
+        [TestCase(10, null, ParameterDirection.InputOutput)]
+        [TestCase(10, null, ParameterDirection.ReturnValue)]
+        [TestCase(10, 10, ParameterDirection.Input)]
+        [TestCase(10, 10, ParameterDirection.Output)]
+        [TestCase(10, 10, ParameterDirection.InputOutput)]
+        [TestCase(10, 10, ParameterDirection.ReturnValue)]
+        public void CanCreateFixedSizeParameter(byte? scale, byte? precision, ParameterDirection direction)
         {
             string name = "@ParameterName";
             int value = 200;
             DbType dbType = DbType.Int32;
-            ParameterDirection direction = ParameterDirection.Input;
 
             DbParameter parameter = _factory.GetFixedSizeDbParameter(name, value, dbType, scale, precision, direction);
 
