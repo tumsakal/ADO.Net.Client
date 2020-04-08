@@ -56,7 +56,7 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.  Default is 30 seconds
         /// </summary>
-        public int CommandTimeout { get; set; } = 30;
+        public int CommandTimeout { get; internal set; } = 30;
         #endregion
         #region Constructors
         /// <summary>
