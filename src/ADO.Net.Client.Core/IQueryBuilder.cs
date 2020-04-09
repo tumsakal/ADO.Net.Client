@@ -35,7 +35,14 @@ namespace ADO.Net.Client.Core
     /// <seealso cref="IDbParameterUtility"/>
     public interface IQueryBuilder : IDbParameterUtility
     {
-        #region Fields/Properties        
+        #region Fields/Properties   
+        /// <summary>
+        /// The query command text or name of stored procedure to execute against the data store
+        /// </summary>
+        /// <value>
+        /// The <see cref="string"/> value of stored procedure or ad-hoc query
+        /// </value>
+        string QueryText { get; }
         /// <summary>
         /// The database parameters associated with a query
         /// </summary>

@@ -54,6 +54,19 @@ namespace ADO.Net.Client.Implementation
                 return _parameters;
             }
         }
+        /// <summary>
+        /// The query command text or name of stored procedure to execute against the data store
+        /// </summary>
+        /// <value>
+        /// The <see cref="string"/> value of stored procedure or ad-hoc query
+        /// </value>
+        public string QueryText
+        {
+            get
+            {
+                return _sqlQuery.ToString();
+            }
+        }
         #endregion
         #region Constructors        
         /// <summary>
