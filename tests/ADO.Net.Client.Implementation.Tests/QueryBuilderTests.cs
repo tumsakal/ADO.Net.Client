@@ -25,6 +25,8 @@ SOFTWARE.*/
 using ADO.Net.Client.Core;
 using MySql.Data.MySqlClient;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 #endregion
 
@@ -70,13 +72,36 @@ namespace ADO.Net.Client.Implementation.Tests
         {
             string valueToAppend = "Value To Append";
             QueryBuilder builder = new QueryBuilder();
-            MySqlParameter parameter = new MySqlParameter();
+            MySqlParameter parameter = new MySqlParameter() { ParameterName = "Param1" };
 
             builder.Append(valueToAppend, parameter);
 
             Assert.That(!string.IsNullOrWhiteSpace(builder.QueryText));
+            Assert.That(valueToAppend == builder.QueryText);
             Assert.IsNotNull(builder.Parameters);
             Assert.That(builder.Parameters.Count() == 1);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        public void CanAppendStringAndParameters()
+        {
+            string valueToAppend = "Value To Append";
+            QueryBuilder builder = new QueryBuilder();
+            List<DbParameter> parameters = new List<DbParameter>() 
+            { 
+                new MySqlParameter() { ParameterName = "Param1" },
+                new MySqlParameter() { ParameterName = "Param2" },
+                new MySqlParameter() { ParameterName = "Param3" }
+            };
+
+            builder.Append(valueToAppend, parameters);
+
+            Assert.That(!string.IsNullOrWhiteSpace(builder.QueryText));
+            Assert.That(valueToAppend == builder.QueryText);
+            Assert.IsNotNull(builder.Parameters);
+            Assert.That(builder.Parameters.Count() == 3);
         }
         #endregion
     }
