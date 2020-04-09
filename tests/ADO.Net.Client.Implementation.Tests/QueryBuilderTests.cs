@@ -110,6 +110,30 @@ namespace ADO.Net.Client.Implementation.Tests
         /// 
         /// </summary>
         [Test]
+        public void CanClearParameters()
+        {
+            QueryBuilder builder = new QueryBuilder();
+            List<DbParameter> parameters = new List<DbParameter>()
+            {
+                new MySqlParameter() { ParameterName = "Param1" },
+                new MySqlParameter() { ParameterName = "Param2" },
+                new MySqlParameter() { ParameterName = "Param3" }
+            };
+
+            builder.AddParameterRange(parameters);
+
+            Assert.IsNotNull(builder.Parameters);
+            Assert.That(builder.Parameters.Count() == 3);
+
+            builder.ClearParameters();
+
+            Assert.IsNotNull(builder.Parameters);
+            Assert.That(builder.Parameters.Count() == 0);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
         public void CanFindParameterByName()
         {
             QueryBuilder builder = new QueryBuilder();
