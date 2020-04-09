@@ -35,29 +35,23 @@ namespace ADO.Net.Client.Core
     {
         #region Helper Methods
         /// <summary>
+        /// Retrieves a <see cref="DbParameter"/> object by using the passed in parameter name
+        /// </summary>
+        /// <param name="parameterName">The name of the parameter to use to find the parameter value</param>
+        /// <returns>The specified <see cref="DbParameter"/> object from the parameters collection</returns>
+        DbParameter GetParameter(string parameterName);
+        /// <summary>
         /// Removes a <see cref="DbParameter"/> from the parameters collection by using the parameter name
         /// </summary>
         /// <param name="parameterName">The name of the parameter to identify the parameter to remove from the collection</param>
         /// <returns>Returns true if item was successully removed, false otherwise if item was not found in the list</returns>
         bool RemoveParameter(string parameterName);
         /// <summary>
-        /// Removes a <see cref="DbParameter"/> from the parameters collection by using the index of the parameter
-        /// </summary>
-        /// <param name="index">The index of the parameter in the parameters collection to identify the parameter to remove from the collection</param>
-        /// <returns>Returns true if item was successully removed, false otherwise if item was not found in the list</returns>
-        bool RemoveParameter(int index);
-        /// <summary>
         /// Replaces an existing parameter with the new <see cref="DbParameter"/> with an existing <see cref="DbParameter.ParameterName"/>
         /// </summary>
         /// <param name="parameterName">The index as a <c>string</c> to use when searching for the existing parameter</param>
         /// <param name="param">A new instance of <see cref="DbParameter"/></param>
         void ReplaceParameter(string parameterName, DbParameter param);
-        /// <summary>
-        /// Replaces an existing parameter with the new <see cref="DbParameter"/> passed in at the <paramref name="index"/>
-        /// </summary>
-        /// <param name="index">The index as an <see cref="int"/> to use when searching for the existing parameter</param>
-        /// <param name="param">A new instance of <see cref="DbParameter"/></param>
-        void ReplaceParameter(int index, DbParameter param);
         /// <summary>
         /// Clears all parameters from the parameters collection
         /// </summary>
@@ -75,12 +69,6 @@ namespace ADO.Net.Client.Core
         /// <param name="value">The value of the parameter as an <see cref="object"/></param>
         void SetParamaterValue(string parameterName, object value);
         /// <summary>
-        /// Sets the value of an existing <see cref="DbParameter"/> by using the <paramref name="index"/> and passed in <paramref name="value"/>
-        /// </summary>
-        /// <param name="index">The index of the parameter in the parameters collection to identify the parameter to retrieve from the collection</param>
-        /// <param name="value">The value of the parameter as an <see cref="object"/></param>
-        void SetParamaterValue(int index, object value);
-        /// <summary>
         /// Adds an <see cref="IEnumerable{DbParameter}"/> objects to the helpers underlying db parameter collection
         /// </summary>
         /// <param name="dbParams">An <see cref="IEnumerable{DbParameter}"/> to add to the underlying db parameter collection for the connection</param>
@@ -91,12 +79,6 @@ namespace ADO.Net.Client.Core
         /// <param name="parameterName">The name of the parameter to use when searching the Parameters list</param>
         /// <returns>True if this parameter exists in the parameters collection, false otherwise</returns>
         bool Contains(string parameterName);
-        /// <summary>
-        /// Checks for a paremeter in the parameters list with the passed in index
-        /// </summary>
-        /// <param name="index">The index of the parameter in the parameters collection to identify the parameter to remove from the collection</param>
-        /// <returns>Returns true if item was found in the paramerters collection, false otherwise if item was not found in the collection</returns>
-        bool Contains(int index);
         #endregion
     }
 }

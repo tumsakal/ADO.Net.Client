@@ -215,29 +215,6 @@ namespace ADO.Net.Client.Implementation
             return !(_parameters.Find(x => x.ParameterName == parameterName) == null);
         }
         /// <summary>
-        /// Checks for a paremeter in the parameters list with the passed in index
-        /// </summary>
-        /// <param name="index">The index of the parameter in the parameters collection to identify the parameter to remove from the collection</param>
-        /// <returns>Returns true if item was found in the paramerters collection, false otherwise if item was not found in the collection</returns>
-        public bool Contains(int index)
-        {
-            try
-            {
-                DbParameter param;
-
-                //Get the parameter at this index
-                param = _parameters[index];
-
-                //We found this item, tell the caller
-                return (param == null);
-            }
-            catch (Exception ex)
-            {
-                //We couldn't find this item, tell the caller
-                return false;
-            }
-        }
-        /// <summary>
         /// Retrieves a <see cref="DbParameter"/> object by using the passed in parameter name
         /// </summary>
         /// <exception cref="ArgumentException">Throws when the passed in <paramref name="parameterName"/> is <c>null</c> or <see cref="string.Empty"/></exception>
@@ -253,17 +230,6 @@ namespace ADO.Net.Client.Implementation
             }
 
             return _parameters.Find(x => x.ParameterName == parameterName);
-        }
-        /// <summary>
-        /// Retrieves a <see cref="DbParameter"/> from the parameters collection by using the index of the parameter
-        /// </summary>
-        /// <param name="index">The index of the parameter in the parameters collection to identify the parameter to retrieve from the collection</param>
-        /// <returns>Returns the DbParameter object located at this index</returns>
-        /// <exception cref="IndexOutOfRangeException">thrown when an attempt is made to access an element of an array or collection with an index that is outside the bounds of the array or less than zero.</exception>
-        public DbParameter GetParameter(int index)
-        {
-            //Return this back to the caller
-            return _parameters[index];
         }
         /// <summary>
         /// Removes a <see cref="DbParameter"/> from the parameters collection for the current <see cref="DbConnection"/> by using the parameter name
@@ -300,17 +266,6 @@ namespace ADO.Net.Client.Implementation
             _parameters[index] = param;
         }
         /// <summary>
-        /// Replaces an existing parameter with the new <see cref="DbParameter"/> passed in at the <paramref name="index"/>
-        /// </summary>
-        /// <param name="index">The index as an <see cref="int"/> to use when searching for the existing parameter</param>
-        /// <param name="param">A new instance of <see cref="DbParameter"/></param>
-        /// <exception cref="IndexOutOfRangeException">thrown when an attempt is made to access an element of an array or collection with an index that is outside the bounds of the array or less than zero.</exception>
-        public void ReplaceParameter(int index, DbParameter param)
-        {
-            //Do a replace of the parameter
-            _parameters[index] = param;
-        }
-        /// <summary>
         /// Sets the value of an existing <see cref="DbParameter"/> by using the <paramref name="parameterName"/> and passed in <paramref name="value"/>
         /// </summary>
         /// <param name="parameterName">The name of the parameter to identify the parameter</param>
@@ -320,24 +275,8 @@ namespace ADO.Net.Client.Implementation
             //Get index of this parameter
             int index = _parameters.FindIndex(i => i.ParameterName == parameterName);
 
-            //Change the value
-            SetParamaterValue(index, value);
-        }
-        /// <summary>
-        /// Sets the value of an existing <see cref="DbParameter"/> by using the <paramref name="index"/> and passed in <paramref name="value"/>
-        /// </summary>
-        /// <param name="index">The index of the parameter in the parameters collection to identify the parameter to retrieve from the collection</param>
-        /// <param name="value">The value of the parameter as an <see cref="object"/></param>
-        /// <exception cref="IndexOutOfRangeException">thrown when an attempt is made to access an element of an array or collection with an index that is outside the bounds of the array or less than zero.</exception>
-        public void SetParamaterValue(int index, object value)
-        {
-            DbParameter param = GetParameter(index);
-
-            //Now set the value
-            param.Value = value;
-
-            //Change the value
-            _parameters[index] = param;
+            //Do a replace of the parameter
+            _parameters[index].Value = value;
         }
         #endregion
     }

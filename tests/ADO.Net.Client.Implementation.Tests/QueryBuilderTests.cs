@@ -52,7 +52,10 @@ namespace ADO.Net.Client.Implementation.Tests
         {
         }
         #endregion
-        #region Tests
+        #region Tests        
+        /// <summary>
+        /// Determines whether this instance [can append string].
+        /// </summary>
         [Test]
         public void CanAppendString()
         {
@@ -76,9 +79,9 @@ namespace ADO.Net.Client.Implementation.Tests
 
             builder.Append(valueToAppend, parameter);
 
+            Assert.IsNotNull(builder.Parameters);
             Assert.That(!string.IsNullOrWhiteSpace(builder.QueryText));
             Assert.That(valueToAppend == builder.QueryText);
-            Assert.IsNotNull(builder.Parameters);
             Assert.That(builder.Parameters.Count() == 1);
         }
         /// <summary>
@@ -98,10 +101,29 @@ namespace ADO.Net.Client.Implementation.Tests
 
             builder.Append(valueToAppend, parameters);
 
+            Assert.IsNotNull(builder.Parameters);
             Assert.That(!string.IsNullOrWhiteSpace(builder.QueryText));
             Assert.That(valueToAppend == builder.QueryText);
-            Assert.IsNotNull(builder.Parameters);
             Assert.That(builder.Parameters.Count() == 3);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        public void CanFindParameterByName()
+        {
+            QueryBuilder builder = new QueryBuilder();
+            MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1", Value = 1};
+
+            builder.AddParameter(parameter);
+
+            DbParameter param = builder.GetParameter(parameter.ParameterName);
+
+            Assert.IsNotNull(param);
+            Assert.AreEqual(typeof(MySqlParameter), param.GetType());
+            Assert.That(builder.Parameters.Count() == 1);
+            Assert.That(param.ParameterName == parameter.ParameterName);
+            Assert.That(param.Value == parameter.Value);
         }
         #endregion
     }
