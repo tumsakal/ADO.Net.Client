@@ -22,7 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using ADO.Net.Client.Core;
+using MySql.Data.MySqlClient;
 using NUnit.Framework;
+using System.Linq;
 #endregion
 
 namespace ADO.Net.Client.Implementation.Tests
@@ -31,17 +34,50 @@ namespace ADO.Net.Client.Implementation.Tests
     /// 
     /// </summary>
     [TestFixture]
-    public class QueryBuilderTests
+    public class QueryBuilderTests 
     {
+        #region Fields/Properties
+        #endregion
+        #region Constructors
+        public QueryBuilderTests()
+        {
+           
+        }
+        #endregion
+        #region Setup/Teardown
         [SetUp]
         public void Setup()
         {
         }
-
+        #endregion
+        #region Tests
         [Test]
-        public void Test1()
+        public void CanAppendString()
         {
-            Assert.Pass();
+            QueryBuilder builder = new QueryBuilder();
+            string valueToAppend = "Value To Append";
+
+            builder.Append(valueToAppend);
+
+            Assert.That(!string.IsNullOrWhiteSpace(builder.QueryText));
+            Assert.That(valueToAppend == builder.QueryText);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        public void CanAppendStringAndParameter()
+        {
+            string valueToAppend = "Value To Append";
+            QueryBuilder builder = new QueryBuilder();
+            MySqlParameter parameter = new MySqlParameter();
+
+            builder.Append(valueToAppend, parameter);
+
+            Assert.That(!string.IsNullOrWhiteSpace(builder.QueryText));
+            Assert.IsNotNull(builder.Parameters);
+            Assert.That(builder.Parameters.Count() == 1);
+        }
+        #endregion
     }
 }
