@@ -35,6 +35,7 @@ namespace ADO.Net.Client.Implementation
     /// <summary>
     /// Utility class that builds out queries to be exectued against a database
     /// </summary>
+    /// <seealso cref="IQueryBuilder"/>
     public class QueryBuilder : IQueryBuilder
     {
         #region Fields/Properties
@@ -69,6 +70,23 @@ namespace ADO.Net.Client.Implementation
         }
         #endregion
         #region Constructors        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueryBuilder"/> class.
+        /// </summary>
+        /// <param name="queryText">The query command text or name of stored procedure to execute against the data store</param>
+        /// <param name="parameters">The database parameters associated with <paramref name="queryText"/></param>
+        public QueryBuilder(string queryText, IEnumerable<DbParameter> parameters) : this(queryText)
+        {
+            AddParameterRange(parameters);
+        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueryBuilder"/> class.
+        /// </summary>
+        /// <param name="queryText">The query command text or name of stored procedure to execute against the data store</param>
+        public QueryBuilder(string queryText) : this()
+        {
+            Append(queryText);
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="QueryBuilder"/> class.
         /// </summary>
