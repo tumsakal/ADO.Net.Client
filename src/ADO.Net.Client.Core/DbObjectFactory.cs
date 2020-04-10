@@ -50,8 +50,30 @@ namespace ADO.Net.Client.Core
         #region Fields/Properties
         private readonly DbProviderFactory _dbProviderFactory;
 
+#if NETSTANDARD2_1
         /// <summary>
-        /// Whether or not the passed in provider is capable of creating a data source enumerator
+        /// Whether or not this instance is capable of creating a <see cref="DbDataAdapter"/>
+        /// </summary>
+        public bool CanCreateDataAdapter
+        {
+            get
+            {
+                return _dbProviderFactory.CanCreateDataAdapter;
+            }
+        }
+        /// <summary>
+        /// Whether or not this instance is capable of creating a <see cref="DbCommandBuilder"/>
+        /// </summary>
+        public bool CanCreateCommandBuilder
+        {
+            get
+            {
+                return _dbProviderFactory.CanCreateCommandBuilder;
+            }
+        }
+#endif
+        /// <summary>
+        /// Whether or not this instance is capable of creating a <see cref="DbDataSourceEnumerator"/>
         /// </summary>
         public bool CanCreateDataSourceEnumerator
         {

@@ -37,10 +37,20 @@ namespace ADO.Net.Client.Core
     public interface IDbObjectFactory
     {
         #region Fields/Properties
-        /// <summary>
-        /// Whether or not the passed in provider is capable of creating a data source enumerator
+        // <summary>
+        /// Whether or not the passed in provider is capable of creating a <see cref="DbDataSourceEnumerator"/>
         /// </summary>
         bool CanCreateDataSourceEnumerator { get; }
+#if NETSTANDARD2_1
+        /// <summary>
+        /// Whether or not this instance is capable of creating a <see cref="DbDataAdapter"/>
+        /// </summary>
+        bool CanCreateDataAdapter { get; }
+        /// <summary>
+        /// Whether or not this instance is capable of creating a <see cref="DbCommandBuilder"/>
+        /// </summary>
+        bool CanCreateCommandBuilder { get; }
+#endif
         #endregion
         #region Utility Methods
         /// <summary>
