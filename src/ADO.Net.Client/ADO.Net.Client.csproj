@@ -14,7 +14,7 @@
     <Product>ADO.Net.Client</Product>
     <Title>ADO.NET.Client</Title>
     <PackageId>ADO.Net.Client</PackageId>
-    <Description>ADO.Net driver client functionality API objects for ADO.Net.Client based libraries</Description>
+    <Description>High level ADO.Net client library to agnostically query a relational database using a given ADO.Net driver</Description>
     <PackageReleaseNotes>
       Initial release of package
     </PackageReleaseNotes>

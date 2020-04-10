@@ -37,7 +37,7 @@ namespace ADO.Net.Client.Core
     public interface IDbObjectFactory
     {
         #region Fields/Properties
-        // <summary>
+        /// <summary>
         /// Whether or not the passed in provider is capable of creating a <see cref="DbDataSourceEnumerator"/>
         /// </summary>
         bool CanCreateDataSourceEnumerator { get; }
