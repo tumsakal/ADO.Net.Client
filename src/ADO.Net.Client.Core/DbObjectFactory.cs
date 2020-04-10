@@ -261,22 +261,6 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Instantiates a new instance of the <see cref="DbConnection"/> object based on the specified provider
         /// </summary>
-        /// <param name="connectionString">The connection string used to query a data store</param>
-        /// <returns>Returns a new instance of the <see cref="DbConnection"/> object based on the specified provider</returns>
-        public DbConnection GetDbConnection(string connectionString)
-        {
-            //Get the DbConnection object
-            DbConnection db = GetDbConnection();
-
-            //Set the connection string
-            db.ConnectionString = connectionString;
-
-            //Return this back to the caller
-            return db;
-        }
-        /// <summary>
-        /// Instantiates a new instance of the <see cref="DbConnection"/> object based on the specified provider
-        /// </summary>
         /// <returns>Returns a new instance of the <see cref="DbConnection"/> object based on the specified provider</returns>
         public DbConnection GetDbConnection()
         {

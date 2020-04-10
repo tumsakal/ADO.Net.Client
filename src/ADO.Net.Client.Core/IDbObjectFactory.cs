@@ -139,12 +139,6 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns a new instance of the <see cref="DbConnection"/> subclass based on the specified provider</returns>
         DbConnection GetDbConnection();
         /// <summary>
-        /// Instantiates a new instance of a <see cref="DbConnection"/> subclass based on the provider passed into the class constructor
-        /// </summary>
-        /// <param name="connectionString">The connection string used to query a data store</param>
-        /// <returns>Returns a new instance of the <see cref="DbConnection"/> subclass based on the specified provider</returns>
-        DbConnection GetDbConnection(string connectionString);
-        /// <summary>
         /// Create an instance of a <see cref="DbParameter"/> based off of the provider passed into factory
         /// </summary>
         /// <returns>Returns an instantiated <see cref="DbParameter"/> object</returns>
