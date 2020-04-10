@@ -149,6 +149,61 @@ namespace ADO.Net.Client.Implementation.Tests
             Assert.That(param.ParameterName == parameter.ParameterName);
             Assert.That(param.Value == parameter.Value);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        public void CanRemoveParameterByName()
+        {
+            QueryBuilder builder = new QueryBuilder();
+            MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1", Value = 1 };
+
+            builder.AddParameter(parameter);
+
+            builder.RemoveParameter(parameter.ParameterName);
+
+            Assert.IsNotNull(builder.Parameters);
+            Assert.That(builder.Contains(parameter.ParameterName) == false);
+            Assert.That(builder.Parameters.Count() == 0);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        public void CanReplaceParameterByName()
+        {
+            QueryBuilder builder = new QueryBuilder();
+            MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1", Value = 1 };
+            MySqlParameter newParam = new MySqlParameter() { ParameterName="@Param2", Value = "SomeValue" };
+            
+            builder.AddParameter(parameter);
+
+            builder.ReplaceParameter(parameter.ParameterName, newParam);
+
+            Assert.IsNotNull(builder.Parameters);
+            Assert.That(builder.Parameters.Count() == 1);
+            Assert.AreNotEqual(parameter, newParam);
+            Assert.AreNotEqual(parameter.Value, newParam.Value);
+            Assert.AreNotEqual(parameter.ParameterName, newParam.ParameterName);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        public void CanSetParameterValueByName()
+        {
+            QueryBuilder builder = new QueryBuilder();
+            MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1", Value = 1 };
+
+            builder.AddParameter(parameter);
+            builder.SetParamaterValue(parameter.ParameterName, 333);
+            DbParameter param = builder.GetParameter(parameter.ParameterName);
+
+            Assert.IsNotNull(builder.Parameters);
+            Assert.That(builder.Parameters.Count() == 1);
+            Assert.That(param.ParameterName == parameter.ParameterName);
+            Assert.That(333 == (int)param.Value);
+        }
         #endregion
     }
 }
