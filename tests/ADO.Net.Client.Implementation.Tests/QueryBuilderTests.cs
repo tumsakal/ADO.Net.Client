@@ -71,13 +71,13 @@ namespace ADO.Net.Client.Implementation.Tests
 
             builder.AddParameterRange(parameters);
 
-            ISqlQuery query = builder.CreateSQLQuery(CommandType.Text, commandTimeout, shouldBePrepared);
+            ISqlQuery query = builder.CreateSQLQuery(commandType, commandTimeout, shouldBePrepared);
 
             Assert.IsNotNull(query);
             Assert.AreEqual(commandTimeout, query.CommandTimeout);
             Assert.AreEqual(queryString, query.QueryText);
             Assert.AreEqual(shouldBePrepared, query.ShouldBePrepared);
-            Assert.AreEqual(commandTimeout, query.QueryType);
+            Assert.AreEqual(commandType, query.QueryType);
             Assert.That(query.Parameters.Count() == parameters.Count);
         }
         [Test]
