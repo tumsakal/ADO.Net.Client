@@ -25,6 +25,7 @@ SOFTWARE.*/
 using ADO.Net.Client.Core;
 using MySql.Data.MySqlClient;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -53,6 +54,16 @@ namespace ADO.Net.Client.Implementation.Tests
         }
         #endregion
         #region Tests        
+        [Test]
+        public void RejectsDuplicateParameterName()
+        {
+            QueryBuilder builder = new QueryBuilder();
+            MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1" };
+
+            builder.AddParameter(parameter);
+
+            Assert.Throws<ArgumentException>(() => builder.AddParameter(new MySqlParameter() { ParameterName = "@Param1" }));
+        }
         /// <summary>
         /// Determines whether this instance [can append string].
         /// </summary>
