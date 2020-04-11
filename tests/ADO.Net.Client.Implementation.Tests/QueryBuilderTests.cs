@@ -100,9 +100,14 @@ namespace ADO.Net.Client.Implementation.Tests
         public void RejectsDuplicateParameterNamesInEnumerable()
         {
             QueryBuilder builder = new QueryBuilder();
-            MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1" };
+            List<DbParameter> parameters = new List<DbParameter>()
+            {
+                new MySqlParameter() { ParameterName = "@Param1" },
+                new MySqlParameter() { ParameterName = "@Param2" },
+                new MySqlParameter() { ParameterName = "@Param1" }
+            };
 
-            //Assert.Throws<ArgumentException>(() => builder.AddParameter(new MySqlParameter() { ParameterName = "@Param1" }));
+            Assert.Throws<ArgumentException>(() => builder.AddParameterRange(parameters));
         }
         [Test]
         public void RejectsDuplicateParameterNames()
