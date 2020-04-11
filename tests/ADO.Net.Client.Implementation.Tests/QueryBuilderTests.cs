@@ -27,6 +27,7 @@ using MySql.Data.MySqlClient;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Linq;
 #endregion
@@ -54,6 +55,30 @@ namespace ADO.Net.Client.Implementation.Tests
         }
         #endregion
         #region Tests    
+        [Test]
+        [TestCase(CommandType.StoredProcedure, 60,false)]
+        [TestCase(CommandType.Text, 10, true)]
+        public void CanBuildSQLQuery(CommandType commandType, int commandTimeout, bool shouldBePrepared)
+        {
+            string queryString = "Query Text to check";
+            QueryBuilder builder = new QueryBuilder(queryString);
+            List<DbParameter> parameters = new List<DbParameter>()
+            {
+                new MySqlParameter() { ParameterName = "@Param3" },
+                new MySqlParameter() { ParameterName = "@Param2" },
+                new MySqlParameter() { ParameterName = "@Param1" }
+            };
+
+            builder.AddParameterRange(parameters);
+
+            ISqlQuery query = builder.CreateSQLQuery(CommandType.Text, commandTimeout, shouldBePrepared);
+
+            Assert.IsNotNull(query);
+            Assert.AreEqual(commandTimeout, query.CommandTimeout);
+            Assert.AreEqual(queryString, query.QueryText);
+            Assert.AreEqual(shouldBePrepared, query.ShouldBePrepared);
+            Assert.AreEqual(commandTimeout, query.QueryType);
+        }
         [Test]
         public void ContainsParameterFalse()
         {
