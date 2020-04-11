@@ -7,7 +7,7 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/rgarrison12345/ADO.Net.Client.git</RepositoryUrl>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <PackageTags>ORM ADO.NET ADO SQL .NET Database RDBMS Generic DAL ANSI</PackageTags>
     <Authors>Robert Garrison</Authors>
     <Company>Robert Garrison</Company>
@@ -16,7 +16,7 @@
     <PackageId>ADO.Net.Client</PackageId>
     <Description>High level ADO.Net client library to agnostically query a relational database using a given ADO.Net driver</Description>
     <PackageReleaseNotes>
-      Initial release of package
+      Updating to ADO.Net.Client.Implementation 1.0.3
     </PackageReleaseNotes>
     <IncludeSource>true</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
@@ -56,6 +56,6 @@
     <ProjectReference Include="..\ADO.Net.Client.Implementation\ADO.Net.Client.Implementation.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="ADO.Net.Client.Implementation" Version="1.0.2" />
+    <PackageReference Include="ADO.Net.Client.Implementation" Version="1.0.3" />
   </ItemGroup>
 </Project>
