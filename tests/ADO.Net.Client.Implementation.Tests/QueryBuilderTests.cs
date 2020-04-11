@@ -53,7 +53,39 @@ namespace ADO.Net.Client.Implementation.Tests
         {
         }
         #endregion
-        #region Tests        
+        #region Tests    
+        [Test]
+        public void ContainsParameterFalse()
+        {
+            QueryBuilder builder = new QueryBuilder();
+            List<DbParameter> parameters = new List<DbParameter>()
+            {
+                new MySqlParameter() { ParameterName = "@Param3" },
+                new MySqlParameter() { ParameterName = "@Param2" },
+                new MySqlParameter() { ParameterName = "@Param1" }
+            };
+
+            builder.AddParameterRange(parameters);
+
+            Assert.That(builder.Contains("@Param4") == false);
+        }
+        [Test]
+        public void ContainsParameterTrue()
+        {
+            QueryBuilder builder = new QueryBuilder();
+            List<DbParameter> parameters = new List<DbParameter>()
+            {
+                new MySqlParameter() { ParameterName = "@Param3" },
+                new MySqlParameter() { ParameterName = "@Param2" },
+                new MySqlParameter() { ParameterName = "@Param1" }
+            };
+
+            builder.AddParameterRange(parameters);
+
+            Assert.That(builder.Contains("@Param1"));
+            Assert.That(builder.Contains("@Param3"));
+            Assert.That(builder.Contains("@Param2"));
+        }
         [Test]
         public void RejectsDuplicateParameterName()
         {
@@ -63,6 +95,30 @@ namespace ADO.Net.Client.Implementation.Tests
             builder.AddParameter(parameter);
 
             Assert.Throws<ArgumentException>(() => builder.AddParameter(new MySqlParameter() { ParameterName = "@Param1" }));
+        }
+        [Test]
+        public void RejectsDuplicateParameterNamesInEnumerable()
+        {
+            QueryBuilder builder = new QueryBuilder();
+            MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1" };
+
+            //Assert.Throws<ArgumentException>(() => builder.AddParameter(new MySqlParameter() { ParameterName = "@Param1" }));
+        }
+        [Test]
+        public void RejectsDuplicateParameterNames()
+        {
+            QueryBuilder builder = new QueryBuilder();
+            MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1" };
+            List<DbParameter> parameters = new List<DbParameter>()
+            {
+                new MySqlParameter() { ParameterName = "@Param3" },
+                new MySqlParameter() { ParameterName = "@Param2" },
+                new MySqlParameter() { ParameterName = "@Param1" }
+            };
+
+            builder.AddParameter(parameter);
+
+            Assert.Throws<ArgumentException>(() => builder.AddParameterRange(parameters));
         }
         /// <summary>
         /// Determines whether this instance [can append string].
@@ -140,6 +196,22 @@ namespace ADO.Net.Client.Implementation.Tests
 
             Assert.IsNotNull(builder.Parameters);
             Assert.That(builder.Parameters.Count() == 0);
+        }
+        /// <summary>
+        /// Determines whether this instance [can clear SQL string].
+        /// </summary>
+        [Test]
+        public void CanClearSqlString()
+        {
+            QueryBuilder builder = new QueryBuilder();
+
+            builder.Append("A value to append \n");
+            builder.Append("A second value to append");
+
+            //Clear the sql string
+            builder.ClearSQL();
+
+            Assert.That(string.IsNullOrWhiteSpace(builder.QueryText) == true);
         }
         /// <summary>
         /// 

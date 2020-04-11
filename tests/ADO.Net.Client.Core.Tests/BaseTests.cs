@@ -127,7 +127,7 @@ namespace ADO.Net.Client.Core.Tests
         [TestCase(ParameterDirection.InputOutput)]
         [TestCase(ParameterDirection.ReturnValue)]
         [Category("DbParameterTests")]
-        public void CanCreateDbType(ParameterDirection direction)
+        public void CanCreateParameterByDbType(ParameterDirection direction)
         {
             string name = "@ParameterName";
             int value = 200;

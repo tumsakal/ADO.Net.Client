@@ -69,7 +69,7 @@ namespace ADO.Net.Client.Core
         /// <param name="value">The value of the parameter as an <see cref="object"/></param>
         void SetParamaterValue(string parameterName, object value);
         /// <summary>
-        /// Adds an <see cref="IEnumerable{DbParameter}"/> objects to the helpers underlying db parameter collection
+        /// Adds an <see cref="IEnumerable{DbParameter}"/> of <see cref="DbParameter"/> objects to the helpers underlying db parameter collection
         /// </summary>
         /// <param name="dbParams">An <see cref="IEnumerable{DbParameter}"/> to add to the underlying db parameter collection for the connection</param>
         void AddParameterRange(IEnumerable<DbParameter> dbParams);

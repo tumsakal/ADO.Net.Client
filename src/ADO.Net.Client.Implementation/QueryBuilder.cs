@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Linq;
 using System.Text;
 #endregion
 
@@ -161,23 +162,23 @@ namespace ADO.Net.Client.Implementation
             }
             else
             {
-                //Check if the value passed in was null
-                if (param.Value == null)
-                {
-                    param.Value = DBNull.Value;
-                }
-
                 //Add this parameter
                 _parameters.Add(param);
             }
         }
         /// <summary>
-        /// Adds an <see cref="IEnumerable{T}" /> objects to the helpers underlying db parameter collection
+        /// Adds an <see cref="IEnumerable{T}" /> of <see cref="DbParameter"/> objects to the helpers underlying db parameter collection
         /// </summary>
         /// <exception cref="ArgumentException">Throws argument exception when there are duplicate parameter names</exception>
         /// <param name="dbParams">An <see cref="IEnumerable{T}" /> to add to the underlying db parameter collection for the connection</param>
         public void AddParameterRange(IEnumerable<DbParameter> dbParams)
         {
+            //Check incoming parameters for duplicate parameters
+            if(dbParams.GroupBy(x => x.ParameterName).Any(g => g.Count() > 1) == true)
+            {
+                throw new ArgumentException($"The passed in {dbParams} contains duplicate parameter names");
+            }
+
             //Check if any of the items in this IEnumerable already exists in the list by checking parameter name
             foreach (DbParameter dbParam in dbParams)
             {
@@ -240,17 +241,6 @@ namespace ADO.Net.Client.Implementation
         {
             //Return this back to the caller
             return _parameters.Remove(_parameters.Find(x => x.ParameterName == parameterName));
-        }
-        /// <summary>
-        /// Removes a <see cref="DbParameter"/> from the parameters collection for the current <see cref="DbConnection"/> by using the index of the parameter
-        /// </summary>
-        /// <param name="index">The index of the parameter in the parameters collection to identify the parameter to remove from the collection</param>
-        /// <returns>Returns true if item was successully removed, false otherwise if item was not found in the list</returns>
-        /// <exception cref="IndexOutOfRangeException">thrown when an attempt is made to access an element of an array or collection with an index that is outside the bounds of the array or less than zero.</exception>
-        public bool RemoveParameter(int index)
-        {
-            //Return this back to the caller
-            return _parameters.Remove(_parameters[index]);
         }
         /// <summary>
         /// Replaces an existing parameter with the new <see cref="DbParameter"/> with an existing <see cref="DbParameter.ParameterName"/>

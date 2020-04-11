@@ -1,11 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-
+    <TargetFrameworks>netcoreapp3.1;netcoreapp2.1;net472</TargetFrameworks>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Bogus" Version="29.0.1" />
     <PackageReference Include="MySqlConnector" Version="0.63.1" />
@@ -16,9 +13,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\src\ADO.Net.Client.Implementation\ADO.Net.Client.Implementation.csproj" />
   </ItemGroup>
-
 </Project>
