@@ -194,7 +194,5 @@ namespace ADO.Net.Client.Implementation
             // GC.SuppressFinalize(this);
         }
         #endregion
-        #region Helper Methods
-        #endregion
     }
 }
