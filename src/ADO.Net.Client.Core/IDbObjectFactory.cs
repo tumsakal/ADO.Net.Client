@@ -41,7 +41,7 @@ namespace ADO.Net.Client.Core
         /// Whether or not the passed in provider is capable of creating a <see cref="DbDataSourceEnumerator"/>
         /// </summary>
         bool CanCreateDataSourceEnumerator { get; }
-#if NETSTANDARD2_1
+#if !NET472 && !NETSTANDARD2_0
         /// <summary>
         /// Whether or not this instance is capable of creating a <see cref="DbDataAdapter"/>
         /// </summary>
@@ -116,7 +116,7 @@ namespace ADO.Net.Client.Core
         /// <param name="level">The transaction locking level for the passed in <paramref name="connection"/></param>
         /// <returns>An instance of the <see cref="DbTransaction"/> object</returns>
         DbTransaction GetDbTransaction(DbConnection connection, IsolationLevel level);
-#if NETSTANDARD2_1
+#if !NET472 && !NETSTANDARD2_0
         /// <summary>
         /// Asynchronously gets an instace of the <see cref="DbTransaction"/> object based on the <see cref="DbConnection"/> object passed in
         /// </summary>

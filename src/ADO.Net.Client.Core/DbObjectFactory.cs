@@ -50,7 +50,7 @@ namespace ADO.Net.Client.Core
         #region Fields/Properties
         private readonly DbProviderFactory _dbProviderFactory;
 
-#if NETSTANDARD2_1
+#if !NET472 && !NETSTANDARD2_0
         /// <summary>
         /// Whether or not this instance is capable of creating a <see cref="DbDataAdapter"/>
         /// </summary>
@@ -393,7 +393,7 @@ namespace ADO.Net.Client.Core
             //Return this back to the caller
             return connection.BeginTransaction(level);
         }
-#if NETSTANDARD2_1
+#if !NET472 && !NETSTANDARD2_0
         /// <summary>
         /// Asynchronously gets an instace of the <see cref="DbTransaction"/> object based on the <see cref="DbConnection"/> object passed in
         /// </summary>
