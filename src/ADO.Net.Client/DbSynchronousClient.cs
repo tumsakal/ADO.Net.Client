@@ -41,7 +41,7 @@ namespace ADO.Net.Client
         public override DataSet GetDataSet(ISqlQuery query)
         {
             //Return this back to the caller
-            return _executor.GetDataSet(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout);
+            return _executor.GetDataSet(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared);
         }
         /// <summary>
         /// Gets an instance of <see cref="DataTable"/>
@@ -51,7 +51,7 @@ namespace ADO.Net.Client
         public override DataTable GetDataTable(ISqlQuery query)
         {
             //Return this back to the caller
-            return _executor.GetDataTable(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout);
+            return _executor.GetDataTable(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared);
         }
         /// <summary>
         /// Utility method for returning a <see cref="DbDataReader"/> object created from the passed in query
@@ -62,7 +62,7 @@ namespace ADO.Net.Client
         public override DbDataReader GetDbDataReader(ISqlQuery query, CommandBehavior behavior = CommandBehavior.Default)
         {
             //Return this back to the caller
-            return _executor.GetDbDataReader(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout);
+            return _executor.GetDbDataReader(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared);
         }
         /// <summary>
         /// Utility method for returning a scalar value as an <see cref="object"/> from the database
@@ -72,7 +72,7 @@ namespace ADO.Net.Client
         public override object GetScalarValue(ISqlQuery query)
         {
             //Return this back to the caller
-            return _executor.GetScalarValue(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout);
+            return _executor.GetScalarValue(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared);
         }
         /// <summary>
         /// Gets a single instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine
@@ -85,7 +85,7 @@ namespace ADO.Net.Client
         public override T GetDataObject<T>(ISqlQuery query) where T : class
         {
             //Return this back to the caller
-            return _executor.GetDataObject<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout);
+            return _executor.GetDataObject<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared);
         }
         /// <summary>
         /// Gets a list of the type parameter object that creates an object based on the query passed into the routine
@@ -96,7 +96,7 @@ namespace ADO.Net.Client
         public override IEnumerable<T> GetDataObjectEnumerable<T>(ISqlQuery query) where T : class
         {
             //Return this back to the caller
-            foreach(T type in _executor.GetDataObjectEnumerable<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout))
+            foreach(T type in _executor.GetDataObjectEnumerable<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared))
             {
                 yield return type;
             }
@@ -111,7 +111,7 @@ namespace ADO.Net.Client
         public override int ExecuteNonQuery(ISqlQuery query)
         {
             //Return this back to the caller
-            return _executor.ExecuteNonQuery(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout);
+            return _executor.ExecuteNonQuery(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared);
         }
         /// <summary>
         /// Utility method for executing a query or stored procedure in a SQL transaction
@@ -122,7 +122,7 @@ namespace ADO.Net.Client
         public override int ExecuteTransactedNonQuery(ISqlQuery query, DbTransaction transact)
         {
             //Return this back to the caller
-            return _executor.ExecuteTransactedNonQuery(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, transact);
+            return _executor.ExecuteTransactedNonQuery(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, transact, query.ShouldBePrepared);
         }
         #endregion
     }
