@@ -17,6 +17,7 @@
     <PackageReleaseNotes>
       Updating to ADO.Net.Client.Implementation 1.0.3
     </PackageReleaseNotes>
+    <PackageIcon>icon.png</PackageIcon>
     <IncludeSource>true</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
     <AssemblyName>ADO.Net.Client</AssemblyName>
@@ -48,6 +49,7 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\static\icon.png" Pack="true" PackagePath="icon.png" />
     <None Include="..\..\static\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
     <None Include="..\..\static\CONTRIBUTING.md" Pack="true" PackagePath="CONTRIBUTING.md" />
   </ItemGroup>

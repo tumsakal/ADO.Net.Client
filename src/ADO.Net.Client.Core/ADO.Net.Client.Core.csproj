@@ -17,6 +17,7 @@
     <PackageReleaseNotes>
       Adding CanCreateDataAdapter and CanCreateCommandBuilder properties for .NET Standard 2.1 build.  Updating IQueryBuilder and IDbParameterUtility
     </PackageReleaseNotes>
+    <PackageIcon>icon.png</PackageIcon>
     <IncludeSource>true</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
     <AssemblyName>ADO.Net.Client.Core</AssemblyName>
@@ -31,6 +32,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\..\static\icon.png" Pack="true" PackagePath="icon.png" />
     <None Include="..\..\static\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
     <None Include="..\..\static\CONTRIBUTING.md" Pack="true" PackagePath="CONTRIBUTING.md" />
   </ItemGroup>
