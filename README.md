@@ -27,7 +27,7 @@ in .NET Core 3.1 and C# 8.
 
 ### Licensing
 
-These libraries are licensed under the [MIT License](LICENSE) and may be freely distributed with commercial software.
+These libraries are licensed under the [MIT License](LICENSE.md) and may be freely distributed with commercial software.
 
 ## Goals
 
@@ -47,4 +47,4 @@ The goals of this project are:
 
 ## Contributing
 
-If you'd like to contribute to ADO.Net.Client libraries, please read the [contributing guidelines](CONTRIBUTING).
+If you'd like to contribute to ADO.Net.Client libraries, please read the [contributing guidelines](CONTRIBUTING.md).
