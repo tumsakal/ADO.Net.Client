@@ -314,6 +314,7 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction
         /// </summary>
+        /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <param name="token">Propagates notification that operations should be canceled</param>
         /// <param name="parameters">The database parameters associated with a query</param>
@@ -337,6 +338,7 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Utility method for executing a query or stored procedure in a SQL transaction
         /// </summary>
+        /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error.  Default is 30 seconds</param>
         /// <param name="parameters">The database parameters associated with a query</param>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
