@@ -53,8 +53,8 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Gets a <see cref="IAsyncEnumerable{T}"/> based on the <typeparamref name="T"/> sent into the function to create an object list based on the query passed into the routine
         /// </summary>
-        /// <param name="shouldBePrepared"></param>
-        /// <typeparam name="T/// <param name="shouldBePrepared"></param>">An instance of the type the caller wants to create from the query passed into procedure</typeparam>
+        /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
+        /// <param name="shouldBePrepared">>An instance of the type the caller wants to create from the query passed into procedure</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
