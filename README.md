@@ -17,6 +17,14 @@ Only the core of ADO.NET is implemented, not EF or Designer types.
 
 ### Difference between other Micro-ORMs
 
+* Truly Database agnostic - There are Micro-ORMs that are compatabile with several ADO.Net client drivers.
+  However they almost always implement some workarounds for bugs or attempt to implement functionality such as paging
+  and limiting a result set in a standardized way in managed code that is not performed in the drive itself.
+  While these are good features, it's better to let the driver do this work because that is what it's built to do.
+  These libraries contains no specific code that targets any specific providers client driver.  These libraries
+  take the assumption that you are aware of your targeted drivers abilities as well idiosyncraices and bugs.
+  The means is provided to work around anything you need to at any level if you have a specific driver implementation.
+
 * Assumed SQL skill level - Unlike other Micro-ORMs these libraries assume that you are
 comftorable enough with SQL that you are able to write it without issue.  Peta-Poco and Dapper
 have code that will automatically do an insert, update, delete statement based on a type passed in,
@@ -24,7 +32,7 @@ but this is taking control away from the developer.  The main benefit for that s
 is getting something together quickly, not necessarily maintainability.  
 
 * Control - Most ORMs hide the entire ADO.Net workflow from the user.  From the creation of the objects
-needed to query to the code that actually executes it from a command object.  These libraries 
+needed to query the database to the code that actually executes it from a command object.  These libraries 
 give you the full power of the ADO.Net workflow that allows you to do what you need and not let another Micro-ORM
 leave almost everything out of your hands.  This library does provide some default
 implementations if you're not really interested in doing the hard work yourself.
@@ -67,7 +75,8 @@ creates the factory objects from an ADO.Net providers client drivers.  It also c
   the core library.
 * [ADO.Net.Client](https://www.nuget.org/packages/ADO.Net.Client/) is the highest level library that allows
   the consuming client code to allow the developer to focus on their SQL and encourages the developer to write more standard SQL
-  and not follow properietary extensions unless necessary.
+  and not follow properietary extensions unless necessary.  This library does not consume the core library but instead
+  interacts with it through an interface.
 
 ## Contributing
 
