@@ -25,23 +25,50 @@ SOFTWARE.*/
 using System;
 #endregion
 
-namespace ADO.Net.Client.Core
+namespace ADO.Net.Client.Annotations
 {
     /// <summary>
-    /// Attribute class that defines if a property should be read out of a database query
+    /// Attribute class that defines a field that goes into and comes out of a database
     /// </summary>
     /// <seealso cref="Attribute"/>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class DbFieldIgnore : Attribute
+    public class DbField : Attribute
     {
         #region Fields/Properties
+        private readonly object _valueIfNull = null;
+        private readonly string _databaseFielName = "";
+
+        /// <summary>
+        /// The default value as a <see cref="object"/> in the instance where a value from the database is <see cref="DBNull.Value"/>
+        /// </summary>
+        public object DefaultValueIfNull
+        {
+            get
+            {
+                return _valueIfNull;
+            }
+        }
+        /// <summary>
+        /// The name of a field that is being pulled from a query
+        /// </summary>
+        public string DatabaseFieldName
+        {
+            get
+            {
+                return _databaseFielName;
+            }
+        }
         #endregion
         #region Constuctors
         /// <summary>
-        /// Initializes a new instance of <see cref="DbFieldIgnore"/>
+        /// Initializes a new instance of <see cref="DbField"/>
         /// </summary>
-        public DbFieldIgnore()
+        /// <param name="dbFieldName">The name of a field that exists in a database table</param>
+        /// <param name="valueIfNull">The default value if the field coming from a query has a value of <see cref="DBNull.Value"/></param>
+        public DbField(string dbFieldName, object valueIfNull = null)
         {
+            _valueIfNull = valueIfNull;
+            _databaseFielName = dbFieldName;
         }
         #endregion
     }

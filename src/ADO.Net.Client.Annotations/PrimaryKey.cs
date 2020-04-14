@@ -25,50 +25,39 @@ SOFTWARE.*/
 using System;
 #endregion
 
-namespace ADO.Net.Client.Core
+namespace ADO.Net.Client.Annotations
 {
     /// <summary>
-    /// Attribute class that defines a field that goes into and comes out of a database
+    /// 
     /// </summary>
     /// <seealso cref="Attribute"/>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class DbField : Attribute
+    public class PrimaryKey : Attribute
     {
         #region Fields/Properties
-        private readonly object _valueIfNull = null;
-        private readonly string _databaseFielName = "";
+        private readonly bool _autoIncrement = false;
 
         /// <summary>
-        /// The default value as a <see cref="object"/> in the instance where a value from the database is <see cref="DBNull.Value"/>
+        /// Gets a value indicating whether [automatic increment].
         /// </summary>
-        public object DefaultValueIfNull
+        /// <value>
+        ///   <c>true</c> if [automatic increment]; otherwise, <c>false</c>.
+        /// </value>
+        public bool AutoIncrement
         {
             get
             {
-                return _valueIfNull;
-            }
-        }
-        /// <summary>
-        /// The name of a field that is being pulled from a query
-        /// </summary>
-        public string DatabaseFieldName
-        {
-            get
-            {
-                return _databaseFielName;
+                return _autoIncrement;
             }
         }
         #endregion
-        #region Constuctors
+        #region Constructors
         /// <summary>
-        /// Initializes a new instance of <see cref="DbField"/>
+        /// 
         /// </summary>
-        /// <param name="dbFieldName">The name of a field that exists in a database table</param>
-        /// <param name="valueIfNull">The default value if the field coming from a query has a value of <see cref="DBNull.Value"/></param>
-        public DbField(string dbFieldName, object valueIfNull = null)
+        /// <param name="autoIncrement"></param>
+        public PrimaryKey(bool autoIncrement)
         {
-            _valueIfNull = valueIfNull;
-            _databaseFielName = dbFieldName;
+            _autoIncrement = autoIncrement;
         }
         #endregion
     }
