@@ -12,7 +12,25 @@ in a more standard fashion following the ANSI standard.
 
 ### Lightweight
 
+This libraries make up a Micro-ORm, this is not a full blown framework like Entity.
 Only the core of ADO.NET is implemented, not EF or Designer types.
+
+### Difference between other Micro-ORMs
+
+* Assumed SQL skill level - Unlike other Micro-ORMs these libraries assume that you are
+comftorable enough with SQL that you are able to write it without issue.  Peta-Poco and Dapper
+have code that will automatically do an insert, update, delete statement based on a type passed in,
+but this is taking control away from the developer.  The main benefit for that style of coding
+is getting something together quickly, not necessarily maintainability.  
+
+* Control - Most ORMs hide the entire ADO.Net workflow from the user.  From the creation of the objects
+needed to query to the code that actually executes it from a command object.  These libraries 
+give you the full power of the ADO.Net workflow that allows you to do what you need and not let another Micro-ORM
+leave almost everything out of your hands.  This library does provide some default
+implementations if you're not really interested in doing the hard work yourself.
+
+* Smaller - These libraries are even smaller than other Micro-ORMs because they take the assumption
+that you can write SQL and you know enough about ADO.Net that you could possibly if needed write some code yourself.
 
 ### Async Support
 
