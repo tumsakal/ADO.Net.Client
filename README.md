@@ -1,5 +1,5 @@
 # ADO.Net.Client
-These libraries are a very thing wrapper around a given [ADO.NET](https://msdn.microsoft.com/en-us/library/e80y5yhx.aspx) driver.
+These libraries are a very thing wrapper around a given [ADO.NET](https://msdn.microsoft.com/en-us/library/e80y5yhx.aspx) client driver.
 These libraries are capable of working with any ADO.Net compatible driver, meaining they are database agnostic.  There are three layers to this library, discussed below in the nuget packages section. 
 
 ## Why Use This Library?
@@ -33,17 +33,23 @@ These libraries are licensed under the [MIT License](LICENSE.md) and may be free
 
 The goals of this project are:
 
-1. **.NET Standard support:** It must run on the full .NET Framework and all platforms supported by .NET Core.
-2. **Async:** All operations must be truly asynchronous whenever possible.
-4. **Lightweight:** Only the core of ADO.NET is implemented, not EF or Designer types.
-5. **Managed:** Managed code only, no native code.
-6. **Independent:** These libraries are not bound to any specific ADO.Net driver.
+* **.NET Standard support:** It must run on the full .NET Framework and all platforms supported by .NET Core.
+* **Async:** All operations must be truly asynchronous whenever possible.
+* **Lightweight:** Only the core of ADO.NET is implemented, not EF or Designer types.
+* **Managed:** Managed code only, no native code.
+* **Independent:** These libraries are not bound to any specific ADO.Net driver.
 
 ## NuGet Packages
 
-[ADO.Net.Client.Core](https://www.nuget.org/packages/ADO.Net.Client.Core/)  
-[ADO.Net.Client.Implementation](https://www.nuget.org/packages/ADO.Net.Client.Implementation/)  
-[ADO.Net.Client](https://www.nuget.org/packages/ADO.Net.Client/)
+* [ADO.Net.Client.Core](https://www.nuget.org/packages/ADO.Net.Client.Core/) is the lowest level library that contains the factory objecst that
+creates the factory objects from an ADO.Net providers client drivers.  It also contains the abstract and interface objects that define higher level objects.
+  This is a very thin wrapp around the actual client driver itself.
+* [ADO.Net.Client.Implementation](https://www.nuget.org/packages/ADO.Net.Client.Implementation/) implements the interfaces and abstract classes
+  contained in [ADO.Net.Client.Core](https://www.nuget.org/packages/ADO.Net.Client.Core/).  This is the middle level library that directly consumes
+  the core library.
+* [ADO.Net.Client](https://www.nuget.org/packages/ADO.Net.Client/) is the highest level library that allows
+  the consuming client code to allow the developer to focus on their SQL and encourages the developer to write more standard SQL
+  and not follow properietary extensions unless necessary.
 
 ## Contributing
 
