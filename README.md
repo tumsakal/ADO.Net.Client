@@ -19,7 +19,9 @@ Only the core of ADO.NET is implemented, not EF or Designer types.
 
 * Truly Database agnostic - There are Micro-ORMs that are compatabile with several ADO.Net client drivers.
   However they almost always implement some workarounds for bugs or attempt to implement functionality such as paging
-  and limiting a result set in a standardized way in managed code that is not performed in the drive itself.
+  and limiting a result set in a standardized way in managed code that is not performed in the driver itself.  They
+  are trying to standardized functionality that is found in most databases
+  but the mechanism does not exist in standard ANSI-SQL
   While these are good features, it's better to let the driver do this work because that is what it's built to do.
   These libraries contains no specific code that targets any specific providers client driver.  These libraries
   take the assumption that you are aware of your targeted drivers abilities as well as any idiosyncraices and bugs.
