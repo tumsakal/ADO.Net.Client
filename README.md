@@ -69,7 +69,7 @@ The goals of this project are:
 
 * [ADO.Net.Client.Core](https://www.nuget.org/packages/ADO.Net.Client.Core/) is the lowest level library that contains the factory objecst that
 creates the factory objects from an ADO.Net providers client drivers.  It also contains the abstract and interface objects that define higher level objects.
-  This is a very thin wrapp around the actual client driver itself.
+  This is a very thin wrapper around the actual client driver itself.
 * [ADO.Net.Client.Implementation](https://www.nuget.org/packages/ADO.Net.Client.Implementation/) implements the interfaces and abstract classes
   contained in [ADO.Net.Client.Core](https://www.nuget.org/packages/ADO.Net.Client.Core/).  This is the middle level library that directly consumes
   the core library.
