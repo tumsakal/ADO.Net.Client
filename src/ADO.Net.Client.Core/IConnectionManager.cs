@@ -30,7 +30,8 @@ namespace ADO.Net.Client.Core
     /// <summary>
     /// 
     /// </summary>
-    public interface IConnectionManager
+    /// <seealso cref="IConnectionStringUtility"/>
+    public interface IConnectionManager : IConnectionStringUtility
     {
         #region Fields/Properties        
         /// <summary>
