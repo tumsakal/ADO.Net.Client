@@ -12,7 +12,7 @@ in a more standard fashion following the ANSI standard.
 
 ### Lightweight
 
-This libraries make up a Micro-ORm, this is not a full blown framework like Entity.
+This libraries make up a Micro-ORM, this is not a full blown framework like Entity.
 Only the core of ADO.NET is implemented, not EF or Designer types.
 
 ### Difference between other Micro-ORMs
