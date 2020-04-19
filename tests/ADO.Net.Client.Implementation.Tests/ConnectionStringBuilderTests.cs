@@ -35,7 +35,16 @@ namespace ADO.Net.Client.Implementation.Tests
     public class ConnectionStringBuilderTests
     {
         #region Fields/Properties
-        private readonly string _connectionString = "Server=127.0.0.1;Database=AdventureWorks;UId=myUsername;Pwd=myPassword;";
+        private readonly string _connectionString = "Server=127.0.0.1;Database=AdventureWorks;Port=3306;UId=myUsername;Pwd=myPassword;";
+        private MySqlConnectionStringBuilder _sqlBuilder;
+        #endregion
+        #region Setup/Teardown
+        [SetUp]
+        public void Setup()
+        {
+            _sqlBuilder = new MySqlConnectionStringBuilder();
+            _sqlBuilder.ConnectionString = _connectionString;
+        }
         #endregion
         #region Tests        
         /// <summary>
@@ -44,7 +53,35 @@ namespace ADO.Net.Client.Implementation.Tests
         [Test]
         public void AddConnectionStringProperty()
         {
-            
+            ConnectionStringBuilder builder = new ConnectionStringBuilder(_sqlBuilder);
+
+            builder.AddConnectionStringProperty("SSL Mode", "Preffered");
+
+            Assert.That(builder.ConnectionString.EndsWith("SSL Mode=Preffered"));
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        public void RemoveConnectionStringProperty()
+        {
+            ConnectionStringBuilder builder = new ConnectionStringBuilder(_sqlBuilder);
+
+            builder.RemoveConnectionStringProperty("Port");
+
+            Assert.That(builder.ConnectionString.Contains("Port=3306;") == false);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        public void ClearConnectionString()
+        {
+            ConnectionStringBuilder builder = new ConnectionStringBuilder(_sqlBuilder);
+
+            builder.ClearConnectionString();
+
+            Assert.That(string.IsNullOrWhiteSpace(builder.ConnectionString));
         }
         #endregion
     }
