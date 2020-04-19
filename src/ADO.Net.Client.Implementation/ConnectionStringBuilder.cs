@@ -89,7 +89,14 @@ namespace ADO.Net.Client.Implementation
         /// Returns a connection string property as an <see cref="T:System.Object" /></returns>
         public object GetConnectionStringPropertyValue(string name)
         {
-            throw new System.NotImplementedException();
+            object value;
+
+            if(_builder.TryGetValue(name, out value) == true)
+            {
+                return value;
+            }
+
+            return null;
         }
         /// <summary>
         /// Configures the connection string with the key value pairs passed into the routine
@@ -97,7 +104,10 @@ namespace ADO.Net.Client.Implementation
         /// <param name="properties">Key value pairs of connection string property names and values</param>
         public void ConfigureConnectionString(IDictionary<string, object> properties)
         {
-            throw new System.NotImplementedException();
+            foreach(KeyValuePair<string,object> kvp in properties)
+            {
+                AddConnectionStringProperty(kvp.Key, kvp.Value);
+            }
         }
         /// <summary>
         /// Clears the contents of the connection string
