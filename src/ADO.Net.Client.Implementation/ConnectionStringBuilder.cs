@@ -64,7 +64,7 @@ namespace ADO.Net.Client.Implementation
         #endregion
         #region Utility Methods        
         /// <summary>
-/        /// Adds a property name and value to the current connection string
+        /// Adds a property name and value to the current connection string
         /// </summary>
         /// <param name="name">The name of the connection string property</param>
         /// <param name="value">The value to use with the connection string property</param>
