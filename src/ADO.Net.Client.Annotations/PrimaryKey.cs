@@ -31,6 +31,7 @@ namespace ADO.Net.Client.Annotations
     /// 
     /// </summary>
     /// <seealso cref="Attribute"/>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class PrimaryKey : Attribute
     {
         #region Fields/Properties
