@@ -68,7 +68,6 @@ namespace ADO.Net.Client.Implementation
         /// </summary>
         /// <param name="name">The name of the connection string property</param>
         /// <param name="value">The value to use with the connection string property</param>
-        /// <exception cref="System.NotImplementedException"></exception>
         public void AddConnectionStringProperty(string name, object value)
         {
             _builder.Add(name, value);
