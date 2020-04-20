@@ -55,9 +55,9 @@ namespace ADO.Net.Client.Implementation.Tests
         {
             ConnectionStringBuilder builder = new ConnectionStringBuilder(_sqlBuilder);
 
-            builder.AddConnectionStringProperty("SSL Mode", "Preffered");
+            builder.AddConnectionStringProperty("SslMode", "Preferred");
 
-            Assert.That(builder.ConnectionString.EndsWith("SSL Mode=Preffered"));
+            Assert.That(builder.ConnectionString.EndsWith("SSL Mode=Preferred"));
         }
         /// <summary>
         /// 
@@ -70,6 +70,28 @@ namespace ADO.Net.Client.Implementation.Tests
             builder.RemoveConnectionStringProperty("Port");
 
             Assert.That(builder.ConnectionString.Contains("Port=3306;") == false);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        public void GetConnectionStringPropertyValueReturnsNull()
+        {
+            ConnectionStringBuilder builder = new ConnectionStringBuilder(_sqlBuilder);
+            object value = builder.GetConnectionStringPropertyValue("SSL Mode");
+
+            Assert.IsNull(value);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        public void GetConnectionStringPropertyValue()
+        {
+            ConnectionStringBuilder builder = new ConnectionStringBuilder(_sqlBuilder);
+            object value = builder.GetConnectionStringPropertyValue("Port");
+
+            Assert.AreEqual(3306.ToString(), value);
         }
         /// <summary>
         /// 

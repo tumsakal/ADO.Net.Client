@@ -65,35 +65,5 @@ namespace ADO.Net.Client.Implementation
             _builder = builder;
         }
         #endregion
-        #region Utility Methods
-        public void AddConnectionStringProperty(string name, object value)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void ClearConnectionString()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void RemoveConnectionStringProperty(string name)
-        {
-            throw new System.NotImplementedException();
-        }
-        public void ConfigureConnectionString(IDictionary<string, object> properties)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public bool ConnectionStringAllowsKey(string keyword)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public object GetConnectionStringPropertyValue(string name)
-        {
-            throw new System.NotImplementedException();
-        }
-        #endregion
     }
 }

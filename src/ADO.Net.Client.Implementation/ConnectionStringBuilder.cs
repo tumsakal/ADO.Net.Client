@@ -81,16 +81,14 @@ namespace ADO.Net.Client.Implementation
             _builder.Remove(name);
         }
         /// <summary>
-        /// Retrieves a connection string property value as an object
+        /// Retrieves a connection string property value as an object.  Returns null if value is not present.
         /// </summary>
         /// <param name="name">The name of the connection string property</param>
         /// <returns>
         /// Returns a connection string property as an <see cref="T:System.Object" /></returns>
         public object GetConnectionStringPropertyValue(string name)
         {
-            object value;
-
-            if(_builder.TryGetValue(name, out value) == true)
+            if (_builder.TryGetValue(name, out object value) == true)
             {
                 return value;
             }
