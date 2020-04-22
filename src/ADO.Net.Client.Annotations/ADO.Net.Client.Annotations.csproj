@@ -12,7 +12,7 @@
     <Product>ADO.Net.Client.Annotations</Product>
     <Title>ADO.Net.Client.Annotations</Title>
     <PackageId>ADO.Net.Client.Annotations</PackageId>
-    <Description>Core functionality API objects for ADO.Net.Client based libraries</Description>
+    <Description>Annotation objects for ADO.Net.Client based libraries</Description>
     <RepositoryUrl>https://github.com/rgarrison12345/ADO.Net.Client.git</RepositoryUrl>
     <PackageReleaseNotes>
       Initial Release
