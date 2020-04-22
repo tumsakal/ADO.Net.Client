@@ -327,7 +327,7 @@ namespace ADO.Net.Client.Core
         /// <param name="parameterValue">The value of the parameter as a <see cref="object"/></param>
         /// <param name="paramDirection">The direction of the parameter, defaults to <see cref="ParameterDirection.Input"/></param>
         /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
-        public DbParameter GetDbParameter(string parameterName, object parameterValue, DbType dataType, ParameterDirection paramDirection)
+        public DbParameter GetDbParameter(string parameterName, object parameterValue, DbType dataType, ParameterDirection paramDirection = ParameterDirection.Input)
         {
             //Get the DbParameter object
             DbParameter parameter = GetDbParameter(parameterName, parameterValue);
