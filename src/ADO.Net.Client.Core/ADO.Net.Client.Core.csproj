@@ -15,7 +15,7 @@
     <Description>Core functionality API objects for ADO.Net.Client based libraries</Description>
     <RepositoryUrl>https://github.com/rgarrison12345/ADO.Net.Client.git</RepositoryUrl>
     <PackageReleaseNotes>
-      Setting default parameter direction to input in DbObjectFactory.GetDbParameter
+      Setting default parameter direction to input in DbObjectFactory.GetDbParameter.  New dependency ADO.Net.Client.Annotations.  IConnectionManager no longer chaining IConnectionStringUtility
     </PackageReleaseNotes>
     <PackageIcon>icon.png</PackageIcon>
     <IncludeSource>true</IncludeSource>
