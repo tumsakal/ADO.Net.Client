@@ -4,6 +4,10 @@ These libraries are capable of working with any ADO.Net compatible driver, meain
 
 ## Why Use This Library?
 
+### .NET Standard Support
+
+This library supports .NET Framework 4.7.2+ and .NET Standard2.0+
+
 ### Database Agnostic
 
 These libraries are not tied to any given database providers driver.  This means that you can focus on 
