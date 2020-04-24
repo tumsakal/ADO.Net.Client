@@ -25,6 +25,7 @@ SOFTWARE.*/
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 #endregion
@@ -41,7 +42,7 @@ namespace ADO.Net.Client.Core
         /// Whether or not the passed in provider is capable of creating a <see cref="DbDataSourceEnumerator"/>
         /// </summary>
         bool CanCreateDataSourceEnumerator { get; }
-#if !NET472 && !NETSTANDARD2_0
+#if !NET45 && !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Whether or not this instance is capable of creating a <see cref="DbDataAdapter"/>
         /// </summary>
@@ -116,7 +117,7 @@ namespace ADO.Net.Client.Core
         /// <param name="level">The transaction locking level for the passed in <paramref name="connection"/></param>
         /// <returns>An instance of the <see cref="DbTransaction"/> object</returns>
         DbTransaction GetDbTransaction(DbConnection connection, IsolationLevel level);
-#if !NET472 && !NETSTANDARD2_0
+#if !NET45 && !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Asynchronously gets an instace of the <see cref="DbTransaction"/> object based on the <see cref="DbConnection"/> object passed in
         /// </summary>
@@ -159,6 +160,7 @@ namespace ADO.Net.Client.Core
         /// <param name="paramDirection">The direction of the parameter, defaults to <see cref="ParameterDirection.Input"/></param>
         /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
         DbParameter GetDbParameter(string parameterName, object parameterValue, DbType dataType, ParameterDirection paramDirection = ParameterDirection.Input);
+#if !NET45
         /// <summary>
         /// Gets an initialized instance of a <see cref="DbParameter"/> object based on the specified provider
         /// </summary>
@@ -170,6 +172,7 @@ namespace ADO.Net.Client.Core
         /// <param name="paramDirection">The direction of the parameter, defaults to <see cref="ParameterDirection.Input"/></param>
         /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
         DbParameter GetFixedSizeDbParameter(string parameterName, object parameterValue, DbType dataType, byte? scale = null, byte? precision = null, ParameterDirection paramDirection = ParameterDirection.Input);
+#endif
         /// <summary>
         /// Gets an initialized instance of a <see cref="DbParameter"/> object based on the specified provider
         /// </summary>
@@ -180,6 +183,17 @@ namespace ADO.Net.Client.Core
         /// <param name="paramDirection">The direction of the parameter, defaults to <see cref="ParameterDirection.Input"/></param>
         /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
         DbParameter GetVariableSizeDbParameter(string parameterName, object parameterValue, DbType dataType, int? size = null, ParameterDirection paramDirection = ParameterDirection.Input);
+        /// <summary>
+        /// Gets an instance of <see cref="DbProviderFactory"/> based off a .NET drivers <paramref name="providerName"/>, such as System.Data.SqlClientt
+        /// </summary>
+        /// <returns>Returns an instance of <see cref="DbProviderFactory"/></returns>
+        DbProviderFactory GetProviderFactory(string providerName);
+        /// <summary>
+        /// Gets an instance of <see cref="DbProviderFactory"/> based off a .NET driver <see cref="Assembly"/>
+        /// Looks for the <see cref="DbProviderFactory"/> within the current <see cref="Assembly"/>
+        /// </summary>
+        /// <returns>Returns an instance of <see cref="DbProviderFactory"/></returns>
+        DbProviderFactory GetProviderFactory(Assembly assembly);
         #endregion
     }
 }

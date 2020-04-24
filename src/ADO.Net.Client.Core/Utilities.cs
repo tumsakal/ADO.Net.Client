@@ -77,6 +77,7 @@ namespace ADO.Net.Client.Core
             //Return this back to the caller
             return results;
         }
+#if !NET45
         /// <summary>
         /// Gets the query values coming out of the passed in <paramref name="reader"/> for each row retrieved
         /// </summary>
@@ -109,6 +110,7 @@ namespace ADO.Net.Client.Core
                 yield return obj;
             }
         }
+#endif
         /// <summary>
         /// Gets the query values coming out of the passed in <paramref name="reader"/> for each row retrieved
         /// </summary>

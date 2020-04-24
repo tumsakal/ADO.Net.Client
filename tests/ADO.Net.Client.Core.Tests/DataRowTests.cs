@@ -47,7 +47,7 @@ namespace ADO.Net.Client.Core.Tests
         [OneTimeSetUp]
         public override void OneTimeSetup()
         {
-#if !NET472
+#if !NET45 && !NET461
             DbProviderFactories.RegisterFactory("MySqlConnector", MySqlClientFactory.Instance);
 #endif
             //For regular .NET framework the driver must be installed in the Global Assembly Cache

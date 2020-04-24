@@ -168,6 +168,7 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(name, parameter.ParameterName);
             Assert.AreEqual(value, parameter.Value);
         }
+#if !NET45
         [Test]
         [Category("DbParameterTests")]
         [TestCase(null, 10, ParameterDirection.Input)]
@@ -199,6 +200,7 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(name, parameter.ParameterName);
             Assert.AreEqual(value, parameter.Value);
         }
+#endif
         #endregion
     }
 }

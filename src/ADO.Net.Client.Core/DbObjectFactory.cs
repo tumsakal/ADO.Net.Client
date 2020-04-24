@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Declarations
+using ADO.Net.Client.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -50,7 +51,7 @@ namespace ADO.Net.Client.Core
         #region Fields/Properties
         private readonly DbProviderFactory _dbProviderFactory;
 
-#if !NET472 && !NETSTANDARD2_0
+#if !NET45 && !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Whether or not this instance is capable of creating a <see cref="DbDataAdapter"/>
         /// </summary>
@@ -89,7 +90,7 @@ namespace ADO.Net.Client.Core
         /// <value>
         /// The paramter formatter.
         /// </value>
-        public IDbParameterFormatter ParamterFormatter { get; set; }
+        public IDbParameterFormatter ParameterFormatter { get; set; }
         #endregion
         #region Constructors
         /// <summary>
@@ -199,16 +200,6 @@ namespace ADO.Net.Client.Core
             dCommand.CommandType = queryCommandType;
             dCommand.CommandText = query;
 
-            //Check for null, don't add in null
-            if (parameters != null)
-            {
-                //Add in all the parameters
-                foreach (DbParameter param in parameters)
-                {
-                    dCommand.Parameters.Add(param);
-                }
-            }
-
             //Return this back to the caller
             return dCommand;
         }
@@ -267,6 +258,7 @@ namespace ADO.Net.Client.Core
             //Return this back to the caller
             return _dbProviderFactory.CreateConnection();
         }
+#if !NET45
         /// <summary>
         /// Gets an initialized instance of a <see cref="DbParameter"/> object based on the specified provider
         /// </summary>
@@ -295,6 +287,7 @@ namespace ADO.Net.Client.Core
             //Return this back to the caller
             return parameter;
         }
+#endif
         /// <summary>
         /// Gets an initialized instance of a <see cref="DbParameter"/> object based on the specified provider
         /// </summary>
@@ -354,10 +347,10 @@ namespace ADO.Net.Client.Core
             parameter.ParameterName = parameterName;
 
             //Check db parameter has been set
-            if (ParamterFormatter != null)
+            if (ParameterFormatter != null)
             {
                 //Now get the RDBMS mapped data type to the .net data type
-                parameter.DbType = ParamterFormatter.GetDbType(parameter.Value);
+                parameter.DbType = ParameterFormatter.GetDbType(parameter.Value);
             }
 
             //Return this back to the caller
@@ -393,7 +386,7 @@ namespace ADO.Net.Client.Core
             //Return this back to the caller
             return connection.BeginTransaction(level);
         }
-#if !NET472 && !NETSTANDARD2_0
+#if !NET45 && !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Asynchronously gets an instace of the <see cref="DbTransaction"/> object based on the <see cref="DbConnection"/> object passed in
         /// </summary>
@@ -418,22 +411,11 @@ namespace ADO.Net.Client.Core
             return await connection.BeginTransactionAsync(level, token).ConfigureAwait(false);
         }
 #endif
-        #endregion
-        #region Helper Methods        
-        /// <summary>
-        /// Databases the command disposed.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void DbCommand_Disposed(object sender, EventArgs e)
-        {
-            ((DbCommand)sender).Parameters.Clear();
-        }
         /// <summary>
         /// Gets an instance of <see cref="DbProviderFactory"/> based off a .NET drivers <paramref name="providerName"/>, such as System.Data.SqlClientt
         /// </summary>
         /// <returns>Returns an instance of <see cref="DbProviderFactory"/></returns>
-        public static DbProviderFactory GetProviderFactory(string providerName)
+        public DbProviderFactory GetProviderFactory(string providerName)
         {
             //Get the assembly
             return GetProviderFactory(Assembly.Load(new AssemblyName(providerName)));
@@ -443,7 +425,7 @@ namespace ADO.Net.Client.Core
         /// Looks for the <see cref="DbProviderFactory"/> within the current <see cref="Assembly"/>
         /// </summary>
         /// <returns>Returns an instance of <see cref="DbProviderFactory"/></returns>
-        public static DbProviderFactory GetProviderFactory(Assembly assembly)
+        public DbProviderFactory GetProviderFactory(Assembly assembly)
         {
             Type providerFactory = null;
 
@@ -465,6 +447,17 @@ namespace ADO.Net.Client.Core
             //Get the provider factory
             return (DbProviderFactory)field.GetValue(null);
         }
-        #endregion
+#endregion
+#region Helper Methods        
+        /// <summary>
+        /// Databases the command disposed.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void DbCommand_Disposed(object sender, EventArgs e)
+        {
+            ((DbCommand)sender).Parameters.Clear();
+        }
+#endregion
     }
 }

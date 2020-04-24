@@ -23,12 +23,13 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using System.Data;
+using System.Data.Common;
 #endregion
 
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class the defines the behavior of a DbFormatter mapper class
+    /// Contract class the defines the behavior of a <see cref="DbParameter"/> mapper class
     /// </summary>
     public interface IDbParameterFormatter
     {
@@ -39,6 +40,12 @@ namespace ADO.Net.Client.Core
         /// <param name="parameterValue">The .NET value that will be mapped to a providers native data type</param>
         /// <returns>Returns a <see cref="DbType"/> value that describes the RDBMS type of passed in <paramref name="parameterValue"/></returns>
         DbType GetDbType(object parameterValue);
+        /// <summary>
+        /// Maps the parameter value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        object MapParameterValue(object value);
         #endregion
     }
 }
