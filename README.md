@@ -27,7 +27,7 @@ Only the core of ADO.NET is implemented, not EF or Designer types.
   are trying to standardized functionality that is found in most databases
   but the mechanism does not exist in standard ANSI-SQL
   While these are good features, it's better to let the driver do this work because that is what it's built to do.
-  These libraries contains no specific code that targets any specific providers client driver.  These libraries
+  These libraries contain no specific code that targets any specific providers client driver.  These libraries
   take the assumption that you are aware of your targeted drivers abilities as well as any idiosyncraices and bugs.
   The means is provided to work around anything you need to at any level if you have a specific driver implementation.
 
