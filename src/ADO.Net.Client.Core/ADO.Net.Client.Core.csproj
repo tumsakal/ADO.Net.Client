@@ -5,7 +5,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.6</Version>
+    <Version>1.0.7</Version>
     <PackageTags>ORM ADO.NET ADO SQL .NET Database RDBMS Generic DAL ANSI</PackageTags>
     <Authors>Robert Garrison</Authors>
     <Company>Robert Garrison</Company>
@@ -15,7 +15,7 @@
     <Description>Core functionality API objects for ADO.Net.Client based libraries</Description>
     <RepositoryUrl>https://github.com/rgarrison12345/ADO.Net.Client.git</RepositoryUrl>
     <PackageReleaseNotes>
-      Setting default parameter direction to input in DbObjectFactory.GetDbParameter.  New dependency ADO.Net.Client.Annotations.  IConnectionManager no longer chaining IConnectionStringUtility
+      Updating to ADO.Net.Client.Annotations 1.1.0
     </PackageReleaseNotes>
     <PackageIcon>icon.png</PackageIcon>
     <IncludeSource>true</IncludeSource>
@@ -64,6 +64,6 @@
     <ProjectReference Include="..\ADO.Net.Client.Annotations\ADO.Net.Client.Annotations.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="ADO.Net.Client.Annotations" Version="1.0.0" />
+    <PackageReference Include="ADO.Net.Client.Annotations" Version="1.1.0" />
   </ItemGroup>
 </Project>

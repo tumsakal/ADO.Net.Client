@@ -151,7 +151,7 @@ namespace ADO.Net.Client.Implementation
         {
             _reader.Close();
         }
-#if NETSTANDARD2_1
+#if !NET45 && !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Closes the asynchronous.
         /// </summary>
