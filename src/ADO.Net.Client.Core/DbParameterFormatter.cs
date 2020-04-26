@@ -68,9 +68,44 @@ namespace ADO.Net.Client.Core
             {
                 return DbType.Binary;
             }
+            else if(info.PropertyType == typeof(DateTime))
+            {
+                return DbType.DateTime;
+            }
+            else if(info.PropertyType == typeof(DateTimeOffset))
+            {
+                return DbType.DateTimeOffset;
+            }
+            else if(info.PropertyType == typeof(TimeSpan))
+            {
+                return DbType.Time;
+            }
+            else if(info.PropertyType == typeof(bool))
+            {
+                return DbType.Boolean;
+            }
+            else if(info.PropertyType == typeof(byte))
+            {
+                return DbType.Byte;
+            }
+            else if (info.PropertyType == typeof(Guid))
+            {
+                if(HasNativeGuidSupport == true)
+                {
+                    return DbType.Guid;
+                }
+                else
+                {
+                    return DbType.String;
+                }
+            }
             else if (info.PropertyType == typeof(string))
             {
                 return DbType.String;
+            }
+            else
+            {
+                return DbType.Object;
             }
         }
         /// <summary>
@@ -108,6 +143,17 @@ namespace ADO.Net.Client.Core
             parameter.ParameterName = string.Concat(ParameterNamePrefix, info.Name);
             parameter.Value = MapParameterValue(parameterValue, info);
             parameter.DbType = MapDbType(info);
+
+            //Help query plan caching by using common size if this is a string type
+            if (info == typeof(Guid) && HasNativeGuidSupport == false)
+            {
+                parameter.Size = 40;
+            }
+            else if (parameter.DbType == DbType.String || parameter.DbType == DbType.StringFixedLength
+                || parameter.DbType == DbType.AnsiString  || parameter.DbType == DbType.AnsiStringFixedLength)
+            {
+                parameter.Size = Math.Max(parameter.Value.ToString().Length + 1, 4000);
+            }
         }
         #endregion
     }

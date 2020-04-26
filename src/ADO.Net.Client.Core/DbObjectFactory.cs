@@ -338,13 +338,12 @@ namespace ADO.Net.Client.Core
         /// <param name="paramDirection"></param>
         /// <param name="parameterValue">The value of the parameter</param>
         /// <param name="info">The information.</param>
-        /// <param name="parameterNamePrefix">The parameter name prefix symbol</param>
         /// <returns></returns>
-        public DbParameter GetDbParameter(object parameterValue, PropertyInfo info, ParameterDirection paramDirection = ParameterDirection.Input, string parameterNamePrefix = "@")
+        public DbParameter GetDbParameter(object parameterValue, PropertyInfo info, ParameterDirection paramDirection = ParameterDirection.Input)
         {
             DbParameter parameter = GetDbParameter();
 
-            ParameterFormatter.MapDbParameter(parameter, parameterValue, info, parameterNamePrefix);
+            ParameterFormatter.MapDbParameter(parameter, parameterValue, info);
 
             parameter.Direction = paramDirection;
 
