@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Reflection;
@@ -35,16 +37,37 @@ namespace ADO.Net.Client.Core
     /// <seealso cref="IDbParameterFormatter" />
     public class DbParameterFormatter : IDbParameterFormatter
     {
+        #region Fields/Properties        
+        /// <summary>
+        /// Gets a value indicating whether this instance has native unique identifier support.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance has native unique identifier support; otherwise, <c>false</c>.
+        /// </value>
+        public bool HasNativeGuidSupport { get; set; } = true;
+        /// <summary>
+        /// Gets or sets the parameter name prefix.
+        /// </summary>
+        /// <value>
+        /// The parameter name prefix.
+        /// </value>
+        public string ParameterNamePrefix { get; set; } = "@";
+        #endregion
         #region Utility Methods                
         /// <summary>
         /// Maps the type of the database.
         /// </summary>
         /// <param name="info">The information.</param>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public DbType MapDbType(PropertyInfo info)
         {
-            throw new System.NotImplementedException();
+            IEnumerable<CustomAttributeData> attributes = info.CustomAttributes;
+
+            //Check if this is a byte array
+            if (info.PropertyType.Name == "Byte[]")
+            {
+                return DbType.Binary;
+            }
         }
         /// <summary>
         /// Maps the parameter value.
@@ -54,7 +77,20 @@ namespace ADO.Net.Client.Core
         /// <returns></returns>
         public object MapParameterValue(object value, PropertyInfo info)
         {
-            throw new System.NotImplementedException();
+            if (value == null)
+            {
+                return DBNull.Value;
+            }
+            else if (info.PropertyType.IsEnum == true)
+            { 
+                return Convert.ChangeType(value, ((Enum)value).GetTypeCode());
+            }
+            else if (info.PropertyType == typeof(Guid) && HasNativeGuidSupport == false)
+            {
+                return value.ToString();
+            }
+
+            return value;
         }
         /// <summary>
         /// Maps an instance of a <see cref="DbParameter"/>
@@ -62,11 +98,10 @@ namespace ADO.Net.Client.Core
         /// <param name="parameter"></param>
         /// <param name="parameterValue">The value of the parameter</param>
         /// <param name="info">The information.</param>
-        /// <param name="parameterNamePrefix">The parameter name prefix symbol</param>
         /// <returns></returns>
-        public void MapDbParameter(DbParameter parameter, object parameterValue, PropertyInfo info, string parameterNamePrefix = "@")
+        public void MapDbParameter(DbParameter parameter, object parameterValue, PropertyInfo info)
         {
-            parameter.ParameterName = string.Concat(parameterNamePrefix, info.Name);
+            parameter.ParameterName = string.Concat(ParameterNamePrefix, info.Name);
             parameter.Value = MapParameterValue(parameterValue, info);
             parameter.DbType = MapDbType(info);
         }

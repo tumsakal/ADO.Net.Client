@@ -34,6 +34,22 @@ namespace ADO.Net.Client.Core
     /// </summary>
     public interface IDbParameterFormatter
     {
+        #region Fields/Properties
+        /// <summary>
+        /// Gets a value indicating whether this instance has native unique identifier support.  Defaults to <c>true</c>
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance has native unique identifier support; otherwise, <c>false</c>.
+        /// </value>
+        bool HasNativeGuidSupport => true;
+        /// <summary>
+        /// Gets or sets the parameter name prefix.
+        /// </summary>
+        /// <value>
+        /// The parameter name prefix.
+        /// </value>
+        string ParameterNamePrefix => "@";
+        #endregion
         #region Utility Methods        
         /// <summary>
         /// Maps the type of the database.
@@ -54,9 +70,8 @@ namespace ADO.Net.Client.Core
         /// <param name="parameter"></param>
         /// <param name="parameterValue">The value of the parameter</param>
         /// <param name="info">The information.</param>
-        /// <param name="parameterNamePrefix">The parameter name prefix symbol</param>
         /// <returns></returns>
-        void MapDbParameter(DbParameter parameter, object parameterValue, PropertyInfo info, string parameterNamePrefix = "@");
+        void MapDbParameter(DbParameter parameter, object parameterValue, PropertyInfo info);
         #endregion
     }
 }
