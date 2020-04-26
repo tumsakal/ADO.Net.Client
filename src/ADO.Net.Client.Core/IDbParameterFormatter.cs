@@ -24,6 +24,7 @@ SOFTWARE.*/
 #region Using Statements
 using System.Data;
 using System.Data.Common;
+using System.Reflection;
 #endregion
 
 namespace ADO.Net.Client.Core
@@ -33,19 +34,29 @@ namespace ADO.Net.Client.Core
     /// </summary>
     public interface IDbParameterFormatter
     {
-        #region Utility Methods
+        #region Utility Methods        
         /// <summary>
-        /// Gets the <see cref="DbType"/> associated with the passed in <paramref name="parameterValue"/>
+        /// Maps the type of the database.
         /// </summary>
-        /// <param name="parameterValue">The .NET value that will be mapped to a providers native data type</param>
-        /// <returns>Returns a <see cref="DbType"/> value that describes the RDBMS type of passed in <paramref name="parameterValue"/></returns>
-        DbType GetDbType(object parameterValue);
+        /// <param name="info">The information.</param>
+        /// <returns></returns>
+        DbType MapDbType(PropertyInfo info);
         /// <summary>
         /// Maps the parameter value.
         /// </summary>
+        /// <param name="info"></param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        object MapParameterValue(object value);
+        object MapParameterValue(object value, PropertyInfo info);
+        /// <summary>
+        /// Maps an instance of a <see cref="DbParameter"/>
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="parameterValue">The value of the parameter</param>
+        /// <param name="info">The information.</param>
+        /// <param name="parameterNamePrefix">The parameter name prefix symbol</param>
+        /// <returns></returns>
+        void MapDbParameter(DbParameter parameter, object parameterValue, PropertyInfo info, string parameterNamePrefix = "@");
         #endregion
     }
 }

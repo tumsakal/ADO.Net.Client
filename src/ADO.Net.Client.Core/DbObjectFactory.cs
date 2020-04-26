@@ -335,6 +335,24 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Gets an initialized instance of a <see cref="DbParameter"/> object based on the specified provider
         /// </summary>
+        /// <param name="paramDirection"></param>
+        /// <param name="parameterValue">The value of the parameter</param>
+        /// <param name="info">The information.</param>
+        /// <param name="parameterNamePrefix">The parameter name prefix symbol</param>
+        /// <returns></returns>
+        public DbParameter GetDbParameter(object parameterValue, PropertyInfo info, ParameterDirection paramDirection = ParameterDirection.Input, string parameterNamePrefix = "@")
+        {
+            DbParameter parameter = GetDbParameter();
+
+            ParameterFormatter.MapDbParameter(parameter, parameterValue, info, parameterNamePrefix);
+
+            parameter.Direction = paramDirection;
+
+            return parameter;
+        }
+        /// <summary>
+        /// Gets an initialized instance of a <see cref="DbParameter"/> object based on the specified provider
+        /// </summary>
         /// <param name="parameterName">The name of the parameter to identify the parameter</param>
         /// <param name="parameterValue">The value of the parameter</param>
         /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
@@ -345,13 +363,6 @@ namespace ADO.Net.Client.Core
 
             parameter.Value = parameterValue ?? DBNull.Value;
             parameter.ParameterName = parameterName;
-
-            //Check db parameter has been set
-            if (ParameterFormatter != null)
-            {
-                //Now get the RDBMS mapped data type to the .net data type
-                parameter.DbType = ParameterFormatter.GetDbType(parameter.Value);
-            }
 
             //Return this back to the caller
             return parameter;
