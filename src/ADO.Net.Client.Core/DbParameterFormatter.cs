@@ -68,6 +68,10 @@ namespace ADO.Net.Client.Core
             {
                 return DbType.Binary;
             }
+            else if (info.PropertyType == typeof(string))
+            {
+                return DbType.String;
+            }
         }
         /// <summary>
         /// Maps the parameter value.
