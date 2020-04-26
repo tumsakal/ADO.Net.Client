@@ -6,7 +6,7 @@ These libraries are capable of working with any ADO.Net compatible driver, meain
 
 ### .NET Standard Support
 
-This library supports .NET Framework 4.7.2+ and .NET Standard2.0+
+This library supports .NET Framework 4.5+ and .NET Standard2.0+
 
 ### Database Agnostic
 
