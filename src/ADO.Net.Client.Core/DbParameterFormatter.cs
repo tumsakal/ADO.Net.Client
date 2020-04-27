@@ -39,14 +39,14 @@ namespace ADO.Net.Client.Core
     {
         #region Fields/Properties        
         /// <summary>
-        /// Gets a value indicating whether this instance has native unique identifier support.
+        /// Gets a value indicating whether this instance has native unique identifier support.  Defaults to <c>true</c>
         /// </summary>
         /// <value>
         ///   <c>true</c> if this instance has native unique identifier support; otherwise, <c>false</c>.
         /// </value>
         public bool HasNativeGuidSupport { get; set; } = true;
         /// <summary>
-        /// Gets or sets the parameter name prefix.
+        /// Gets or sets the parameter name prefix.  Defaults to @
         /// </summary>
         /// <value>
         /// The parameter name prefix.
@@ -80,13 +80,53 @@ namespace ADO.Net.Client.Core
             {
                 return DbType.Time;
             }
+            else if (info.PropertyType == typeof(float))
+            {
+                return DbType.Single;
+            }
             else if(info.PropertyType == typeof(bool))
             {
                 return DbType.Boolean;
             }
+            else if (info.PropertyType == typeof(sbyte))
+            {
+                return DbType.SByte;
+            }
             else if(info.PropertyType == typeof(byte))
             {
                 return DbType.Byte;
+            }
+            else if(info.PropertyType == typeof(double))
+            {
+                return DbType.Double;
+            }
+            else if(info.PropertyType == typeof(decimal))
+            {
+                return DbType.Decimal;
+            }
+            else if (info.PropertyType == typeof(short))
+            {
+                return DbType.Int16;
+            }
+            else if (info.PropertyType == typeof(int))
+            {
+                return DbType.Int32;
+            }
+            else if(info.PropertyType == typeof(long))
+            {
+                return DbType.Int64;
+            }
+            else if (info.PropertyType == typeof(ushort))
+            {
+                return DbType.Int16;
+            }
+            else if (info.PropertyType == typeof(uint))
+            {
+                return DbType.UInt32;
+            }
+            else if (info.PropertyType == typeof(ulong))
+            {
+                return DbType.UInt64;
             }
             else if (info.PropertyType == typeof(Guid))
             {
@@ -144,7 +184,7 @@ namespace ADO.Net.Client.Core
             parameter.Value = MapParameterValue(parameterValue, info);
             parameter.DbType = MapDbType(info);
 
-            //Help query plan caching by using common size if this is a string type
+            //Help query plan caching by using common size if this is a string or Guid Type
             if (info == typeof(Guid) && HasNativeGuidSupport == false)
             {
                 parameter.Size = 40;

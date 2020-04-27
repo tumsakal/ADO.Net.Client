@@ -41,14 +41,14 @@ namespace ADO.Net.Client.Core
         /// <value>
         ///   <c>true</c> if this instance has native unique identifier support; otherwise, <c>false</c>.
         /// </value>
-        bool HasNativeGuidSupport => true;
+        bool HasNativeGuidSupport { get; }
         /// <summary>
         /// Gets or sets the parameter name prefix.
         /// </summary>
         /// <value>
         /// The parameter name prefix.
         /// </value>
-        string ParameterNamePrefix => "@";
+        string ParameterNamePrefix { get; }
         #endregion
         #region Utility Methods        
         /// <summary>
