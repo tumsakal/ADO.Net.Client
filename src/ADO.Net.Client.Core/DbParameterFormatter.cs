@@ -32,7 +32,7 @@ using System.Reflection;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// 
+    /// A <see cref="DbParameter"/> formatter class that implements <see cref="IDbParameterFormatter"/>
     /// </summary>
     /// <seealso cref="IDbParameterFormatter" />
     public class DbParameterFormatter : IDbParameterFormatter
