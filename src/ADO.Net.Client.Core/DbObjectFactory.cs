@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Declarations
-using ADO.Net.Client.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -457,8 +456,8 @@ namespace ADO.Net.Client.Core
             //Get the provider factory
             return (DbProviderFactory)field.GetValue(null);
         }
-#endregion
-#region Helper Methods        
+        #endregion
+        #region Helper Methods        
         /// <summary>
         /// Databases the command disposed.
         /// </summary>
@@ -468,6 +467,6 @@ namespace ADO.Net.Client.Core
         {
             ((DbCommand)sender).Parameters.Clear();
         }
-#endregion
+        #endregion
     }
 }
