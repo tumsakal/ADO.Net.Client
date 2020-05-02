@@ -65,13 +65,13 @@ namespace ADO.Net.Client.Core
         /// <returns></returns>
         object MapParameterValue(object value, PropertyInfo info);
         /// <summary>
-        /// Maps an instance of a <see cref="DbParameter"/>
+        /// Maps an instance of a <see cref="IDbDataParameter"/>
         /// </summary>
         /// <param name="parameter"></param>
         /// <param name="parameterValue">The value of the parameter</param>
         /// <param name="info">The information.</param>
         /// <returns></returns>
-        void MapDbParameter(DbParameter parameter, object parameterValue, PropertyInfo info);
+        void MapDbParameter(IDbDataParameter parameter, object parameterValue, PropertyInfo info);
         #endregion
     }
 }

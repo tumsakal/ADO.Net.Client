@@ -172,13 +172,13 @@ namespace ADO.Net.Client.Core
             return value;
         }
         /// <summary>
-        /// Maps an instance of a <see cref="DbParameter"/>
+        /// Maps an instance of a <see cref="IDbDataParameter"/>
         /// </summary>
         /// <param name="parameter"></param>
         /// <param name="parameterValue">The value of the parameter</param>
         /// <param name="info">The information.</param>
         /// <returns></returns>
-        public void MapDbParameter(DbParameter parameter, object parameterValue, PropertyInfo info)
+        public void MapDbParameter(IDbDataParameter parameter, object parameterValue, PropertyInfo info)
         {
             parameter.ParameterName = string.Concat(ParameterNamePrefix, info.Name);
             parameter.Value = MapParameterValue(parameterValue, info);
