@@ -23,22 +23,55 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using System.Data;
+using System.Data.Common;
+using System.Reflection;
 #endregion
 
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class the defines the behavior of a DbFormatter mapper class
+    /// Contract class the defines the behavior of a <see cref="DbParameter"/> mapper class
     /// </summary>
     public interface IDbParameterFormatter
     {
-        #region Utility Methods
+        #region Fields/Properties
         /// <summary>
-        /// Gets the <see cref="DbType"/> associated with the passed in <paramref name="parameterValue"/>
+        /// Gets a value indicating whether this instance has native unique identifier support.  Defaults to <c>true</c>
         /// </summary>
-        /// <param name="parameterValue">The .NET value that will be mapped to a providers native data type</param>
-        /// <returns>Returns a <see cref="DbType"/> value that describes the RDBMS type of passed in <paramref name="parameterValue"/></returns>
-        DbType GetDbType(object parameterValue);
+        /// <value>
+        ///   <c>true</c> if this instance has native unique identifier support; otherwise, <c>false</c>.
+        /// </value>
+        bool HasNativeGuidSupport { get; }
+        /// <summary>
+        /// Gets or sets the parameter name prefix.
+        /// </summary>
+        /// <value>
+        /// The parameter name prefix.
+        /// </value>
+        string ParameterNamePrefix { get; }
+        #endregion
+        #region Utility Methods        
+        /// <summary>
+        /// Maps the type of the database.
+        /// </summary>
+        /// <param name="info">The information.</param>
+        /// <returns></returns>
+        DbType MapDbType(PropertyInfo info);
+        /// <summary>
+        /// Maps the parameter value.
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        object MapParameterValue(object value, PropertyInfo info);
+        /// <summary>
+        /// Maps an instance of a <see cref="IDbDataParameter"/>
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="parameterValue">The value of the parameter</param>
+        /// <param name="info">The information.</param>
+        /// <returns></returns>
+        void MapDbParameter(IDbDataParameter parameter, object parameterValue, PropertyInfo info);
         #endregion
     }
 }

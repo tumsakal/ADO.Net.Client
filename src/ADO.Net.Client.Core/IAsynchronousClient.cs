@@ -54,6 +54,7 @@ namespace ADO.Net.Client.Core
         /// Or the default value of <typeparamref name="T"/> if there are no search results
         /// </returns>
         Task<T> GetDataObjectAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class;
+#if !NET45
         /// <summary>
         /// Gets a list of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
@@ -62,6 +63,7 @@ namespace ADO.Net.Client.Core
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Returns a list of type parameter object based on the fields in the passed in query</returns>
         IAsyncEnumerable<T> GetDataObjectEnumerableAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class;
+#endif
         /// <summary>
         /// Gets a list of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
@@ -94,7 +96,7 @@ namespace ADO.Net.Client.Core
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns the number of rows affected by this query as a <see cref="Task{Int32}"/></returns>
         Task<int> ExecuteNonQueryAsync(ISqlQuery query, CancellationToken token = default);
-#if !NET472 && !NETSTANDARD2_0
+#if !NET45 && !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Utility method for executing an Ad-Hoc query or stored procedure with a transaction
         /// </summary>

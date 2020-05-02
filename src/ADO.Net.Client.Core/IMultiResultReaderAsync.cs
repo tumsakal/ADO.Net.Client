@@ -35,6 +35,7 @@ namespace ADO.Net.Client.Core
     public interface IMultiResultReaderAsync
     {
         #region Utility Methods
+#if !NET45
         /// <summary>
         /// Reads the object asynchronously.
         /// </summary>
@@ -42,6 +43,7 @@ namespace ADO.Net.Client.Core
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         IAsyncEnumerable<T> ReadObjectEnumerableAsync<T>(CancellationToken token = default);
+#endif
         /// <summary>
         /// Reads the object list.
         /// </summary>
@@ -62,7 +64,7 @@ namespace ADO.Net.Client.Core
         /// <param name="token"></param>
         /// <returns></returns>
         Task<bool> MoveToNextResultAsync(CancellationToken token = default);
-#if NETSTANDARD2_1
+#if !NET45 && !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Closes the asynchronous.
         /// </summary>

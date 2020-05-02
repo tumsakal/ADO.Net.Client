@@ -29,15 +29,11 @@ using System.Data;
 namespace ADO.Net.Client.Annotations
 {
     /// <summary>
-    /// Signifies if the data type is <see cref="DbType.StringFixedLength"/>
+    /// Signifies if the data type is <see cref="DbType.DateTime2"/>
     /// </summary>
     /// <seealso cref="Attribute"/>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class StringFixedLength : Attribute
+    public class DateTim2 : Attribute
     {
-        #region Fields/Properties
-        #endregion
-        #region Constructors
-        #endregion
     }
 }
