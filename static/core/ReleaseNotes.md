@@ -17,3 +17,11 @@ Version History
 * Updating ISqlExecutor async methods to take in a bool that determines 
   if a query should be prepared
   * For .net standard 2.1 and above.
+ 
+### 1.0.4
+
+* Updating ISqlExecutor sync methods to take in a bool that determines if a query should be prepared
+
+### 1.0.3
+* Adding CanCreateDataAdapter and CanCreateCommandBuilder
+  properties to IDbObjectFactory for .NET Standard 2.1 build
