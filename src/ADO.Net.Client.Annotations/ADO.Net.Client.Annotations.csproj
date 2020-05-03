@@ -14,6 +14,7 @@
     <PackageId>ADO.Net.Client.Annotations</PackageId>
     <Description>Annotation objects for ADO.Net.Client based libraries</Description>
     <RepositoryUrl>https://github.com/rgarrison12345/ADO.Net.Client.git</RepositoryUrl>
+    <PackageReleaseNotes>Release Notes https://github.com/rgarrison12345/ADO.Net.Client/blob/master/static/annotations/ReleaseNotes.md</PackageReleaseNotes>
     <PackageIcon>icon.png</PackageIcon>
     <IncludeSource>true</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
