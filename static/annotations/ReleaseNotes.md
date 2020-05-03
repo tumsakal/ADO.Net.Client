@@ -4,7 +4,7 @@ Version History
 ### 1.1.1
 
 * Adding new annotation
-  * [DateTime2](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/DateTime2.cs)
+  * [DateTime2](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/DateTim2.cs)
     * Signifies data type is equivelant of DateTime2
 ### 1.1.0
 
