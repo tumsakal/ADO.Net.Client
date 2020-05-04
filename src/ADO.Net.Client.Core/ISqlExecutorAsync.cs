@@ -37,7 +37,7 @@ namespace ADO.Net.Client.Core
     public interface ISqlExecutorAsync
     {
         #region Data Retrieval
-#if !NET472 && !NETSTANDARD2_0
+#if !NET45 && !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Gets a single instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine
         /// </summary>
@@ -50,7 +50,6 @@ namespace ADO.Net.Client.Core
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Gets an instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine</returns>
         Task<T> GetDataObjectAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false, CancellationToken token = default) where T : class;
-#if !NET45
         /// <summary>
         /// Gets a <see cref="IAsyncEnumerable{T}"/> based on the <typeparamref name="T"/> sent into the function to create an object list based on the query passed into the routine
         /// </summary>
@@ -63,7 +62,6 @@ namespace ADO.Net.Client.Core
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Returns a <see cref="IAsyncEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
         IAsyncEnumerable<T> GetDataObjectEnumerableAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false, CancellationToken token = default) where T : class;
-#endif
         /// <summary>
         /// Gets a <see cref="List{T}"/> of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
@@ -111,6 +109,7 @@ namespace ADO.Net.Client.Core
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Gets an instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine</returns>
         Task<T> GetDataObjectAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, CancellationToken token = default) where T : class;
+#if !NET45
         /// <summary>
         /// Gets a <see cref="IAsyncEnumerable{T}"/> based on the <typeparamref name="T"/> sent into the function to create an object list based on the query passed into the routine
         /// </summary>
@@ -122,6 +121,7 @@ namespace ADO.Net.Client.Core
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Returns a <see cref="IAsyncEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
         IAsyncEnumerable<T> GetDataObjectEnumerableAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, CancellationToken token = default) where T : class;
+#endif
         /// <summary>
         /// Gets a <see cref="List{T}"/> of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
@@ -156,9 +156,9 @@ namespace ADO.Net.Client.Core
         Task<object> GetScalarValueAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, CancellationToken token = default);
 
 #endif
-        #endregion
+#endregion
         #region Data Modification
-#if !NET472 && !NETSTANDARD2_0
+#if !NET45 && !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Utility method for executing an Ad-Hoc query or stored procedure
         /// </summary>

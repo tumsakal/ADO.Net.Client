@@ -65,6 +65,7 @@ namespace ADO.Net.Client.Implementation
             //Keep looping through each object in enumerator
             return Utilities.GetDynamicTypeList<T>(await Utilities.GetDynamicResultsListAsync(_reader, token).ConfigureAwait(false));
         }
+#if !NET45
         /// <summary>
         /// Reads the object.
         /// </summary>
@@ -79,6 +80,7 @@ namespace ADO.Net.Client.Implementation
                 yield return Utilities.GetSingleDynamicType<T>(dict);
             }
         }
+#endif
         /// <summary>
         /// Reads the object asynchronous.
         /// </summary>

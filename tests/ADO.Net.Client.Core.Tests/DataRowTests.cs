@@ -24,7 +24,6 @@ SOFTWARE.*/
 #region Using Statements
 using MySql.Data.MySqlClient;
 using NUnit.Framework;
-using System;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
@@ -47,9 +46,8 @@ namespace ADO.Net.Client.Core.Tests
         [OneTimeSetUp]
         public override void OneTimeSetup()
         {
-#if !NET45 && !NET461
             DbProviderFactories.RegisterFactory("MySqlConnector", MySqlClientFactory.Instance);
-#endif
+
             //For regular .NET framework the driver must be installed in the Global Assembly Cache
             DataTable table = DbProviderFactories.GetFactoryClasses();
             DataRow row = (from a in table.Rows.Cast<DataRow>()
@@ -57,6 +55,6 @@ namespace ADO.Net.Client.Core.Tests
                            select a).FirstOrDefault();
             _factory = new DbObjectFactory(row);
         }
-#endregion
+        #endregion
     }
 }

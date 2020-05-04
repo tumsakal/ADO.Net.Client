@@ -15,7 +15,7 @@
     <Description>Core functionality API objects for ADO.Net.Client based libraries</Description>
     <RepositoryUrl>https://github.com/rgarrison12345/ADO.Net.Client.git</RepositoryUrl>
     <PackageReleaseNotes>
-      Updating to ADO.Net.Client.Annotations 1.1.0
+      Release Notes https://github.com/rgarrison12345/ADO.Net.Client/blob/master/static/core/ReleaseNotes.md
     </PackageReleaseNotes>
     <PackageIcon>icon.png</PackageIcon>
     <IncludeSource>true</IncludeSource>
@@ -62,7 +62,7 @@
     <ProjectReference Include="..\ADO.Net.Client.Annotations\ADO.Net.Client.Annotations.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="ADO.Net.Client.Annotations" Version="1.1.0" />
+    <PackageReference Include="ADO.Net.Client.Annotations" Version="1.1.1" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
   </ItemGroup>
 </Project>
