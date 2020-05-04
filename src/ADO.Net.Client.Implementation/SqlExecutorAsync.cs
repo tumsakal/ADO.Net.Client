@@ -36,7 +36,7 @@ namespace ADO.Net.Client.Implementation
     public partial class SqlExecutor
     {
         #region Data Retrieval
-#if !NET472 && !NETSTANDARD2_0
+#if !NET45 && !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Gets an instance of the <typeparamref name="T"/> parameter object that creates an object based on the query passed into the routine
         /// </summary>
@@ -200,6 +200,7 @@ namespace ADO.Net.Client.Implementation
                 }
             }
         }
+#if !NET45
         /// <summary>
         /// Gets an <see cref="IAsyncEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
@@ -230,6 +231,7 @@ namespace ADO.Net.Client.Implementation
                 yield break;
             }
         }
+#endif
         /// <summary>
         /// Gets a <see cref="List{T}"/> of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
@@ -310,7 +312,7 @@ namespace ADO.Net.Client.Implementation
                 return await command.ExecuteNonQueryAsync(token).ConfigureAwait(false);
             }
         }
-#if !NET472 && !NETSTANDARD2_0     
+#if !NET45 && !NET461 && !NETSTANDARD2_0     
         /// <summary>
         /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction
         /// </summary>
