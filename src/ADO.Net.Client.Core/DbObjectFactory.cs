@@ -424,7 +424,7 @@ namespace ADO.Net.Client.Core
         /// Gets an instance of <see cref="DbProviderFactory"/> based off a .NET drivers <paramref name="providerName"/>, such as System.Data.SqlClientt
         /// </summary>
         /// <returns>Returns an instance of <see cref="DbProviderFactory"/></returns>
-        public DbProviderFactory GetProviderFactory(string providerName)
+        public static DbProviderFactory GetProviderFactory(string providerName)
         {
             //Get the assembly
             return GetProviderFactory(Assembly.Load(new AssemblyName(providerName)));
@@ -434,14 +434,13 @@ namespace ADO.Net.Client.Core
         /// Looks for the <see cref="DbProviderFactory"/> within the current <see cref="Assembly"/>
         /// </summary>
         /// <returns>Returns an instance of <see cref="DbProviderFactory"/></returns>
-        public DbProviderFactory GetProviderFactory(Assembly assembly)
+        public static DbProviderFactory GetProviderFactory(Assembly assembly)
         {
             Type providerFactory = null;
 
             //Get the type that inherits from DbProviderFactory
             foreach (Type t in assembly.GetTypes())
             {
-
                 //Check if this is a dbproviderfactory
                 if (t.GetTypeInfo().BaseType == typeof(DbProviderFactory))
                 {
