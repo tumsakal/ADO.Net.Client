@@ -3,6 +3,7 @@ Version History
 
 ### 1.0.8
 
+* Removing dependency on [Microsoft.Extensions.DependencyModel](https://www.nuget.org/packages/Microsoft.Extensions.DependencyModel)
 * Making DbObjectFactory.GetProviderFactory a static function
   * Removing API from [IDbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbObjectFactory.cs)
 
@@ -20,7 +21,7 @@ Version History
 ### 1.0.6
 
 * Setting default parameter direction to input in DbObjectFactory.GetDbParameter
-* New dependency ADO.Net.Client.Annotations
+* New dependency [ADO.Net.Client.Annotations](https://www.nuget.org/packages/ADO.Net.Client.Annotations/)
 * IConnectionManager no longer chaining IConnectionStringUtility 
   
 ### 1.0.5
