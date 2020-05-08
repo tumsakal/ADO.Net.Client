@@ -61,14 +61,6 @@ namespace ADO.Net.Client.Core.Tests
         /// 
         /// </summary>
         [Test]
-        public void CanCreateDbFactoryFromAssembly()
-        {
-
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        [Test]
         public void CanCreateDbDataAdapter()
         {
             DbDataAdapter dbDataAdapter = _factory.GetDbDataAdapter();

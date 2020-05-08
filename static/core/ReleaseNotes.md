@@ -1,6 +1,11 @@
 Version History
 ===============
 
+### 1.0.8
+
+* Making DbObjectFactory.GetProviderFactory a static function
+  * Removing API from [IDbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbObjectFactory.cs)
+
 ### 1.0.7
 
 * Updating to ADO.Net.Client.Annotations 1.1.1
