@@ -39,7 +39,7 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <typeparam name="T">The <see cref="Type"/> the caller wants created from the passed in <paramref name="record"/></typeparam>
         /// <param name="record">A record from a result set of data</param>
-        /// <returns></returns>
+        /// <returns>Returns the instance of <typeparamref name="T"/> created from the passed in <paramref name="record"/></returns>
         T MapRecord<T>(IDataRecord record);
         #endregion
     }
