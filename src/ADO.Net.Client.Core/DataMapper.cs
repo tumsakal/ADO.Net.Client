@@ -147,7 +147,7 @@ namespace ADO.Net.Client.Core
                     }
 
                     //Check if this is a nullable type
-                    if (IsNullableGenericType(p.PropertyType))
+                    if (Utilities.IsNullableGenericType(p.PropertyType))
                     {
                         if (value == null)
                         {
@@ -178,18 +178,6 @@ namespace ADO.Net.Client.Core
             return (T)returnType;
         }
         #region Helper Methods
-        /// <summary>
-        /// Checks if the passed in type is a generic type that is nullable
-        /// </summary>
-        /// <param name="type">The .NET type to check for nullable</param>
-        /// <returns>Returns true if the passed in type is nullable, false otherwise</returns>
-        private static bool IsNullableGenericType(Type type)
-        {
-            TypeInfo info = type.GetTypeInfo();
-
-            //Return this back to the caller
-            return (info.IsGenericType && info.GetGenericTypeDefinition() == typeof(Nullable<>));
-        }
         #endregion
     }
 }

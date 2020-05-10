@@ -155,8 +155,9 @@ namespace ADO.Net.Client.Implementation
         /// <param name="parameters">The database parameters associated with a query</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the value of the first column in the first row returned from the passed in query as an object</returns>
-        public async Task<object> GetScalarValueAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false, CancellationToken token = default)
+        /// <typeparam name="T">The data type to return from data value returned from the query</typeparam>
+        /// <returns>Returns the value of the first column in the first row as an instance of <typeparamref name="T"/></returns>
+        public async Task<T> GetScalarValueAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false, CancellationToken token = default)
         {
             //Wrap this in a using statement to handle disposing of resources
             using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout))
@@ -167,7 +168,7 @@ namespace ADO.Net.Client.Implementation
                 }
 
                 //Return this back to the caller
-                return await command.ExecuteScalarAsync(token).ConfigureAwait(false);
+                return Utilities.GetTypeFromValue<T>(await command.ExecuteScalarAsync(token).ConfigureAwait(false));
             }
         }
 #else
@@ -281,14 +282,15 @@ namespace ADO.Net.Client.Implementation
         /// <param name="parameters">The database parameters associated with a query</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the value of the first column in the first row returned from the passed in query as an object</returns>
-        public async Task<object> GetScalarValueAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, CancellationToken token = default)
+        /// <typeparam name="T">The data type to return from data value returned from the query</typeparam>
+        /// <returns>Returns the value of the first column in the first row as an instance of <typeparamref name="T"/></returns>
+        public async Task<T> GetScalarValueAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, CancellationToken token = default)
         {
             //Wrap this in a using statement to handle disposing of resources
             using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout))
             {
                 //Return this back to the caller
-                return await command.ExecuteScalarAsync(token).ConfigureAwait(false);
+                return Utilities.GetTypeFromValue<T>(await command.ExecuteScalarAsync(token).ConfigureAwait(false));
             }
         }
 #endif

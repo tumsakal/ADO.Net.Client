@@ -129,6 +129,17 @@ namespace ADO.Net.Client.Core
             _dbProviderFactory = GetProviderFactory(connection.GetType().Assembly);
 #endif
         }
+#if !NETSTANDARD2_0
+        /// <summary>
+        /// Instantiates a new instance with the passed in <paramref name="row"/>
+        /// </summary>
+        /// <param name="formatter"></param>
+        /// <param name="row">An instance of <see cref="DataRow"/> that has the necessary information to create an instance of <see cref="DbProviderFactory"/></param>
+        public DbObjectFactory(DataRow row, IDbParameterFormatter formatter) : this(formatter)
+        {
+            _dbProviderFactory = DbProviderFactories.GetFactory(row);
+        }
+#endif
         /// <summary>
         /// 
         /// </summary>
@@ -137,16 +148,6 @@ namespace ADO.Net.Client.Core
         {
             _dbParameterFormatter = dbParameterFormatter;
         }
-#if !NETSTANDARD2_0
-        /// <summary>
-        /// Instantiates a new instance with the passed in <paramref name="row"/>
-        /// </summary>
-        /// <param name="row">An instance of <see cref="DataRow"/> that has the necessary information to create an instance of <see cref="DbProviderFactory"/></param>
-        public DbObjectFactory(DataRow row)
-        {
-            _dbProviderFactory = DbProviderFactories.GetFactory(row);
-        }
-#endif
         #endregion
         #region Utility Methods
         /// <summary>
