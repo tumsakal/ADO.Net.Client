@@ -83,7 +83,7 @@ namespace ADO.Net.Client.Core
         public T MapRecord<T>(IDataRecord record)
         {
             //Get an instance of the object passed in
-            object returnType = Activator.CreateInstance(typeof(T));
+            object returnType = Activator.CreateInstance<T>();
             Type type = returnType.GetType();
 
             //Loop through all properties
