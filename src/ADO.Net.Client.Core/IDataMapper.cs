@@ -23,17 +23,38 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
+using System.Threading;
+using System.Threading.Tasks;
 #endregion
 
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class that maps data from a record in a database to a .NET object
+    /// Contract class that defines the methods that map data from a record in a database to a .NET object
     /// </summary>
     public interface IDataMapper
     {
         #region Utility Methods
+#if !NET45
+        /// <summary>
+        /// Maps the result set.
+        /// </summary>
+        /// <param name="token"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
+        IAsyncEnumerable<T> MapResultSetAsync<T>(DbDataReader reader, CancellationToken token = default);
+#endif
+        /// <summary>
+        /// Maps the result set.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
+        IEnumerable<T> MapResultSet<T>(DbDataReader reader);
         /// <summary>
         /// Maps the passed in <paramref name="record"/> to an instance of the <typeparamref name="T"/>
         /// </summary>
