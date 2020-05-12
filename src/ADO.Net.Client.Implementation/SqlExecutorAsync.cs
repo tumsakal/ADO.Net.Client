@@ -58,8 +58,11 @@ namespace ADO.Net.Client.Implementation
                 //Check if the reader has rows
                 if (reader.HasRows == true)
                 {
+                    //Move to the first record in the result set
+                    await reader.ReadAsync(token).ConfigureAwait(false);
+
                     //Return this back to the caller
-                    return Utilities.GetSingleDynamicType<T>(await Utilities.GetDynamicResultAsync(reader, token).ConfigureAwait(false));
+                    return _mapper.MapRecord<T>(reader);
                 }
                 else
                 {

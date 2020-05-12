@@ -105,21 +105,18 @@ namespace ADO.Net.Client.Implementation
             //Wrap this to automatically handle disposing of resources
             using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleRow))
             {
-                //Get the field name and value pairs out of this query
-                IEnumerable<IDictionary<string, object>> results = Utilities.GetDynamicResultsEnumerable(reader);
-                IEnumerator<IDictionary<string, object>> enumerator = results.GetEnumerator();
-                bool canMove = enumerator.MoveNext();
-
-                //Check if we need to return the default for the type
-                if (canMove == false)
+                //Check if the reader has rows
+                if (reader.HasRows == true)
                 {
-                    //Return the default for the type back to the caller
-                    return default;
+                    //Move to the first record in the result set
+                    reader.Read();
+
+                    //Return this back to the caller
+                    return _mapper.MapRecord<T>(reader);
                 }
                 else
                 {
-                    //Return this back to the caller
-                    return Utilities.GetSingleDynamicType<T>(enumerator.Current);
+                    return default;
                 }
             }
         }
