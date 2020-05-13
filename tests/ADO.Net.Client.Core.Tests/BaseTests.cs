@@ -22,9 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
-using ADO.Net.Client.Core;
 using MySql.Data.MySqlClient;
-using NUnit;
 using NUnit.Framework;
 using System.Data;
 using System.Data.Common;
@@ -196,7 +194,7 @@ namespace ADO.Net.Client.Core.Tests
         [TestCase(null, ParameterDirection.Output)]
         [TestCase(null, ParameterDirection.InputOutput)]
         [TestCase(null, ParameterDirection.ReturnValue)]
-        public void CanCreateVariableizeParameter(int? size, ParameterDirection direction)
+        public void CanCreateVariableSizeParameter(int? size, ParameterDirection direction)
         {
             string name = "@ParameterName";
             string value = "ParameterValue";
