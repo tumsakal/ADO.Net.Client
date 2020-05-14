@@ -36,10 +36,12 @@ namespace ADO.Net.Client.Core.Tests
     [Category("DbProviderFactoryTests")]
     public class DbProviderFactoryTests : BaseTests
     {
+        #region Setup/Teardown
         [OneTimeSetUp]
         public override void OneTimeSetup()
         {
             _factory = new DbObjectFactory(MySqlClientFactory.Instance, new DbParameterFormatter());
         }
+        #endregion
     }
 }

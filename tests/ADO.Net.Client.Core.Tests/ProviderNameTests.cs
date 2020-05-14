@@ -35,10 +35,12 @@ namespace ADO.Net.Client.Core.Tests
     [Category("ProviderNameTests")]
     public class ProviderNameTests : BaseTests
     {
+        #region Setup/Teardown
         [OneTimeSetUp]
         public override void OneTimeSetup()
         {
             _factory = new DbObjectFactory("MySqlConnector", new DbParameterFormatter());
         }
+        #endregion
     }
 }

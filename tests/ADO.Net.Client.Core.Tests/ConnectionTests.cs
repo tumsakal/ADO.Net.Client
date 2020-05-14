@@ -36,10 +36,12 @@ namespace ADO.Net.Client.Core.Tests
     [Category("ConnectionTests")]
     public class ConnectionTests : BaseTests
     {
+        #region Setup/Teardown
         [OneTimeSetUp]
         public override void OneTimeSetup()
         {
             _factory = new DbObjectFactory(new MySqlConnection(), new DbParameterFormatter());
         }
+        #endregion
     }
 }
