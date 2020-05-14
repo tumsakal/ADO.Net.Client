@@ -39,7 +39,7 @@ namespace ADO.Net.Client.Core.Tests
         [OneTimeSetUp]
         public override void OneTimeSetup()
         {
-            _factory = new DbObjectFactory(MySqlClientFactory.Instance);
+            _factory = new DbObjectFactory(MySqlClientFactory.Instance, new DbParameterFormatter());
         }
     }
 }

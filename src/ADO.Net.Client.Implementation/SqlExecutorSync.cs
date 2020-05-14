@@ -105,21 +105,18 @@ namespace ADO.Net.Client.Implementation
             //Wrap this to automatically handle disposing of resources
             using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleRow))
             {
-                //Get the field name and value pairs out of this query
-                IEnumerable<IDictionary<string, object>> results = Utilities.GetDynamicResultsEnumerable(reader);
-                IEnumerator<IDictionary<string, object>> enumerator = results.GetEnumerator();
-                bool canMove = enumerator.MoveNext();
-
-                //Check if we need to return the default for the type
-                if (canMove == false)
+                //Check if the reader has rows
+                if (reader.HasRows == true)
                 {
-                    //Return the default for the type back to the caller
-                    return default;
+                    //Move to the first record in the result set
+                    reader.Read();
+
+                    //Return this back to the caller
+                    return _mapper.MapRecord<T>(reader);
                 }
                 else
                 {
-                    //Return this back to the caller
-                    return Utilities.GetSingleDynamicType<T>(enumerator.Current);
+                    return default;
                 }
             }
         }
@@ -202,8 +199,9 @@ namespace ADO.Net.Client.Implementation
         /// <param name="parameters">The parameters associated with a database query</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the value of the first column in the first row returned from the passed in query as an object</returns>
-        public object GetScalarValue(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false)
+        /// <typeparam name="T">The data type to return from data value returned from the query</typeparam>
+        /// <returns>Returns the value of the first column in the first row as an instance of <typeparamref name="T"/></returns>
+        public T GetScalarValue<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false)
         {
             //Wrap this in a using statement to handle disposing of resources
             using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout))
@@ -215,7 +213,7 @@ namespace ADO.Net.Client.Implementation
                 }
 
                 //Return this back to the caller
-                return command.ExecuteScalar();
+                return Utilities.GetTypeFromValue<T>(command.ExecuteScalar());
             }
         }
         #endregion

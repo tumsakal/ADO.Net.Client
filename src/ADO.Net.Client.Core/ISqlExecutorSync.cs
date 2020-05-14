@@ -106,8 +106,9 @@ namespace ADO.Net.Client.Core
         /// <param name="parameters">The query database parameters that are associated with a query</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <returns>Returns the value of the first column in the first row returned from the passed in query as an object</returns>
-        object GetScalarValue(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false);
+        /// <typeparam name="T">The data type to return from data value returned from the query</typeparam>
+        /// <returns>Returns the value of the first column in the first row returned from the passed in query as an instance of <typeparamref name="T"/></returns>
+        T GetScalarValue<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false);
         #endregion
         #region Data Modification
         /// <summary>

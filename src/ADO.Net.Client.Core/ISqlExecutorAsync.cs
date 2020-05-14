@@ -95,8 +95,9 @@ namespace ADO.Net.Client.Core
         /// <param name="parameters">The database parameters that are associated with a query</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the value of the first column in the first row as an object</returns>
-        Task<object> GetScalarValueAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false, CancellationToken token = default);
+        /// <typeparam name="T">The data type to return from data value returned from the query</typeparam>
+        /// <returns>Returns the value of the first column in the first row as an instance of <typeparamref name="T"/></returns>
+        Task<T> GetScalarValueAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false, CancellationToken token = default);
 #else
         /// <summary>
         /// Gets a single instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine
@@ -152,11 +153,12 @@ namespace ADO.Net.Client.Core
         /// <param name="parameters">The database parameters that are associated with a query</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the value of the first column in the first row as an object</returns>
-        Task<object> GetScalarValueAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, CancellationToken token = default);
+        /// <typeparam name="T">The data type to return from data value returned from the query</typeparam>
+        /// <returns>Returns the value of the first column in the first row as an instance of <typeparamref name="T"/></returns>
+        Task<T> GetScalarValueAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, CancellationToken token = default);
 
 #endif
-#endregion
+        #endregion
         #region Data Modification
 #if !NET45 && !NET461 && !NETSTANDARD2_0
         /// <summary>

@@ -22,9 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
-using ADO.Net.Client.Core;
 using MySql.Data.MySqlClient;
-using NUnit;
 using NUnit.Framework;
 using System.Data;
 using System.Data.Common;
@@ -46,6 +44,20 @@ namespace ADO.Net.Client.Core.Tests
         public abstract void OneTimeSetup();
         #endregion
         #region Basic Tests
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        public void CanCreateDbFactoryFromProviderName()
+        {
+            DbProviderFactory factory = DbObjectFactory.GetProviderFactory("MySqlConnector");
+
+            //Needs to a mysql client factory
+            Assert.AreEqual(typeof(MySqlClientFactory), factory.GetType());
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         public void CanCreateDbDataAdapter()
         {
@@ -54,6 +66,9 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsNotNull(dbDataAdapter);
             Assert.AreEqual(typeof(MySqlDataAdapter), dbDataAdapter.GetType());
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         public void CanCreateDbConnection()
         {
@@ -62,6 +77,9 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsNotNull(connection);
             Assert.AreEqual(typeof(MySqlConnection), connection.GetType());
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         public void CanCreateConnectionStringBuilder()
         {
@@ -70,6 +88,9 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsNotNull(builder);
             Assert.AreEqual(typeof(MySqlConnectionStringBuilder), builder.GetType());
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         public void CanCreateCommandBuilder()
         {
@@ -78,6 +99,9 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsNotNull(builder);
             Assert.AreEqual(typeof(MySqlCommandBuilder), builder.GetType());
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("DbCommandTests")]
         public void CanCreateDbCommand()
@@ -87,6 +111,9 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsNotNull(command);
             Assert.AreEqual(typeof(MySqlCommand), command.GetType());
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("DbCommandTests")]
         public void DbCommandTimeoutSame()
@@ -98,6 +125,9 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(commandTimeout, command.CommandTimeout);
             Assert.AreEqual(typeof(MySqlCommand), command.GetType());
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("DbParameterTests")]
         public void CanCreateDbParameter()
@@ -107,6 +137,9 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsNotNull(parameter);
             Assert.AreEqual(typeof(MySqlParameter), parameter.GetType());
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("DbParameterTests")]
         public void CanCreateDbParameterNameValue()
@@ -121,6 +154,10 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(name, parameter.ParameterName);
             Assert.AreEqual(value, parameter.Value);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="direction"></param>
         [Test]
         [TestCase(ParameterDirection.Input)]
         [TestCase(ParameterDirection.Output)]
@@ -142,6 +179,11 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(name, parameter.ParameterName);
             Assert.AreEqual(value, parameter.Value);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="size"></param>
+        /// <param name="direction"></param>
         [Test]
         [Category("DbParameterTests")]
         [TestCase(10, ParameterDirection.Input)]
@@ -152,7 +194,7 @@ namespace ADO.Net.Client.Core.Tests
         [TestCase(null, ParameterDirection.Output)]
         [TestCase(null, ParameterDirection.InputOutput)]
         [TestCase(null, ParameterDirection.ReturnValue)]
-        public void CanCreateVariableizeParameter(int? size, ParameterDirection direction)
+        public void CanCreateVariableSizeParameter(int? size, ParameterDirection direction)
         {
             string name = "@ParameterName";
             string value = "ParameterValue";
@@ -169,6 +211,12 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(value, parameter.Value);
         }
 #if !NET45
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="scale"></param>
+        /// <param name="precision"></param>
+        /// <param name="direction"></param>
         [Test]
         [Category("DbParameterTests")]
         [TestCase(null, 10, ParameterDirection.Input)]

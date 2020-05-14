@@ -183,17 +183,6 @@ namespace ADO.Net.Client.Core
         /// <param name="paramDirection">The direction of the parameter, defaults to <see cref="ParameterDirection.Input"/></param>
         /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
         DbParameter GetVariableSizeDbParameter(string parameterName, object parameterValue, DbType dataType, int? size = null, ParameterDirection paramDirection = ParameterDirection.Input);
-        /// <summary>
-        /// Gets an instance of <see cref="DbProviderFactory"/> based off a .NET drivers <paramref name="providerName"/>, such as System.Data.SqlClientt
-        /// </summary>
-        /// <returns>Returns an instance of <see cref="DbProviderFactory"/></returns>
-        DbProviderFactory GetProviderFactory(string providerName);
-        /// <summary>
-        /// Gets an instance of <see cref="DbProviderFactory"/> based off a .NET driver <see cref="Assembly"/>
-        /// Looks for the <see cref="DbProviderFactory"/> within the current <see cref="Assembly"/>
-        /// </summary>
-        /// <returns>Returns an instance of <see cref="DbProviderFactory"/></returns>
-        DbProviderFactory GetProviderFactory(Assembly assembly);
         #endregion
     }
 }

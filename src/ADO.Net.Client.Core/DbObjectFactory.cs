@@ -49,6 +49,7 @@ namespace ADO.Net.Client.Core
     {
         #region Fields/Properties
         private readonly DbProviderFactory _dbProviderFactory;
+        private readonly IDbParameterFormatter _dbParameterFormatter;
 
 #if !NET45 && !NET461 && !NETSTANDARD2_0
         /// <summary>
@@ -83,28 +84,23 @@ namespace ADO.Net.Client.Core
                 return _dbProviderFactory.CanCreateDataSourceEnumerator;
             }
         }
-        /// <summary>
-        /// Gets or sets the paramter formatter.
-        /// </summary>
-        /// <value>
-        /// The paramter formatter.
-        /// </value>
-        public IDbParameterFormatter ParameterFormatter { get; set; }
         #endregion
         #region Constructors
         /// <summary>
         /// Instantiates a new instance with the passed in <paramref name="factory"/>
         /// </summary>
+        /// <param name="formatter"></param>
         /// <param name="factory">An instance of the <see cref="DbProviderFactory"/> client class</param>
-        public DbObjectFactory(DbProviderFactory factory)
+        public DbObjectFactory(DbProviderFactory factory, IDbParameterFormatter formatter) : this(formatter)
         {
             _dbProviderFactory = factory;
         }
         /// <summary>
         /// Instantiates a new instance with the passed in <paramref name="providerInvariantName"/>
         /// </summary>
+        /// <param name="formatter"></param>
         /// <param name="providerInvariantName">The name of the data provider that the should be used to query a data store</param>
-        public DbObjectFactory(string providerInvariantName)
+        public DbObjectFactory(string providerInvariantName, IDbParameterFormatter formatter) : this(formatter)
         {
 #if !NETSTANDARD2_0
             try
@@ -122,8 +118,9 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Instantiates a new instance with the passed in <paramref name="connection"/>
         /// </summary>
+        /// <param name="formatter"></param>
         /// <param name="connection">An instance of <see cref="DbConnection"/> </param>
-        public DbObjectFactory(DbConnection connection)
+        public DbObjectFactory(DbConnection connection, IDbParameterFormatter formatter) : this(formatter)
         {
 #if !NETSTANDARD2_0
             _dbProviderFactory = DbProviderFactories.GetFactory(connection);
@@ -136,12 +133,21 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Instantiates a new instance with the passed in <paramref name="row"/>
         /// </summary>
+        /// <param name="formatter"></param>
         /// <param name="row">An instance of <see cref="DataRow"/> that has the necessary information to create an instance of <see cref="DbProviderFactory"/></param>
-        public DbObjectFactory(DataRow row)
+        public DbObjectFactory(DataRow row, IDbParameterFormatter formatter) : this(formatter)
         {
             _dbProviderFactory = DbProviderFactories.GetFactory(row);
         }
 #endif
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dbParameterFormatter"></param>
+        private DbObjectFactory(IDbParameterFormatter dbParameterFormatter)
+        {
+            _dbParameterFormatter = dbParameterFormatter;
+        }
         #endregion
         #region Utility Methods
         /// <summary>
@@ -342,7 +348,7 @@ namespace ADO.Net.Client.Core
         {
             DbParameter parameter = GetDbParameter();
 
-            ParameterFormatter.MapDbParameter(parameter, parameterValue, info);
+            _dbParameterFormatter.MapDbParameter(parameter, parameterValue, info);
 
             parameter.Direction = paramDirection;
 
@@ -424,7 +430,7 @@ namespace ADO.Net.Client.Core
         /// Gets an instance of <see cref="DbProviderFactory"/> based off a .NET drivers <paramref name="providerName"/>, such as System.Data.SqlClientt
         /// </summary>
         /// <returns>Returns an instance of <see cref="DbProviderFactory"/></returns>
-        public DbProviderFactory GetProviderFactory(string providerName)
+        public static DbProviderFactory GetProviderFactory(string providerName)
         {
             //Get the assembly
             return GetProviderFactory(Assembly.Load(new AssemblyName(providerName)));
@@ -434,14 +440,13 @@ namespace ADO.Net.Client.Core
         /// Looks for the <see cref="DbProviderFactory"/> within the current <see cref="Assembly"/>
         /// </summary>
         /// <returns>Returns an instance of <see cref="DbProviderFactory"/></returns>
-        public DbProviderFactory GetProviderFactory(Assembly assembly)
+        public static DbProviderFactory GetProviderFactory(Assembly assembly)
         {
             Type providerFactory = null;
 
             //Get the type that inherits from DbProviderFactory
             foreach (Type t in assembly.GetTypes())
             {
-
                 //Check if this is a dbproviderfactory
                 if (t.GetTypeInfo().BaseType == typeof(DbProviderFactory))
                 {

@@ -376,7 +376,27 @@ namespace ADO.Net.Client.Core
             return (T)returnType;
         }
         #endregion
-        #region Helper Methods
+        #region Helper Methods        
+        /// <summary>
+        /// Gets the type from value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static T GetTypeFromValue<T>(object value)
+        {
+            // Handle nullable types
+            Type u = Nullable.GetUnderlyingType(typeof(T));
+
+            //Check if this is any form of null
+            if (u != null && (value == null || value == DBNull.Value))
+            {
+                return default;
+            }
+
+            //Return this back to the caller
+            return (T)Convert.ChangeType(value, u ?? typeof(T));
+        }
         /// <summary>
         /// Checks if the passed in type is a generic type that is nullable
         /// </summary>

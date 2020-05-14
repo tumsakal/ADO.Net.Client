@@ -39,19 +39,22 @@ namespace ADO.Net.Client.Implementation
     public partial class SqlExecutor : ISqlExecutor
     {
         #region Fields/Properties
+        private readonly IDataMapper _mapper;
         private readonly IDbObjectFactory _factory;
         private readonly IConnectionManager _manager;
         #endregion
-        #region Constructors        
+        #region Constructors                
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlExecutor"/> class.
         /// </summary>
         /// <param name="factory">The factory.</param>
         /// <param name="manager">The manager.</param>
-        public SqlExecutor(IDbObjectFactory factory, IConnectionManager manager)
+        /// <param name="mapper">The mapper.</param>
+        public SqlExecutor(IDbObjectFactory factory, IConnectionManager manager, IDataMapper mapper)
         {
             _manager = manager;
             _factory = factory;
+            _mapper = mapper;
         }
         #endregion
         #region Helper Methods
