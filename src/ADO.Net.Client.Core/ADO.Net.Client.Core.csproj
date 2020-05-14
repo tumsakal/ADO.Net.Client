@@ -55,6 +55,12 @@
   <ItemGroup Condition="'$(TargetFramework)'!='netstandard2.1' and '$(TargetFramework)'!='net45'">
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.0" />
   </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
+    <Compile Remove="ISqlExecutorAsync.cs"/>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net461' or '$(TargetFramework)'=='net45'">
+    <Compile Remove="ISqlExecutorPrepareAsync.cs"/>
+  </ItemGroup>
   <ItemGroup Condition="'$(Configuration)'=='Debug'">
     <ProjectReference Include="..\ADO.Net.Client.Annotations\ADO.Net.Client.Annotations.csproj" />
   </ItemGroup>
