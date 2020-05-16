@@ -44,14 +44,26 @@ namespace ADO.Net.Client.Core
         /// <value>
         ///   <c>true</c> if this instance has native unique identifier support; otherwise, <c>false</c>.
         /// </value>
-        public bool HasNativeGuidSupport => true;
+        public bool HasNativeGuidSupport { get; private set; } = true;
         /// <summary>
         /// Gets or sets the parameter name prefix.  Defaults to @
         /// </summary>
         /// <value>
         /// The parameter name prefix.
         /// </value>
-        public string ParameterNamePrefix => "@";
+        public string ParameterNamePrefix { get; private set; } = "@";
+        #endregion
+        #region Constructors                
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DbParameterFormatter"/> class.
+        /// </summary>
+        /// <param name="nativeGuidSupport">if set to <c>true</c> [native unique identifier support].</param>
+        /// <param name="parameterNamePrefix">The parameter name prefix.</param>
+        public DbParameterFormatter(bool nativeGuidSupport = false, string parameterNamePrefix = "@")
+        {
+            HasNativeGuidSupport = nativeGuidSupport;
+            ParameterNamePrefix = parameterNamePrefix;
+        }
         #endregion
         #region Utility Methods                
         /// <summary>
