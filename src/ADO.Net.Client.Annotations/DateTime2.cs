@@ -33,7 +33,7 @@ namespace ADO.Net.Client.Annotations
     /// </summary>
     /// <seealso cref="Attribute"/>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class DateTim2 : Attribute
+    public class DateTime2 : Attribute
     {
     }
 }
