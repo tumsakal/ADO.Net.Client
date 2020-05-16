@@ -121,7 +121,7 @@ namespace ADO.Net.Client.Implementation
             }
         }
         /// <summary>
-        /// Gets a <see cref="List{T}"/> of the type parameter object that creates an object based on the query passed into the routine
+        /// Gets an <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
@@ -129,18 +129,17 @@ namespace ADO.Net.Client.Implementation
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="parameters">The database parameters associated with a query</param>
-        /// <returns>Returns a <see cref="List{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        public List<T> GetDataObjectList<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false) where T : class
+        /// <returns>Returns an <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
+        public IEnumerable<T> GetDataObjects<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false) where T : class
         {
             //Wrap this to automatically handle disposing of resources
             using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult))
             {
-                //Return this back to the caller
-                return Utilities.GetDynamicTypeList<T>(Utilities.GetDynamicResultsList(reader));
+                return _mapper.MapResultSet<T>(reader);
             }
         }
         /// <summary>
-        /// Gets a list of the type parameter object that creates an object based on the query passed into the routine
+        /// Gets an <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine as an iterator function
         /// </summary>
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
@@ -148,22 +147,20 @@ namespace ADO.Net.Client.Implementation
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="parameters">The parameters associated with a database query</param>
-        /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        public IEnumerable<T> GetDataObjectEnumerable<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false) where T : class
+        /// <returns>Returns an <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
+        public IEnumerable<T> GetDataObjectsStream<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false) where T : class
         {
             //Wrap this to automatically handle disposing of resources
             using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult))
             {
-                //Get the field name and value pairs out of this query
-                IEnumerable<IDictionary<string, object>> results = Utilities.GetDynamicResultsEnumerable(reader);
-                IEnumerator<IDictionary<string, object>> enumerator = results.GetEnumerator();
-
-                //Keep moving through the enumerator
-                while (enumerator.MoveNext() == true)
+                //Keep going through each item
+                foreach (T type in _mapper.MapResultSetStream<T>(reader))
                 {
                     //Return this back to the caller
-                    yield return Utilities.GetSingleDynamicType<T>(enumerator.Current);
+                    yield return type;
                 }
+
+                yield break;
             }
         }
         /// <summary>

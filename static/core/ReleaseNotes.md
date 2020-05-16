@@ -3,12 +3,20 @@ Version History
 
 ### 1.0.8
 
+* Renaming GetDataObjectList and GetDataObjectEnumerable on ISqlExecutorSync
+  * Renamed to GetDataObects
+  * Renamed to GetDataObjectsStream
+* Renaming GetDataObjectListAsync and GetDataObjectEnumerableAsync on ISqlExecutorAsync
+  * Renamed to GetDataObjectsAsync
+  * Renamed to GetDataObjectsStreamAsync
+* Removing all async/sync functions from [Utilities](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/Utilities.cs), those functions are now in [IDataMapper](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDataMapper.cs)
 * [ISqlExecutor](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/ISqlExecutor.cs) GetScalarValue sync and async functions are now generic
 * **New** Class [DataMapper](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DataMapper.cs)
 * **New** Interface [IDataMapper](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDataMapper.cs)
 * All instances of [DbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbObjectFactory.cs) constructors now take in an instance of [IDbParamaterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbParameterFormatter.cs)
 * Removing dependency on [Microsoft.Extensions.DependencyModel](https://www.nuget.org/packages/Microsoft.Extensions.DependencyModel)
 * Correctiing all references to #if NET472
+* Updating to [Microsoft.Bcl.AsyncInterfaces](https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces/) 1.1.1
 * Making DbObjectFactory.GetProviderFactory a static function
   * Removing API from [IDbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbObjectFactory.cs)
 

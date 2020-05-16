@@ -67,17 +67,18 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns an instance of the <typeparamref name="T"/> based on the fields in the passed in query.  Returns the default value for the type if a record is not found</returns>
         T GetDataObject<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false) where T : class;
         /// <summary>
-        /// Gets a <see cref="List{T}"/> of the type parameter object that creates an object based on the query passed into the routine
+        /// Gets a <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <typeparam name="T">An instance of the type caller wants created from the query passed into procedure</typeparam>
         /// <param name="parameters">The query database parameters that are associated with a query</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param> <returns>Returns a <see cref="List{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        List<T> GetDataObjectList<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false) where T : class;
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param> 
+        /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
+        IEnumerable<T> GetDataObjects<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false) where T : class;
         /// <summary>
-        /// Gets a <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
+        /// Gets a <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine as an iterator function
         /// </summary>
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
@@ -86,7 +87,7 @@ namespace ADO.Net.Client.Core
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        IEnumerable<T> GetDataObjectEnumerable<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false) where T : class;
+        IEnumerable<T> GetDataObjectsStream<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false) where T : class;
         /// <summary>
         /// Utility method for returning a DataReader object
         /// </summary>

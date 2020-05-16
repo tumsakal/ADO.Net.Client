@@ -42,7 +42,7 @@ namespace ADO.Net.Client.Core
         /// <param name="token"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        IAsyncEnumerable<T> ReadObjectEnumerableAsync<T>(CancellationToken token = default);
+        IAsyncEnumerable<T> ReadObjectsStreamAsync<T>(CancellationToken token = default);
 #endif
         /// <summary>
         /// Reads the object list.
@@ -50,7 +50,7 @@ namespace ADO.Net.Client.Core
         /// <param name="token"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        Task<List<T>> ReadObjectListAsync<T>(CancellationToken token = default);
+        Task<IEnumerable<T>> ReadObjectsAsync<T>(CancellationToken token = default);
         /// <summary>
         /// Reads the object.
         /// </summary>

@@ -49,10 +49,10 @@ namespace ADO.Net.Client.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="reader">The reader.</param>
         /// <returns></returns>
-        public async IAsyncEnumerable<T> MapResultSetAsync<T>(DbDataReader reader, [EnumeratorCancellation] CancellationToken token = default)
+        public async IAsyncEnumerable<T> MapResultSetStreamAsync<T>(DbDataReader reader, [EnumeratorCancellation] CancellationToken token = default)
         { 
             //Keep looping through the result set
-            while(await reader.ReadAsync(token) == true)
+            while(await reader.ReadAsync(token).ConfigureAwait(false) == true)
             {
                 //Return this object
                 yield return MapRecord<T>(reader);
@@ -62,10 +62,30 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Maps the result set.
         /// </summary>
+        /// <param name="token"></param>
         /// <typeparam name="T"></typeparam>
         /// <param name="reader">The reader.</param>
         /// <returns></returns>
-        public IEnumerable<T> MapResultSet<T>(DbDataReader reader)
+        public async Task<IEnumerable<T>> MapResultSetAsync<T>(DbDataReader reader, CancellationToken token = default)
+        {
+            List<T> returnList = new List<T>();
+
+            //Keep looping through the result set
+            while (await reader.ReadAsync(token).ConfigureAwait(false) == true)
+            {
+                //Return this object
+                returnList.Add(MapRecord<T>(reader));
+            }
+
+            return returnList;
+        }
+        /// <summary>
+        /// Maps the result set.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
+        public IEnumerable<T> MapResultSetStream<T>(DbDataReader reader)
         {
             //Keep looping through the result set
             while(reader.Read() == true)
@@ -73,6 +93,25 @@ namespace ADO.Net.Client.Core
                 //Return this object
                 yield return MapRecord<T>(reader);
             }
+        }
+        /// <summary>
+        /// Maps the result set.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
+        public IEnumerable<T> MapResultSet<T>(DbDataReader reader)
+        {
+            List<T> returnList = new List<T>();
+
+            //Keep looping through the result set
+            while (reader.Read() == true)
+            {
+                //Return this object
+                returnList.Add(MapRecord<T>(reader));
+            }
+
+            return returnList;
         }
         /// <summary>
         /// Maps the passed in <paramref name="record"/> to an instance of the <typeparamref name="T"/>

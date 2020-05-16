@@ -39,13 +39,13 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        IEnumerable<T> ReadObjectEnumerable<T>();
+        IEnumerable<T> ReadObjectsStream<T>();
         /// <summary>
         /// Reads the object list.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        List<T> ReadObjectList<T>();
+        IEnumerable<T> ReadObjects<T>();
         /// <summary>
         /// Reads the object.
         /// </summary>

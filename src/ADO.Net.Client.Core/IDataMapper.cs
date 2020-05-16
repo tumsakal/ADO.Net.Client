@@ -46,8 +46,23 @@ namespace ADO.Net.Client.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="reader">The reader.</param>
         /// <returns></returns>
-        IAsyncEnumerable<T> MapResultSetAsync<T>(DbDataReader reader, CancellationToken token = default);
+        IAsyncEnumerable<T> MapResultSetStreamAsync<T>(DbDataReader reader, CancellationToken token = default);
 #endif
+        /// <summary>
+        /// Maps the result set.
+        /// </summary>
+        /// <param name="token"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
+        Task<IEnumerable<T>> MapResultSetAsync<T>(DbDataReader reader, CancellationToken token = default);
+        /// <summary>
+        /// Maps the result set.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
+        IEnumerable<T> MapResultSetStream<T>(DbDataReader reader);
         /// <summary>
         /// Maps the result set.
         /// </summary>

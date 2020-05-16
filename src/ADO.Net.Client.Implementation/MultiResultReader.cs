@@ -43,15 +43,18 @@ namespace ADO.Net.Client.Implementation
         #endregion
         #region Fields/Properties
         private readonly DbDataReader _reader = null;
+        private readonly IDataMapper _mapper = null;
         #endregion
-        #region Constructors        
+        #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="MultiResultReader"/> class.
         /// </summary>
+        /// <param name="mapper"></param>
         /// <param name="reader">The reader.</param>
-        public MultiResultReader(DbDataReader reader)
+        public MultiResultReader(DbDataReader reader, IDataMapper mapper)
         {
             _reader = reader;
+            _mapper = mapper;
         }
         #endregion
         #region Async Methods
@@ -60,10 +63,10 @@ namespace ADO.Net.Client.Implementation
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public async Task<List<T>> ReadObjectListAsync<T>(CancellationToken token = default)
+        public async Task<IEnumerable<T>> ReadObjectsAsync<T>(CancellationToken token = default)
         {
             //Keep looping through each object in enumerator
-            return Utilities.GetDynamicTypeList<T>(await Utilities.GetDynamicResultsListAsync(_reader, token).ConfigureAwait(false));
+            return await _mapper.MapResultSetAsync<T>(_reader, token).ConfigureAwait(false);
         }
 #if !NET45
         /// <summary>
@@ -71,14 +74,17 @@ namespace ADO.Net.Client.Implementation
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public async IAsyncEnumerable<T> ReadObjectEnumerableAsync<T>([EnumeratorCancellation] CancellationToken token = default)
+        public async IAsyncEnumerable<T> ReadObjectsStreamAsync<T>([EnumeratorCancellation] CancellationToken token = default)
         {
             //Keep looping through each object in enumerator
-            await foreach (IDictionary<string, object> dict in Utilities.GetDynamicResultsEnumerableAsync(_reader, token))
+            await foreach (T type in _mapper.MapResultSetStreamAsync<T>(_reader, token).ConfigureAwait(false))
             {
                 //Keep yielding results
-                yield return Utilities.GetSingleDynamicType<T>(dict);
+                yield return type;
             }
+
+            //Nothing to do here
+            yield break;
         }
 #endif
         /// <summary>
@@ -89,7 +95,9 @@ namespace ADO.Net.Client.Implementation
         /// <returns></returns>
         public async Task<T> ReadObjectAsync<T>(CancellationToken token = default)
         {
-            return Utilities.GetSingleDynamicType<T>(await Utilities.GetDynamicResultAsync(_reader, token).ConfigureAwait(false));
+            await _reader.ReadAsync(token).ConfigureAwait(false);
+
+            return _mapper.MapRecord<T>(_reader);
         }
         /// <summary>
         /// Moves the next to result asynchronous.
@@ -108,23 +116,26 @@ namespace ADO.Net.Client.Implementation
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public IEnumerable<T> ReadObjectEnumerable<T>()
+        public IEnumerable<T> ReadObjectsStream<T>()
         {
             //Keep looping through each object in enumerator
-            foreach (IDictionary<string, object> dict in Utilities.GetDynamicResultsEnumerable(_reader))
+            foreach (T type in _mapper.MapResultSetStream<T>(_reader))
             {
                 //Keep yielding results
-                yield return Utilities.GetSingleDynamicType<T>(dict);
+                yield return type;
             }
+
+            //Nothing to do here
+            yield break;
         }
         /// <summary>
         /// Reads the object list.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public List<T> ReadObjectList<T>()
+        public IEnumerable<T> ReadObjects<T>()
         {
-            return Utilities.GetDynamicTypeList<T>(Utilities.GetDynamicResultsList(_reader));
+            return _mapper.MapResultSet<T>(_reader);
         }
         /// <summary>
         /// Reads the object.
@@ -133,7 +144,10 @@ namespace ADO.Net.Client.Implementation
         /// <returns></returns>
         public T ReadObject<T>()
         {
-            return Utilities.GetSingleDynamicType<T>(Utilities.GetDynamicResult(_reader));
+            //Move to the next record
+            _reader.Read();
+
+            return _mapper.MapRecord<T>(_reader);
         }
         /// <summary>
         /// Moves to next result.

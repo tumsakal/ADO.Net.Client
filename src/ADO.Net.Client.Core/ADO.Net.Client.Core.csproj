@@ -53,19 +53,19 @@
     <DefineConstants>RELEASE;</DefineConstants>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)'!='netstandard2.1' and '$(TargetFramework)'!='net45'">
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
-    <Compile Remove="ISqlExecutorAsync.cs"/>
+    <Compile Remove="ISqlExecutorAsync.cs" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net461' or '$(TargetFramework)'=='net45'">
-    <Compile Remove="ISqlExecutorPrepareAsync.cs"/>
+    <Compile Remove="ISqlExecutorPrepareAsync.cs" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)'=='Debug'">
     <ProjectReference Include="..\ADO.Net.Client.Annotations\ADO.Net.Client.Annotations.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)'=='Release'">
     <PackageReference Include="ADO.Net.Client.Annotations" Version="1.1.1" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 </Project>
