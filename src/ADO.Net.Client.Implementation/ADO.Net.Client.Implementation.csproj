@@ -15,7 +15,7 @@
     <PackageId>ADO.Net.Client.Implementation</PackageId>
     <Description>Implementation functionality API objects for ADO.Net.Client based libraries</Description>
     <PackageReleaseNotes>
-      Updating to ADO.Net.Client.Core 1.0.8.  Removing IConnectionStringUtility methods from DbConnectionManager.  Adding new ConnectionStringBuilder class
+      Release Notes https://github.com/rgarrison12345/ADO.Net.Client/blob/master/static/implementation/ReleaseNotes.md
     </PackageReleaseNotes>
     <PackageIcon>icon.png</PackageIcon>
     <IncludeSource>true</IncludeSource>
@@ -47,10 +47,12 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\static\icon.png" Pack="true" PackagePath="icon.png" />
-    <None Include="..\..\static\implementation\ReleaseNotes.md" Pack="true" PackagePath="ReleaseNotes.md" />
     <None Include="..\..\README.md" Pack="true" PackagePath="README.md" />
     <None Include="..\..\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
     <None Include="..\..\CONTRIBUTING.md" Pack="true" PackagePath="CONTRIBUTING.md" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
+    <Compile Remove="SqlExecutorAsync.cs" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net461' or '$(TargetFramework)'=='net45'">
     <Compile Remove="SqlExecutorPrepareAsync.cs" />
@@ -59,7 +61,7 @@
     <ProjectReference Include="..\ADO.Net.Client.Core\ADO.Net.Client.Core.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="ADO.Net.Client.Core" Version="1.0.7" />
+    <PackageReference Include="ADO.Net.Client.Core" Version="1.0.8" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 </Project>
