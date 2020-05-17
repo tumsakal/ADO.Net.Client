@@ -37,7 +37,6 @@ namespace ADO.Net.Client.Implementation
     {
         #region Fields/Properties
         private readonly DbConnection _connection;
-        private readonly DbConnectionStringBuilder _builder;
 
         /// <summary>
         /// Gets the connection that is being used by this instance
@@ -58,8 +57,7 @@ namespace ADO.Net.Client.Implementation
         /// Initializes a new instance of the <see cref="ConnectionManager"/> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
-        /// <param name="builder">The builder.</param>
-        public ConnectionManager(DbConnection connection, DbConnectionStringBuilder builder)
+        public ConnectionManager(DbConnection connection)
         {
             _connection = connection;
             _builder = builder;
