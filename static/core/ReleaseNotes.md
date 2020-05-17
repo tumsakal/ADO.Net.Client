@@ -4,7 +4,7 @@ Version History
 ### 1.0.8
 
 * Renaming ReadObjectList and ReadObjectEnumerable on IMultiResultReaderSync
-  * Renamed to ReadObects
+  * Renamed to ReadObjects
   * Renamed to ReadObjectsStream
 * Renaming ReadObjectListAsync and ReadObjectEnumerableAsync on IMultiResultReaderAsync
   * Renamed to ReadObjectsAsync
