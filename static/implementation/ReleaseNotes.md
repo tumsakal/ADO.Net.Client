@@ -3,6 +3,12 @@ Version History
 
 ### 1.0.7
 
+* Renaming ReadObjectList and ReadObjectEnumerable on MultiResultReader
+  * Renamed to ReadObects
+  * Renamed to ReadObjectsStream
+* Renaming ReadObjectListAsync and ReadObjectEnumerableAsync on MultiResultReader
+  * Renamed to ReadObjectsAsync
+  * Renamed to ReadaObjectsStreamAsync
 * MultiResultReader constructor now takes in an instance of IDataMapper
 * SqlExecutor constructor now also takes in an instance of IDataMapper
 * SqlExecutor GetScalarValue sync/async methods are now generic
