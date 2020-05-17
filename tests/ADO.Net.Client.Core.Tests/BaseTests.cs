@@ -59,6 +59,17 @@ namespace ADO.Net.Client.Core.Tests
         /// 
         /// </summary>
         [Test]
+        public void CanCreateDbFactoryFromAssembly()
+        {
+            DbProviderFactory factory = DbObjectFactory.GetProviderFactory(new MySqlConnection().GetType().Assembly);
+
+            //Needs to a mysql client factory
+            Assert.AreEqual(typeof(MySqlClientFactory), factory.GetType());
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
         public void CanCreateDbDataAdapter()
         {
             DbDataAdapter dbDataAdapter = _factory.GetDbDataAdapter();
