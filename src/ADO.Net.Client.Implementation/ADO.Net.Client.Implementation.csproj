@@ -11,7 +11,7 @@
     <Authors>Robert Garrison</Authors>
     <Company>Robert Garrison</Company>
     <Product>ADO.Net.Client.Implementation</Product>
-    <Title>ADO.NET.Client.Implementation</Title>
+    <Title>ADO.Net.Client.Implementation</Title>
     <PackageId>ADO.Net.Client.Implementation</PackageId>
     <Description>Implementation functionality API objects for ADO.Net.Client based libraries</Description>
     <PackageReleaseNotes>
