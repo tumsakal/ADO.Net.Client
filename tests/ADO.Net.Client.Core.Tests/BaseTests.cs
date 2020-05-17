@@ -52,7 +52,8 @@ namespace ADO.Net.Client.Core.Tests
         {
             DbProviderFactory factory = DbObjectFactory.GetProviderFactory("MySqlConnector");
 
-            //Needs to a mysql client factory
+            //Needs to be a mysql client factory
+            Assert.IsNotNull(factory);
             Assert.AreEqual(typeof(MySqlClientFactory), factory.GetType());
         }
         /// <summary>
@@ -63,7 +64,8 @@ namespace ADO.Net.Client.Core.Tests
         {
             DbProviderFactory factory = DbObjectFactory.GetProviderFactory(new MySqlConnection().GetType().Assembly);
 
-            //Needs to a mysql client factory
+            //Needs to be a mysql client factory
+            Assert.IsNotNull(factory);
             Assert.AreEqual(typeof(MySqlClientFactory), factory.GetType());
         }
         /// <summary>
