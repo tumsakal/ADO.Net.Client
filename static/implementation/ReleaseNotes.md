@@ -3,6 +3,7 @@ Version History
 
 ### 1.0.7
 
+* GetScalarValue sync/async methods are now generic
 * Updating to ADO.Net.Client.Core 1.0.8
 * Adding .NET 4.5, 4.6.1, removing .NET 4.7.2 build
 
