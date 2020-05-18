@@ -60,7 +60,6 @@ namespace ADO.Net.Client.Implementation
         public ConnectionManager(DbConnection connection)
         {
             _connection = connection;
-            _builder = builder;
         }
         #endregion
     }

@@ -37,6 +37,7 @@ namespace ADO.Net.Client.Implementation.Tests
         #region Fields/Properties
         private readonly string _connectionString = "Server=127.0.0.1;Database=AdventureWorks;Port=3306;UId=myUsername;Pwd=myPassword;";
         private MySqlConnectionStringBuilder _sqlBuilder;
+        private ConnectionStringBuilder _builder;
         #endregion
         #region Setup/Teardown
         [SetUp]
@@ -44,6 +45,7 @@ namespace ADO.Net.Client.Implementation.Tests
         {
             _sqlBuilder = new MySqlConnectionStringBuilder();
             _sqlBuilder.ConnectionString = _connectionString;
+            _builder = new ConnectionStringBuilder(_sqlBuilder);
         }
         #endregion
         #region Tests        
@@ -53,11 +55,9 @@ namespace ADO.Net.Client.Implementation.Tests
         [Test]
         public void AddConnectionStringProperty()
         {
-            ConnectionStringBuilder builder = new ConnectionStringBuilder(_sqlBuilder);
+            _builder.AddConnectionStringProperty("SslMode", "Preferred");
 
-            builder.AddConnectionStringProperty("SslMode", "Preferred");
-
-            Assert.That(builder.ConnectionString.EndsWith("SSL Mode=Preferred"));
+            Assert.That(_builder.ConnectionString.EndsWith("SSL Mode=Preferred"));
         }
         /// <summary>
         /// 
@@ -65,11 +65,9 @@ namespace ADO.Net.Client.Implementation.Tests
         [Test]
         public void RemoveConnectionStringProperty()
         {
-            ConnectionStringBuilder builder = new ConnectionStringBuilder(_sqlBuilder);
+            _builder.RemoveConnectionStringProperty("Port");
 
-            builder.RemoveConnectionStringProperty("Port");
-
-            Assert.That(builder.ConnectionString.Contains("Port=3306;") == false);
+            Assert.That(_builder.ConnectionString.Contains("Port=3306;") == false);
         }
         /// <summary>
         /// 
@@ -77,8 +75,7 @@ namespace ADO.Net.Client.Implementation.Tests
         [Test]
         public void GetConnectionStringPropertyValueReturnsNull()
         {
-            ConnectionStringBuilder builder = new ConnectionStringBuilder(_sqlBuilder);
-            object value = builder.GetConnectionStringPropertyValue("SSL Mode");
+            object value = _builder.GetConnectionStringPropertyValue("SSL Mode");
 
             Assert.IsNull(value);
         }
@@ -88,8 +85,7 @@ namespace ADO.Net.Client.Implementation.Tests
         [Test]
         public void GetConnectionStringPropertyValue()
         {
-            ConnectionStringBuilder builder = new ConnectionStringBuilder(_sqlBuilder);
-            object value = builder.GetConnectionStringPropertyValue("Port");
+            object value = _builder.GetConnectionStringPropertyValue("Port");
 
             Assert.AreEqual(3306.ToString(), value);
         }
@@ -99,11 +95,9 @@ namespace ADO.Net.Client.Implementation.Tests
         [Test]
         public void ClearConnectionString()
         {
-            ConnectionStringBuilder builder = new ConnectionStringBuilder(_sqlBuilder);
+            _builder.ClearConnectionString();
 
-            builder.ClearConnectionString();
-
-            Assert.That(string.IsNullOrWhiteSpace(builder.ConnectionString));
+            Assert.That(string.IsNullOrWhiteSpace(_builder.ConnectionString));
         }
         #endregion
     }
