@@ -86,30 +86,39 @@ namespace ADO.Net.Client.Core
         /// <returns></returns>
         public abstract Task<T> GetDataObjectAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class;
         /// <summary>
-        /// Gets the data object enumerable.
+        /// Gets the data objects stream.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="query">The query.</param>
         /// <returns></returns>
-        public abstract IEnumerable<T> GetDataObjectEnumerable<T>(ISqlQuery query) where T : class;
-#if !NET45
+        public abstract IEnumerable<T> GetDataObjectsStream<T>(ISqlQuery query) where T : class;
         /// <summary>
-        /// Gets the data object enumerable asynchronous.
+        /// Gets a single instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="query">The query.</param>
-        /// <param name="token">The token.</param>
-        /// <returns></returns>
-        public abstract IAsyncEnumerable<T> GetDataObjectEnumerableAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class;
-#endif
+        /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <returns>Gets an instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine.
+        /// Or the default value of <typeparamref name="T"/> if there are no search results
+        /// </returns>
+        public abstract IEnumerable<T> GetDataObjects<T>(ISqlQuery query) where T : class;
+#if !NET45        
         /// <summary>
-        /// Gets the data object list asynchronous.
+        /// Gets an <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine streame from the server
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="query">The query.</param>
-        /// <param name="token">The token.</param>
-        /// <returns></returns>
-        public abstract Task<List<T>> GetDataObjectListAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class;
+        /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>Returns an <see cref="IEnumerable{T}"/> of type parameter object based on the fields in the passed in query</returns>
+        public abstract IAsyncEnumerable<T> GetDataObjectsStreamAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class;
+#endif        
+        /// <summary>
+        /// Gets an <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
+        /// </summary>
+        /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>Returns a <see cref="IEnumerable{T}"/> of type parameter object based on the fields in the passed in query</returns>
+        public abstract Task<IEnumerable<T>> GetDataObjectsAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class;
         /// <summary>
         /// Gets the data set.
         /// </summary>

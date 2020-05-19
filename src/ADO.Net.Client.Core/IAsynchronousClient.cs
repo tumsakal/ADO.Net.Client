@@ -56,22 +56,22 @@ namespace ADO.Net.Client.Core
         Task<T> GetDataObjectAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class;
 #if !NET45
         /// <summary>
-        /// Gets a list of the type parameter object that creates an object based on the query passed into the routine
+        /// Gets an <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine streame from the server
         /// </summary>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <returns>Returns a list of type parameter object based on the fields in the passed in query</returns>
-        IAsyncEnumerable<T> GetDataObjectEnumerableAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class;
+        /// <returns>Returns an <see cref="IEnumerable{T}"/> of type parameter object based on the fields in the passed in query</returns>
+        IAsyncEnumerable<T> GetDataObjectsStreamAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class;
 #endif
         /// <summary>
-        /// Gets a list of the type parameter object that creates an object based on the query passed into the routine
+        /// Gets an <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <returns>Returns a list of type parameter object based on the fields in the passed in query</returns>
-        Task<List<T>> GetDataObjectListAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class;
+        /// <returns>Returns a <see cref="IEnumerable{T}"/> of type parameter object based on the fields in the passed in query</returns>
+        Task<IEnumerable<T>> GetDataObjectsAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class;
         /// <summary>
         /// Utility method for returning a <see cref="Task{DbDataReader}"/> object created from the passed in query
         /// </summary>

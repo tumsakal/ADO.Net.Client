@@ -24,6 +24,7 @@ SOFTWARE.*/
 #region Using Statements
 using MySql.Data.MySqlClient;
 using NUnit.Framework;
+using System;
 using System.Data;
 using System.Data.Common;
 #endregion
@@ -55,6 +56,14 @@ namespace ADO.Net.Client.Core.Tests
             //Needs to be a mysql client factory
             Assert.IsNotNull(factory);
             Assert.AreEqual(typeof(MySqlClientFactory), factory.GetType());
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        public void ThrowsArugementExceptionCantFindProvider()
+        {
+            Assert.Throws<ArgumentException>(() => DbObjectFactory.GetProviderFactory("ADO.Net.Client.Core"));
         }
         /// <summary>
         /// 

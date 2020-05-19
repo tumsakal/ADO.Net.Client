@@ -58,12 +58,19 @@ namespace ADO.Net.Client.Core
         /// </returns>
         T GetDataObject<T>(ISqlQuery query) where T : class;
         /// <summary>
-        /// Gets a list of the type parameter object that creates an object based on the query passed into the routine
+        /// Gets the data objects.
         /// </summary>
         /// <typeparam name="T">An instance of the type caller wants create from query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        IEnumerable<T> GetDataObjectEnumerable<T>(ISqlQuery query) where T : class;
+        IEnumerable<T> GetDataObjects<T>(ISqlQuery query) where T : class;
+        /// <summary>
+        /// Gets a list of the type parameter object that creates an object based on the query passed into the routine, streamed from the server
+        /// </summary>
+        /// <typeparam name="T">An instance of the type caller wants create from query passed into procedure</typeparam>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
+        IEnumerable<T> GetDataObjectsStream<T>(ISqlQuery query) where T : class;
         /// <summary>
         /// Utility method for returning a <see cref="DbDataReader"/> object created from the passed in query
         /// </summary>

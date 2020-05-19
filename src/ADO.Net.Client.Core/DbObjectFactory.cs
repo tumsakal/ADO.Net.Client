@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 #if NETSTANDARD2_1
@@ -430,6 +431,7 @@ namespace ADO.Net.Client.Core
         /// Gets an instance of <see cref="DbProviderFactory"/> based off a .NET drivers <paramref name="providerName"/>, such as System.Data.SqlClientt
         /// </summary>
         /// <returns>Returns an instance of <see cref="DbProviderFactory"/></returns>
+        /// <exception cref="ArgumentException">Thrown when the passed in <paramref name="providerName"/> does not have a <see cref="DbProviderFactory"/> type</exception>
         public static DbProviderFactory GetProviderFactory(string providerName)
         {
             //Get the assembly
@@ -440,19 +442,15 @@ namespace ADO.Net.Client.Core
         /// Looks for the <see cref="DbProviderFactory"/> within the current <see cref="Assembly"/>
         /// </summary>
         /// <returns>Returns an instance of <see cref="DbProviderFactory"/></returns>
+        /// <exception cref="ArgumentException">Thrown when the passed in <paramref name="assembly"/> does not have a <see cref="DbProviderFactory"/> type</exception>
         public static DbProviderFactory GetProviderFactory(Assembly assembly)
         {
-            Type providerFactory = null;
+            Type providerFactory = assembly.GetTypes().Where(x => x.GetTypeInfo().BaseType == typeof(DbProviderFactory)).FirstOrDefault();
 
-            //Get the type that inherits from DbProviderFactory
-            foreach (Type t in assembly.GetTypes())
+            //There's no instance of client factory in this assembly
+            if(providerFactory == null)
             {
-                //Check if this is a dbproviderfactory
-                if (t.GetTypeInfo().BaseType == typeof(DbProviderFactory))
-                {
-                    providerFactory = t;
-                    break;
-                }
+                throw new ArgumentException($"An instance of {nameof(DbProviderFactory)} was not found in the passed in assembly {assembly.FullName}");
             }
 
             //Get the field to get the factory instance
