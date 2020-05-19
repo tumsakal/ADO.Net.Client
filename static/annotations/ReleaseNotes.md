@@ -1,11 +1,16 @@
 Version History
 ===============
 
+### 1.1.2
+
+* Correcting DateTim2 attribute to be DateTime2
+
 ### 1.1.1
 
 * Adding new annotation
   * [DateTime2](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/DateTim2.cs)
     * Signifies data type is equivelant of DateTime2
+
 ### 1.1.0
 
 * Adding .NET 4.5 and .NET 4.6.1 builds

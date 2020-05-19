@@ -5,7 +5,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
-    <Version>1.1.1</Version>
+    <Version>1.1.2</Version>
     <PackageTags>ORM ADO.NET ADO SQL .NET Database RDBMS Generic DAL ANSI</PackageTags>
     <Authors>Robert Garrison</Authors>
     <Company>Robert Garrison</Company>
@@ -14,7 +14,9 @@
     <PackageId>ADO.Net.Client.Annotations</PackageId>
     <Description>Annotation objects for ADO.Net.Client based libraries</Description>
     <RepositoryUrl>https://github.com/rgarrison12345/ADO.Net.Client.git</RepositoryUrl>
-    <PackageReleaseNotes>Release Notes https://github.com/rgarrison12345/ADO.Net.Client/blob/master/static/annotations/ReleaseNotes.md</PackageReleaseNotes>
+    <PackageReleaseNotes>
+      Release Notes https://github.com/rgarrison12345/ADO.Net.Client/blob/master/static/annotations/ReleaseNotes.md
+    </PackageReleaseNotes>
     <PackageIcon>icon.png</PackageIcon>
     <IncludeSource>true</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
