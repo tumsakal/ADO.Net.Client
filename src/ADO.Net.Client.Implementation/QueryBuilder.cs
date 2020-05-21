@@ -150,9 +150,6 @@ namespace ADO.Net.Client.Implementation
         /// </summary>
         /// <param name="param">An instance of the <see cref="T:System.Data.Common.DbParameter" /> object, that is created the by the caller</param>
         /// <exception cref="ArgumentException">Throws argument exception when there are duplicate parameter names</exception>
-        /// <returns>
-        /// Returns a <see cref="T:System.Data.Common.DbParameter" />
-        /// </returns>
         public void AddParameter(DbParameter param)
         {
             //Check if this parameter exists before adding to collection
