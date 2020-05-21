@@ -44,12 +44,12 @@ namespace ADO.Net.Client.Core
     {
 #if !NET45
         /// <summary>
-        /// Maps the result set.
+        /// Maps the result set one at a time by streaming the result from the server asynchronously
         /// </summary>
-        /// <param name="token"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="reader">The reader.</param>
-        /// <returns></returns>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <typeparam name="T">The <see cref="Type"/> the caller wants created from the passed in <paramref name="reader"/></typeparam>
+        /// <param name="reader">An instance of <see cref="DbDataReader"/> that contains a result set of records that needs to be mapped</param>
+        /// <returns>Returns the instance of <typeparamref name="T"/> created from the passed in <paramref name="reader"/></returns>
         public async IAsyncEnumerable<T> MapResultSetStreamAsync<T>(DbDataReader reader, [EnumeratorCancellation] CancellationToken token = default)
         {
             //Keep looping through the result set
@@ -61,12 +61,12 @@ namespace ADO.Net.Client.Core
         }
 #endif
         /// <summary>
-        /// Maps the result set.
+        /// Maps an entire result set in the <paramref name="reader"/>
         /// </summary>
-        /// <param name="token"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="reader">The reader.</param>
-        /// <returns></returns>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <typeparam name="T">The <see cref="Type"/> the caller wants created from the passed in <paramref name="reader"/></typeparam>
+        /// <param name="reader">An instance of <see cref="DbDataReader"/> that contains a result set of records that needs to be mapped</param>
+        /// <returns>Returns the instance of <typeparamref name="T"/> created from the passed in <paramref name="reader"/></returns>
         public async Task<IEnumerable<T>> MapResultSetAsync<T>(DbDataReader reader, CancellationToken token = default)
         {
             List<T> returnList = new List<T>();
@@ -81,11 +81,11 @@ namespace ADO.Net.Client.Core
             return returnList;
         }
         /// <summary>
-        /// Maps the result set.
+        /// Maps the result set one at a time by streaming the result from the server
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="reader">The reader.</param>
-        /// <returns></returns>
+        /// <typeparam name="T">The <see cref="Type"/> the caller wants created from the passed in <paramref name="reader"/></typeparam>
+        /// <param name="reader">An instance of <see cref="DbDataReader"/> that contains a result set of records that needs to be mapped</param>
+        /// <returns>Returns the instance of <typeparamref name="T"/> created from the passed in <paramref name="reader"/></returns>
         public IEnumerable<T> MapResultSetStream<T>(DbDataReader reader)
         {
             //Keep looping through the result set
@@ -96,11 +96,11 @@ namespace ADO.Net.Client.Core
             }
         }
         /// <summary>
-        /// Maps the result set.
+        /// Maps an entire result set in the <paramref name="reader"/>
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="reader">The reader.</param>
-        /// <returns></returns>
+        /// <typeparam name="T">The <see cref="Type"/> the caller wants created from the passed in <paramref name="reader"/></typeparam>
+        /// <param name="reader">An instance of <see cref="DbDataReader"/> that contains a result set of records that needs to be mapped</param>
+        /// <returns>Returns the instance of <typeparamref name="T"/> created from the passed in <paramref name="reader"/></returns>
         public IEnumerable<T> MapResultSet<T>(DbDataReader reader)
         {
             List<T> returnList = new List<T>();
@@ -130,14 +130,14 @@ namespace ADO.Net.Client.Core
             foreach (PropertyInfo p in writeableProperties)
             {
                 object[] customAttributes = p.GetCustomAttributes(false);
-                DbField field = (DbField)customAttributes.Where(x => x is DbField).FirstOrDefault();
+                DbField field = customAttributes.Where(x => x is DbField).FirstOrDefault() as DbField;
 
                 string fieldName = (field != null && string.IsNullOrEmpty(field.DatabaseFieldName) == false) ? field.DatabaseFieldName : p.Name;
                 int ordinalIndex = record.GetOrdinal(fieldName);
                 object value = record.GetValue(ordinalIndex);
 
                 //Check if DBNull
-                if (field != null && (value == null || value == DBNull.Value))
+                if (field != null && value == DBNull.Value)
                 {
                     //Set new value
                     value = field.DefaultValueIfNull;
