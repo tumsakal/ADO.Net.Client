@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -36,7 +37,7 @@ using System.Threading.Tasks;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// 
+    /// Mapper class that maps fields in a record in a database to a .NET object
     /// </summary>
     /// <seealso cref="IDataMapper" />
     public class DataMapper : IDataMapper
@@ -50,9 +51,9 @@ namespace ADO.Net.Client.Core
         /// <param name="reader">The reader.</param>
         /// <returns></returns>
         public async IAsyncEnumerable<T> MapResultSetStreamAsync<T>(DbDataReader reader, [EnumeratorCancellation] CancellationToken token = default)
-        { 
+        {
             //Keep looping through the result set
-            while(await reader.ReadAsync(token).ConfigureAwait(false) == true)
+            while (await reader.ReadAsync(token).ConfigureAwait(false) == true)
             {
                 //Return this object
                 yield return MapRecord<T>(reader);
@@ -88,7 +89,7 @@ namespace ADO.Net.Client.Core
         public IEnumerable<T> MapResultSetStream<T>(DbDataReader reader)
         {
             //Keep looping through the result set
-            while(reader.Read() == true)
+            while (reader.Read() == true)
             {
                 //Return this object
                 yield return MapRecord<T>(reader);
@@ -122,99 +123,50 @@ namespace ADO.Net.Client.Core
         public T MapRecord<T>(IDataRecord record)
         {
             //Get an instance of the object passed in
-            object returnType = Activator.CreateInstance<T>();
-            Type type = returnType.GetType();
+            T returnType = Activator.CreateInstance<T>();
+            IEnumerable<PropertyInfo> writeableProperties = returnType.GetType().GetProperties().Where(x => x.CanWrite == true).Where(x => x.GetCustomAttributes(false).Contains(typeof(DbFieldIgnore)) == false);
 
-            //Loop through all properties
-            foreach (PropertyInfo p in type.GetProperties())
+            //Loop through all the properties
+            foreach (PropertyInfo p in writeableProperties)
             {
-                DbField field = null;
-                bool ignoredField = false;
-                bool shouldSkip = !(p.CanWrite == true);
+                object[] customAttributes = p.GetCustomAttributes(false);
+                DbField field = (DbField)customAttributes.Where(x => x is DbField).FirstOrDefault();
 
-                //Check if we can write the property
-                if (shouldSkip == true)
-                {
-                    //Don't go any further we cannot write to this property
-                    continue;
-                }
-
-                //Get the dbfield attribute
-                foreach (object attribute in p.GetCustomAttributes(false))
-                {
-                    //Check if this is an ignored field
-                    if (attribute is DbFieldIgnore)
-                    {
-                        //Break out we're done
-                        ignoredField = true;
-                        break;
-                    }
-                    //Check if this is a dbfield
-                    else if (attribute is DbField)
-                    {
-                        field = (DbField)attribute;
-                    }
-                }
-
-                //Check if we should go on to the next loop
-                if (ignoredField == true)
-                {
-                    continue;
-                }
-
-                string fieldName = p.Name;
-
-                //Check if the cast took place
-                if (field != null && !string.IsNullOrEmpty(field.DatabaseFieldName))
-                {
-                    fieldName = field.DatabaseFieldName;
-                }
-
+                string fieldName = (field != null && string.IsNullOrEmpty(field.DatabaseFieldName) == false) ? field.DatabaseFieldName : p.Name;
                 int ordinalIndex = record.GetOrdinal(fieldName);
+                object value = record.GetValue(ordinalIndex);
 
-                //Check if the field is present in the dynamic object
-                if (ordinalIndex != -1)
+                //Check if DBNull
+                if (field != null && (value == null || value == DBNull.Value))
                 {
-                    //Get the current property value
-                    object value = record.GetValue(ordinalIndex);
+                    //Set new value
+                    value = field.DefaultValueIfNull;
+                }
 
-                    //Check if DBNull
-                    if (field != null && (value == null || value == DBNull.Value))
+                if (Utilities.IsNullableGenericType(p.PropertyType) == true)
+                {
+                    if (value == null)
                     {
-                        //Set new value
-                        value = field.DefaultValueIfNull;
-                    }
-
-                    //Check if this is a nullable type
-                    if (Utilities.IsNullableGenericType(p.PropertyType))
-                    {
-                        if (value == null)
-                        {
-                            p.SetValue(returnType, null, null);
-                        }
-                        else
-                        {
-                            p.SetValue(returnType, Convert.ChangeType(value, Nullable.GetUnderlyingType(p.PropertyType)), null);
-                        }
-                    }
-                    //Check if an enum
-                    else if (p.PropertyType.GetTypeInfo().IsEnum)
-                    {
-                        if (value != null)
-                        {
-                            p.SetValue(returnType, Enum.Parse(p.PropertyType, value.ToString()), null);
-                        }
+                        p.SetValue(returnType, null, null);
                     }
                     else
                     {
-                        //This is a normal property
-                        p.SetValue(returnType, Convert.ChangeType(value, p.PropertyType), null);
+                        p.SetValue(returnType, Convert.ChangeType(value, Nullable.GetUnderlyingType(p.PropertyType)), null);
                     }
+                }
+                else if (p.PropertyType.GetTypeInfo().IsEnum == true && value != null)
+                {
+                    p.SetValue(returnType, Enum.Parse(p.PropertyType, value.ToString()), null);
+                }
+                else
+                {
+                    //This is a normal property
+                    p.SetValue(returnType, Convert.ChangeType(value, p.PropertyType), null);
                 }
             }
 
             //Return this back to the caller
-            return (T)returnType;
+            return returnType;
         }
         #region Helper Methods
         #endregion
