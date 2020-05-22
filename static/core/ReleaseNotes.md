@@ -1,6 +1,10 @@
 Version History
 ===============
 
+### 1.0.9
+
+* IAsynchronousClient and ISynchronousClient GetScalarValue now generic
+
 ### 1.0.8
 
 * Renaming ReadObjectList and ReadObjectEnumerable on IMultiResultReaderSync
