@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using System;
+using System.Collections;
 using System.Reflection;
 #endregion
 
@@ -37,7 +38,18 @@ namespace ADO.Net.Client.Core
         #endregion
         #region Sync Methods   
         #endregion
-        #region Helper Methods        
+        #region Helper Methods            
+        /// <summary>
+        /// Determines whether this instance is an <see cref="IEnumerable"/>
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified input is enumerable; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsEnumerable(this object input)
+        {
+            return (input as IEnumerable) != null && (input as string) == null && (input as byte[]) == null;
+        }
         /// <summary>
         /// Gets the type from value.
         /// </summary>
