@@ -22,10 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using ADO.Net.Client.Annotations;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Linq;
 using System.Reflection;
 #endregion
 
@@ -73,22 +74,30 @@ namespace ADO.Net.Client.Core
         /// <returns></returns>
         public DbType MapDbType(PropertyInfo info)
         {
-            IEnumerable<CustomAttributeData> attributes = info.CustomAttributes;
+            object[] customAttributes = info.GetCustomAttributes(false);
 
             //Check if this is a byte array
             if (info.PropertyType.Name == "Byte[]")
             {
                 return DbType.Binary;
             }
-            else if(info.PropertyType == typeof(DateTime))
+            else if (info.PropertyType == typeof(DateTime))
             {
-                return DbType.DateTime;
+                //Check which date type to map to
+                if (customAttributes.Contains(typeof(DateTime2)) == true)
+                {
+                    return DbType.DateTime2;
+                }
+                else
+                {
+                    return DbType.DateTime;
+                }
             }
-            else if(info.PropertyType == typeof(DateTimeOffset))
+            else if (info.PropertyType == typeof(DateTimeOffset))
             {
                 return DbType.DateTimeOffset;
             }
-            else if(info.PropertyType == typeof(TimeSpan))
+            else if (info.PropertyType == typeof(TimeSpan))
             {
                 return DbType.Time;
             }
@@ -96,7 +105,7 @@ namespace ADO.Net.Client.Core
             {
                 return DbType.Single;
             }
-            else if(info.PropertyType == typeof(bool))
+            else if (info.PropertyType == typeof(bool))
             {
                 return DbType.Boolean;
             }
@@ -104,15 +113,15 @@ namespace ADO.Net.Client.Core
             {
                 return DbType.SByte;
             }
-            else if(info.PropertyType == typeof(byte))
+            else if (info.PropertyType == typeof(byte))
             {
                 return DbType.Byte;
             }
-            else if(info.PropertyType == typeof(double))
+            else if (info.PropertyType == typeof(double))
             {
                 return DbType.Double;
             }
-            else if(info.PropertyType == typeof(decimal))
+            else if (info.PropertyType == typeof(decimal))
             {
                 return DbType.Decimal;
             }
@@ -124,7 +133,7 @@ namespace ADO.Net.Client.Core
             {
                 return DbType.Int32;
             }
-            else if(info.PropertyType == typeof(long))
+            else if (info.PropertyType == typeof(long))
             {
                 return DbType.Int64;
             }
@@ -142,7 +151,7 @@ namespace ADO.Net.Client.Core
             }
             else if (info.PropertyType == typeof(Guid))
             {
-                if(HasNativeGuidSupport == true)
+                if (HasNativeGuidSupport == true)
                 {
                     return DbType.Guid;
                 }
@@ -153,7 +162,23 @@ namespace ADO.Net.Client.Core
             }
             else if (info.PropertyType == typeof(string))
             {
-                return DbType.String;
+                //Check which string type to map to
+                if (customAttributes.Contains(typeof(ANSIString)) == true)
+                {
+                    return DbType.AnsiString;
+                }
+                else if (customAttributes.Contains(typeof(ANSIStringFixedLength)) == true)
+                {
+                    return DbType.AnsiStringFixedLength;
+                }
+                else if (customAttributes.Contains(typeof(StringFixedLength)) == true)
+                {
+                    return DbType.StringFixedLength;
+                }
+                else
+                {
+                    return DbType.String;
+                }
             }
             else
             {
@@ -173,7 +198,7 @@ namespace ADO.Net.Client.Core
                 return DBNull.Value;
             }
             else if (info.PropertyType.IsEnum == true)
-            { 
+            {
                 return Convert.ChangeType(value, ((Enum)value).GetTypeCode());
             }
             else if (info.PropertyType == typeof(Guid) && HasNativeGuidSupport == false)
@@ -202,7 +227,7 @@ namespace ADO.Net.Client.Core
                 parameter.Size = 40;
             }
             else if (parameter.DbType == DbType.String || parameter.DbType == DbType.StringFixedLength
-                || parameter.DbType == DbType.AnsiString  || parameter.DbType == DbType.AnsiStringFixedLength)
+                || parameter.DbType == DbType.AnsiString || parameter.DbType == DbType.AnsiStringFixedLength)
             {
                 parameter.Size = Math.Max(parameter.Value.ToString().Length + 1, 4000);
             }
