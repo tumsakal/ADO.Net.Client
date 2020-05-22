@@ -32,7 +32,7 @@ using System.Threading.Tasks;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// 
+    /// Base class for all classes that query a database
     /// </summary>
     /// <seealso cref="IDbProvider" />
     public abstract class DbProvider : IDbProvider
