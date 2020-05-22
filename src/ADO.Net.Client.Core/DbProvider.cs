@@ -71,26 +71,30 @@ namespace ADO.Net.Client.Core
         #endregion
         #region Data Retrieval        
         /// <summary>
-        /// Gets the data object.
+        /// Gets a single instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="query">The query.</param>
-        /// <returns></returns>
+        /// <typeparam name="T">An instance of the type caller wants create from query passed into procedure</typeparam>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <returns>Gets an instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine.
+        /// Or the default value of <typeparamref name="T"/> if there are no search results
+        /// </returns>
         public abstract T GetDataObject<T>(ISqlQuery query) where T : class;
         /// <summary>
-        /// Gets the data object asynchronous.
+        /// Gets a single instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="query">The query.</param>
-        /// <param name="token">The token.</param>
-        /// <returns></returns>
+        /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>Gets an instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine.
+        /// Or the default value of <typeparamref name="T"/> if there are no search results
+        /// </returns>
         public abstract Task<T> GetDataObjectAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class;
         /// <summary>
-        /// Gets the data objects stream.
+        /// Gets a list of the type parameter object that creates an object based on the query passed into the routine, streamed from the server
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="query">The query.</param>
-        /// <returns></returns>
+        /// <typeparam name="T">An instance of the type caller wants create from query passed into procedure</typeparam>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
         public abstract IEnumerable<T> GetDataObjectsStream<T>(ISqlQuery query) where T : class;
         /// <summary>
         /// Gets a single instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine
@@ -120,51 +124,51 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns a <see cref="IEnumerable{T}"/> of type parameter object based on the fields in the passed in query</returns>
         public abstract Task<IEnumerable<T>> GetDataObjectsAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class;
         /// <summary>
-        /// Gets the data set.
+        /// Gets an instance of <see cref="DataSet"/>
         /// </summary>
-        /// <param name="query">The query.</param>
-        /// <returns></returns>
+        /// <param name="query">SQL query to use to build a <see cref="DataSet"/></param>
+        /// <returns>Returns an instance of <see cref="DataSet"/> based on the <paramref name="query"/> passed into the routine</returns>
         public abstract DataSet GetDataSet(ISqlQuery query);
         /// <summary>
-        /// Gets the data table.
+        /// Utility method for returning a <see cref="DataTable"/> object created from the passed in query
         /// </summary>
-        /// <param name="query">The query.</param>
-        /// <returns></returns>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <returns>Returns a <see cref="DataTable"/> object</returns>
         public abstract DataTable GetDataTable(ISqlQuery query);
         /// <summary>
-        /// Gets the data table asynchronous.
+        /// Gets an instance of <see cref="DataTable"/> asynchronously
         /// </summary>
-        /// <param name="query">The query.</param>
-        /// <param name="token">The token.</param>
-        /// <returns></returns>
+        /// <param name="query">SQL query to use to build a <see cref="DataTable"/></param>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>Returns a <see cref="Task{TResult}"/> of datatable</returns>
         public abstract Task<DataTable> GetDataTableAsync(ISqlQuery query, CancellationToken token = default);
         /// <summary>
-        /// Gets the database data reader.
+        /// Utility method for returning a <see cref="DbDataReader"/> object created from the passed in query
         /// </summary>
-        /// <param name="query">The query.</param>
-        /// <param name="behavior">The behavior.</param>
-        /// <returns></returns>
+        /// <param name="behavior">Provides a description of the results of the query and its effect on the database.  Defaults to <see cref="CommandBehavior.Default"/></param>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <returns>An instance of <see cref="DbDataReader"/> object, the caller is responsible for handling closing the <see cref="DbDataReader"/>.  Once the data reader is closed, the database connection will be closed as well</returns>
         public abstract DbDataReader GetDbDataReader(ISqlQuery query, CommandBehavior behavior = CommandBehavior.Default);
         /// <summary>
-        /// Gets the database data reader asynchronous.
+        /// Utility method for returning a <see cref="Task{DbDataReader}"/> object created from the passed in query
         /// </summary>
-        /// <param name="query">The query.</param>
-        /// <param name="behavior">The behavior.</param>
-        /// <param name="token">The token.</param>
-        /// <returns></returns>
+        /// <param name="behavior">Provides a description of the results of the query and its effect on the database.  Defaults to <see cref="CommandBehavior.Default"/></param>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>A <see cref="Task{DbDataReader}"/> object, the caller is responsible for handling closing the <see cref="DbDataReader"/>.  Once the data reader is closed, the database connection will be closed as well</returns>
         public abstract Task<DbDataReader> GetDbDataReaderAsync(ISqlQuery query, CommandBehavior behavior = CommandBehavior.Default, CancellationToken token = default);
         /// <summary>
-        /// Gets the scalar value.
+        /// Utility method for returning a scalar value from the database
         /// </summary>
-        /// <param name="query">The query.</param>
-        /// <returns></returns>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <returns>Returns the value of the first column in the first row as an object</returns>
         public abstract object GetScalarValue(ISqlQuery query);
         /// <summary>
-        /// Gets the scalar value asynchronous.
+        /// Utility method for returning a <see cref="Task{Object}"/> value from the database
         /// </summary>
-        /// <param name="query">The query.</param>
-        /// <param name="token">The token.</param>
-        /// <returns></returns>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>Returns the value of the first column in the first row as <see cref="Task"/></returns>
         public abstract Task<object> GetScalarValueAsync(ISqlQuery query, CancellationToken token = default);
         #endregion
     }
