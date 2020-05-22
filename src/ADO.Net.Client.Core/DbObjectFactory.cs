@@ -379,13 +379,13 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <param name="values">The values.</param>
         /// <returns></returns>
-        public IEnumerable<DbParameter> GetDbParameters(params[] values)
+        public IEnumerable<DbParameter> GetDbParameters(params object[] values)
         {
             // For a stored proc, we assume that we're only getting POCOs or parameters
             List<DbParameter> result = new List<DbParameter>();
 
             //Keep looping through each item in the parameter array
-            foreach (var arg in values)
+            foreach (object arg in values)
             {
                 result.Add(GetDbParameter(arg));
             }
@@ -398,7 +398,7 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <param name="arg">The argument.</param>
         /// <returns></returns>
-        private object GetDbParameter(object arg)
+        private DbParameter GetDbParameter(object arg)
         {
             //Check if this is an enumerable object 
             if (arg.IsEnumerable() == true)
