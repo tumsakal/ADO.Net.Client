@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 #region Using Declarations
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -31,6 +32,7 @@ using System.Reflection;
 using System.Threading;
 #if NETSTANDARD2_1
 using System.Threading.Tasks;
+using System.Xml.Linq;
 #endif
 #endregion
 
@@ -373,6 +375,73 @@ namespace ADO.Net.Client.Core
             return parameter;
         }
         /// <summary>
+        /// Gets the database parameters.
+        /// </summary>
+        /// <param name="values">The values.</param>
+        /// <returns></returns>
+        public IEnumerable<DbParameter> GetDbParameters(params[] values)
+        {
+            // For a stored proc, we assume that we're only getting POCOs or parameters
+            List<DbParameter> result = new List<DbParameter>();
+
+            //Keep looping through each item in the parameter array
+            foreach (var arg in values)
+            {
+                result.Add(GetDbParameter(arg));
+            }
+
+            //Return the result back to the caller
+            return result.ToArray();
+        }
+        /// <summary>
+        /// Processes the argument.
+        /// </summary>
+        /// <param name="arg">The argument.</param>
+        /// <returns></returns>
+        private object GetDbParameter(object arg)
+        {
+            //Check if this is an enumerable object 
+            if (arg.IsEnumerable() == true)
+            {
+                //Go through each item in the enumerable
+                foreach (var singleArg in arg as IEnumerable)
+                {
+                    //Recurse the call
+                    return GetDbParameter(singleArg);
+                }
+            }
+            else if (arg is DbParameter parameter)
+            {
+                return parameter;
+            }
+            else
+            {
+                Type type = arg.GetType();
+
+                //Can't have plain string or value types
+                if (type.IsValueType || type == typeof(string))
+                {
+                    throw new ArgumentException($"Value type or string passed as Parameter object: {arg}");
+                }
+
+                //We only want properties where we can read a value
+                IEnumerable<PropertyInfo> readableProps = type.GetProperties().Where(p => p.CanRead);
+
+                //Loop through each property
+                foreach (PropertyInfo prop in readableProps)
+                {
+                    DbParameter param = GetDbParameter();
+
+                    _dbParameterFormatter.MapDbParameter(param, prop.GetValue(null), prop);
+
+                    return param;
+                }
+            }
+
+            //Nothing to return here
+            return null;
+        }
+        /// <summary>
         /// Create an instance of <see cref="DbParameter"/> object based off of the provider passed into factory
         /// </summary>
         /// <returns>Returns an instantiated <see cref="DbParameter"/> object</returns>
@@ -448,7 +517,7 @@ namespace ADO.Net.Client.Core
             Type providerFactory = assembly.GetTypes().Where(x => x.GetTypeInfo().BaseType == typeof(DbProviderFactory)).FirstOrDefault();
 
             //There's no instance of client factory in this assembly
-            if(providerFactory == null)
+            if (providerFactory == null)
             {
                 throw new ArgumentException($"An instance of {nameof(DbProviderFactory)} was not found in the passed in assembly {assembly.FullName}");
             }
@@ -460,7 +529,7 @@ namespace ADO.Net.Client.Core
             return (DbProviderFactory)field.GetValue(null);
         }
         #endregion
-        #region Helper Methods        
+        #region Helper Methods                
         /// <summary>
         /// Databases the command disposed.
         /// </summary>
