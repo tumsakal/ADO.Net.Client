@@ -136,8 +136,14 @@ namespace ADO.Net.Client.Core
                 int ordinalIndex = record.GetOrdinal(fieldName);
                 object value = record.GetValue(ordinalIndex);
 
-                //Check if DBNull
-                if (field != null && value == DBNull.Value)
+                //Check if this is the databae representation of null
+                if(value == DBNull.Value)
+                {
+                    value = null;
+                }
+
+                //Might need to change the value
+                if (field != null && value == null)
                 {
                     //Set new value
                     value = field.DefaultValueIfNull;
