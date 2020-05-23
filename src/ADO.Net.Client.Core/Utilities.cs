@@ -75,7 +75,7 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <param name="type">The .NET type to check for nullable</param>
         /// <returns>Returns true if the passed in type is nullable, false otherwise</returns>
-        public static bool IsNullableGenericType(Type type)
+        public static bool IsNullableGenericType(this Type type)
         {
             TypeInfo info = type.GetTypeInfo();
 

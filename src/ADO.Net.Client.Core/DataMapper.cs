@@ -149,7 +149,7 @@ namespace ADO.Net.Client.Core
                     value = field.DefaultValueIfNull;
                 }
 
-                if (Utilities.IsNullableGenericType(p.PropertyType) == true)
+                if (p.PropertyType.IsNullableGenericType() == true)
                 {
                     if (value == null)
                     {

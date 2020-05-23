@@ -3,7 +3,11 @@ Version History
 
 ### 1.0.9
 
+* IDbObjectFactory new GetDbParameters function that takes in a param array of object
+  and returns an IEnumerable of DbParameter
 * IAsynchronousClient and ISynchronousClient GetScalarValue now generic
+* Utilities class adding new extension method to check if type is IEnumerable
+* Utilites class making IsNullableGenericType an extension method
 
 ### 1.0.8
 

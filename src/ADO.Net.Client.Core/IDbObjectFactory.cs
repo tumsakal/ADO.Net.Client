@@ -140,6 +140,12 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns a new instance of the <see cref="DbConnection"/> subclass based on the specified provider</returns>
         DbConnection GetDbConnection();
         /// <summary>
+        /// Gets an <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/> from the passed in <paramref name="values"/>
+        /// </summary>
+        /// <param name="values">An array of values to be used to create <see cref="DbParameter"/></param>
+        /// <returns>Returns an <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/></returns>
+        IEnumerable<DbParameter> GetDbParameters(params object[] values);
+        /// <summary>
         /// Create an instance of a <see cref="DbParameter"/> based off of the provider passed into factory
         /// </summary>
         /// <returns>Returns an instantiated <see cref="DbParameter"/> object</returns>

@@ -32,7 +32,6 @@ using System.Reflection;
 using System.Threading;
 #if NETSTANDARD2_1
 using System.Threading.Tasks;
-using System.Xml.Linq;
 #endif
 #endregion
 
@@ -144,9 +143,9 @@ namespace ADO.Net.Client.Core
         }
 #endif
         /// <summary>
-        /// 
+        /// Instantiates a new instance with the passed in <paramref name="dbParameterFormatter"/>
         /// </summary>
-        /// <param name="dbParameterFormatter"></param>
+        /// <param name="dbParameterFormatter">An instance of <see cref="DbParameterFormatter"/> to help format <see cref="DbParameter"/></param>
         private DbObjectFactory(IDbParameterFormatter dbParameterFormatter)
         {
             _dbParameterFormatter = dbParameterFormatter;
@@ -375,71 +374,63 @@ namespace ADO.Net.Client.Core
             return parameter;
         }
         /// <summary>
-        /// Gets the database parameters.
+        /// Gets an <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/> from the passed in <paramref name="values"/>
         /// </summary>
-        /// <param name="values">The values.</param>
-        /// <returns></returns>
+        /// <param name="values">An array of values to be used to create <see cref="DbParameter"/></param>
+        /// <returns>Returns an <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/></returns>
         public IEnumerable<DbParameter> GetDbParameters(params object[] values)
         {
-            // For a stored proc, we assume that we're only getting POCOs or parameters
             List<DbParameter> result = new List<DbParameter>();
 
-            //Keep looping through each item in the parameter array
+            void ProcessArg(object value)
+            {
+                //Check if this is an enumerable object 
+                if (value.IsEnumerable() == true)
+                {
+                    //Go through each item in the enumerable
+                    foreach (var singleArg in value as IEnumerable)
+                    {
+                        //Recurse the call
+                        ProcessArg(singleArg);
+                    }
+                }
+                else if (value is DbParameter parameter)
+                {
+                    result.Add(parameter);
+                }
+                else
+                {
+                    Type type = value.GetType();
+
+                    //Can't have plain string or value types
+                    if (type.IsValueType || type == typeof(string))
+                    {
+                        throw new ArgumentException($"Value type or string passed as Parameter object: {value}");
+                    }
+
+                    //We only want properties where we can read a value
+                    IEnumerable<PropertyInfo> readableProps = type.GetProperties().Where(p => p.CanRead == true);
+
+                    //Loop through each property
+                    foreach (PropertyInfo prop in readableProps)
+                    {
+                        DbParameter param = GetDbParameter();
+
+                        _dbParameterFormatter.MapDbParameter(param, prop.GetValue(value, null), prop);
+
+                        result.Add(param);
+                    }
+                }
+            }
+
+            //Go through all items in the params array
             foreach (object arg in values)
             {
-                result.Add(GetDbParameter(arg));
-            }
-
-            //Return the result back to the caller
-            return result.ToArray();
-        }
-        /// <summary>
-        /// Processes the argument.
-        /// </summary>
-        /// <param name="arg">The argument.</param>
-        /// <returns></returns>
-        private DbParameter GetDbParameter(object arg)
-        {
-            //Check if this is an enumerable object 
-            if (arg.IsEnumerable() == true)
-            {
-                //Go through each item in the enumerable
-                foreach (var singleArg in arg as IEnumerable)
-                {
-                    //Recurse the call
-                    return GetDbParameter(singleArg);
-                }
-            }
-            else if (arg is DbParameter parameter)
-            {
-                return parameter;
-            }
-            else
-            {
-                Type type = arg.GetType();
-
-                //Can't have plain string or value types
-                if (type.IsValueType || type == typeof(string))
-                {
-                    throw new ArgumentException($"Value type or string passed as Parameter object: {arg}");
-                }
-
-                //We only want properties where we can read a value
-                IEnumerable<PropertyInfo> readableProps = type.GetProperties().Where(p => p.CanRead);
-
-                //Loop through each property
-                foreach (PropertyInfo prop in readableProps)
-                {
-                    DbParameter param = GetDbParameter();
-
-                    _dbParameterFormatter.MapDbParameter(param, prop.GetValue(null), prop);
-
-                    return param;
-                }
+                ProcessArg(arg);
             }
 
             //Nothing to return here
-            return null;
+            return result;
         }
         /// <summary>
         /// Create an instance of <see cref="DbParameter"/> object based off of the provider passed into factory
