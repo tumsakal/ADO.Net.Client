@@ -178,57 +178,6 @@ namespace ADO.Net.Client.Implementation
                 return await command.ExecuteNonQueryAsync(token).ConfigureAwait(false);
             }
         }
-#if !NET45 && !NET461 && !NETSTANDARD2_0     
-        /// <summary>
-        /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction
-        /// </summary>
-        /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
-        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
-        /// <param name="token">Propagates notification that operations should be canceled</param>
-        /// <param name="parameters">The database parameters associated with a query</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the number of rows affected by this query as a <see cref="Task{Int32}"/></returns>
-        public async Task<int> ExecuteNonQueryAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false, CancellationToken token = default)
-        {
-            //Wrap this in a using statement to automatically handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout))
-            {
-                if(shouldBePrepared == true)
-                {
-                    await command.PrepareAsync(token).ConfigureAwait(false);
-                }
-         
-                //Return this back to the caller
-                return await command.ExecuteNonQueryAsync(token).ConfigureAwait(false);
-            }
-        }
-        /// <summary>
-        /// Utility method for executing a query or stored procedure in a SQL transaction
-        /// </summary>
-        /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
-        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error.  Default is 30 seconds</param>
-        /// <param name="parameters">The database parameters associated with a query</param>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <param name="transact">An instance of a <see cref="DbTransaction"/> class</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the number of rows affected by this query</returns>
-        public async Task<int> ExecuteTransactedNonQueryAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, DbTransaction transact, bool shouldBePrepared = false, CancellationToken token = default)
-        {
-            //Wrap this in a using statement to automatically dispose of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, transact))
-            {
-                if (shouldBePrepared == true)
-                {
-                    await command.PrepareAsync(token).ConfigureAwait(false);
-                }
-
-                //Get the number of records affected by this query
-                return await command.ExecuteNonQueryAsync(token).ConfigureAwait(false);
-            }
-        }
-#endif
         #endregion
         #region Helper Methods
         #endregion

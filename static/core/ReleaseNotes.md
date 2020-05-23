@@ -3,9 +3,10 @@ Version History
 
 ### 1.0.9
 
+* Updating to ADO.Net.Client.Annotations 1.1.2
 * IDbObjectFactory new GetDbParameters function that takes in a param array of object
   and returns an IEnumerable of DbParameter
-* IAsynchronousClient and ISynchronousClient GetScalarValue now generic
+* IAsynchronousClient and ISynchronousClient GetScalarValue is now generic
 * Utilities class adding new extension method to check if type is IEnumerable
 * Utilites class making IsNullableGenericType an extension method
 
