@@ -72,6 +72,8 @@ The goals of this project are:
 
 ## NuGet Packages
 
+* [ADO.Net.Client.Annotations](https://www.nuget.org/packages/ADO.Net.Client.Annotations/) is a library for annotations to properties on .NET objects 
+
 * [ADO.Net.Client.Core](https://www.nuget.org/packages/ADO.Net.Client.Core/) is the lowest level library that contains the factory objecst that
 creates the factory objects from an ADO.Net providers client drivers.  It also contains the abstract and interface objects that define higher level objects.
   This is a very thin wrapper around the actual client driver itself.
