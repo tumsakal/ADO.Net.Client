@@ -147,6 +147,18 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(commandTimeout, command.CommandTimeout);
             Assert.AreEqual(typeof(MySqlCommand), command.GetType());
         }
+        [Test]
+        [Category("DbParameterTests")]
+        public void ThrowsArguementExceptionValueType()
+        {
+            Assert.Throws<ArgumentException>(() => _factory.GetDbParameters(1));
+        }
+        [Test]
+        [Category("DbParameterTests")]
+        public void ThrowsArguementExceptionString()
+        {
+            Assert.Throws<ArgumentException>(() => _factory.GetDbParameters("Some Value"));
+        }
         /// <summary>
         /// 
         /// </summary>
