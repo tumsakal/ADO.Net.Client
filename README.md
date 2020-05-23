@@ -14,6 +14,12 @@ These libraries are not tied to any given database providers driver.  This means
 your SQL and not on the code that you would write.  This also encourages you to write your SQL
 in a more standard fashion following the ANSI standard.
 
+### Prepared Statements
+
+Other Micro-ORMs do not allow the ability to call prepare queries when needed.  Since this libraries give you
+more control you can optionally prepare a query when necessary.  Queries can be prepared asynchronously
+in .NET Standard 2.1 and above
+
 ### Lightweight
 
 This libraries make up a Micro-ORM, this is not a full blown framework like Entity.
