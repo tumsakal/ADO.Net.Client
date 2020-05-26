@@ -24,7 +24,9 @@ SOFTWARE.*/
 #region Using Statements
 using System;
 using System.Collections;
+using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 #endregion
 
 namespace ADO.Net.Client.Core
@@ -38,7 +40,18 @@ namespace ADO.Net.Client.Core
         #endregion
         #region Sync Methods   
         #endregion
-        #region Helper Methods            
+        #region Helper Methods         
+        /// <summary>
+        /// Gets an instance of <see cref="PropertyInfo"/>
+        /// </summary>
+        /// <param name="properties">An instance of <see cref="Array"/> of <see cref="PropertyInfo"/></param>
+        /// <param name="propertyName">The name of a property as a <see cref="string"/> in the <paramref name="properties"/></param>
+        /// <returns>Returns an instance of <see cref="PropertyInfo"/>, null if one cannot be found</returns>
+        public static PropertyInfo GetProperty(this PropertyInfo[] properties, string propertyName)
+        { 
+            //Get the property if it exists
+            return properties.Where(x => x.Name == propertyName).FirstOrDefault();
+        }
         /// <summary>
         /// Determines whether this instance is an <see cref="IEnumerable"/>
         /// </summary>
