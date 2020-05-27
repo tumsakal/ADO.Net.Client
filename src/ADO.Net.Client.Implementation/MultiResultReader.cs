@@ -33,7 +33,7 @@ using System.Threading.Tasks;
 namespace ADO.Net.Client.Implementation
 {
     /// <summary>
-    /// 
+    /// Reader object that reads through multiple result sets
     /// </summary>
     /// <seealso cref="IMultiResultReader"/>
     public class MultiResultReader : IMultiResultReader
