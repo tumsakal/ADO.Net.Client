@@ -9,6 +9,7 @@ Version History
 * IAsynchronousClient and ISynchronousClient GetScalarValue is now generic
 * Utilities class adding new extension method to check if type is IEnumerable
 * Utilites class making IsNullableGenericType an extension method
+* Utilities class adding new extensions method on PropertyInfo[] to get a property by name with string value of the name
 
 ### 1.0.8
 
