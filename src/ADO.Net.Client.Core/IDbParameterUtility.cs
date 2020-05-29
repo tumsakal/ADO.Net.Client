@@ -79,6 +79,14 @@ namespace ADO.Net.Client.Core
         /// <param name="parameterName">The name of the parameter to use when searching the Parameters list</param>
         /// <returns>True if this parameter exists in the parameters collection, false otherwise</returns>
         bool Contains(string parameterName);
+        /// <summary>
+        /// Determines whether this instance contains the passed in <paramref name="parameter"/>
+        /// </summary>
+        /// <param name="parameter">An instance of <see cref="DbParameter"/> that may be associated with this instance</param>
+        /// <returns>
+        ///   <c>true</c> if this instance contains the passed in <paramref name="parameter"/> otherwise, <c>false</c>.
+        /// </returns>
+        bool Contains(DbParameter parameter);
         #endregion
     }
 }

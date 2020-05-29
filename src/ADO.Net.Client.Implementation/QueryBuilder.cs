@@ -213,6 +213,24 @@ namespace ADO.Net.Client.Implementation
             return !(_parameters.Find(x => x.ParameterName == parameterName) == null);
         }
         /// <summary>
+        /// Determines whether this instance contains the passed in <paramref name="parameter"/>
+        /// </summary>
+        /// <param name="parameter">An instance of <see cref="DbParameter"/> that may be associated with this instance</param>
+        /// <returns>
+        ///   <c>true</c> if this instance contains the passed in <paramref name="parameter"/> otherwise, <c>false</c>.
+        /// </returns>
+        /// <exception cref="ArgumentException"></exception>
+        public bool Contains(DbParameter parameter)
+        {
+            if (parameter == null)
+            {
+                throw new ArgumentException(nameof(parameter) + "cannot be null");
+            }
+
+            //Return this back to the caller
+            return _parameters.Contains(parameter);
+        }
+        /// <summary>
         /// Retrieves a <see cref="DbParameter"/> object by using the passed in parameter name
         /// </summary>
         /// <exception cref="ArgumentException">Throws when the passed in <paramref name="parameterName"/> is <c>null</c> or <see cref="string.Empty"/></exception>
