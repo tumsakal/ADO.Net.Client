@@ -41,7 +41,10 @@ namespace ADO.Net.Client.Core.Tests
         #region Fields/Properties
         protected IDbObjectFactory _factory;
         #endregion
-        #region Setup/Teardown
+        #region Setup/Teardown        
+        /// <summary>
+        /// Called when [time setup].
+        /// </summary>
         public abstract void OneTimeSetup();
         #endregion
         #region Basic Tests

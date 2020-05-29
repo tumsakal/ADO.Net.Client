@@ -36,7 +36,10 @@ namespace ADO.Net.Client.Core.Tests
     [Category("ConnectionTests")]
     public class ConnectionTests : BaseTests
     {
-        #region Setup/Teardown
+        #region Setup/Teardown        
+        /// <summary>
+        /// Called when [time setup].
+        /// </summary>
         [OneTimeSetUp]
         public override void OneTimeSetup()
         {
