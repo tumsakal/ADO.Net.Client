@@ -3,6 +3,7 @@ Version History
 
 ### 1.0.9
 
+* IDbParamaeterUtility now has Contains function that takes in an instance of DbParameter
 * Updating to ADO.Net.Client.Annotations 1.1.2
 * IDbObjectFactory new GetDbParameters function that takes in a param array of object
   and returns an IEnumerable of DbParameter
