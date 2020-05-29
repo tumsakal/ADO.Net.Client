@@ -17,7 +17,7 @@ namespace ADO.Net.Client.Core.Tests
         /// <summary>
         /// Cannots the name of the get property by.
         /// </summary>
-/        [Test]
+        [Test]
         public void CannotGetPropertyByName()
         {
             PropertyInfo[] properties = typeof(BasicModel).GetProperties();

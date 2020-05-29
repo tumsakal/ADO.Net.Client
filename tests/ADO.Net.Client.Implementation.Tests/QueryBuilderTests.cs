@@ -80,8 +80,37 @@ namespace ADO.Net.Client.Implementation.Tests
             Assert.AreEqual(commandType, query.QueryType);
             Assert.That(query.Parameters.Count() == parameters.Count);
         }
+        /// <summary>
+        /// Containtses the parameter false.
+        /// </summary>
         [Test]
         public void ContainsParameterFalse()
+        {
+            MySqlParameter param = new MySqlParameter() { ParameterName = "Param", Value = 12321, DbType = DbType.Int32 };
+            QueryBuilder builder = new QueryBuilder();
+
+            builder.AddParameter(param);
+
+            Assert.IsFalse(builder.Contains(new MySqlParameter()));
+        }
+        /// <summary>
+        /// Determines whether [contains parameter true].
+        /// </summary>
+        [Test]
+        public void ContainsParameterTrue()
+        {
+            MySqlParameter param = new MySqlParameter() { ParameterName = "Param", Value = 12321, DbType = DbType.Int32 };
+            QueryBuilder builder = new QueryBuilder();
+
+            builder.AddParameter(param);
+
+            Assert.IsTrue(builder.Contains(param));
+        }
+        /// <summary>
+        /// Determines whether [contains parameter name false].
+        /// </summary>
+        [Test]
+        public void ContainsParameterNameFalse()
         {
             QueryBuilder builder = new QueryBuilder();
             List<DbParameter> parameters = new List<DbParameter>()
@@ -96,7 +125,7 @@ namespace ADO.Net.Client.Implementation.Tests
             Assert.That(builder.Contains("@Param4") == false);
         }
         [Test]
-        public void ContainsParameterTrue()
+        public void ContainsParameterNameTrue()
         {
             QueryBuilder builder = new QueryBuilder();
             List<DbParameter> parameters = new List<DbParameter>()
