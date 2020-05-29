@@ -3,7 +3,7 @@
     <TargetFrameworks>netstandard2.1;netstandard2.0;net461;net45;</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <Version>1.0.9</Version>
     <PackageTags>ORM ADO.NET ADO SQL .NET Database RDBMS Generic DAL ANSI</PackageTags>
