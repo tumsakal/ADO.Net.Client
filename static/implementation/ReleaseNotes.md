@@ -1,6 +1,11 @@
 Version History
 ===============
 
+### 1,0.8
+
+* Updating to ADO.Net.Client.Core 1.0.9
+* QueryBuilder class now has Contains function that takes in an instance of DbParameter
+
 ### 1.0.7
 
 * Renaming ReadObjectList and ReadObjectEnumerable on MultiResultReader
