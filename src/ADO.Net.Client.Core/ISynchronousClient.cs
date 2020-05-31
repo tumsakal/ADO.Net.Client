@@ -90,7 +90,7 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns an instance of <see cref="IMultiResultReader"/></returns>
-        IMultiResultReader GetMultiResultReaderAsync(ISqlQuery query);
+        IMultiResultReader GetMultiResultReader(ISqlQuery query);
         #endregion
         #region Data Modification
         /// <summary>
