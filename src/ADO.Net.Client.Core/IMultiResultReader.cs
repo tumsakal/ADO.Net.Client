@@ -27,7 +27,7 @@ SOFTWARE.*/
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// 
+    /// Contract class for an instance that reads records from a database result set
     /// </summary>
     /// <see cref="IMultiResultReaderAsync"/>
     /// <see cref="IMultiResultReaderSync"/>
