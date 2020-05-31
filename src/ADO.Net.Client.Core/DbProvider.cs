@@ -172,6 +172,19 @@ namespace ADO.Net.Client.Core
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Returns the value of the first column in the first row as <see cref="Task"/></returns>
         public abstract Task<object> GetScalarValueAsync<T>(ISqlQuery query, CancellationToken token = default);
+        /// <summary>
+        /// Gets an instance of <see cref="IMultiResultReader"/> asynchronously
+        /// </summary>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>Returns an instance of <see cref="IMultiResultReader"/></returns>
+        public abstract Task<IMultiResultReader> GetMultiResultReaderAsync(ISqlQuery query, CancellationToken token = default);
+        /// <summary>
+        /// Gets an instance of <see cref="IMultiResultReader"/>
+        /// </summary>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <returns>Returns an instance of <see cref="IMultiResultReader"/></returns>
+        public abstract IMultiResultReader GetMultiResultReader(ISqlQuery query);
         #endregion
     }
 }
