@@ -85,6 +85,12 @@ namespace ADO.Net.Client.Core
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns the value of the first column in the first row as an object</returns>
         object GetScalarValue<T>(ISqlQuery query);
+        /// <summary>
+        /// Gets an instance of <see cref="IMultiResultReader"/>
+        /// </summary>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <returns>Returns an instance of <see cref="IMultiResultReader"/></returns>
+        IMultiResultReader GetMultiResultReaderAsync(ISqlQuery query);
         #endregion
         #region Data Modification
         /// <summary>

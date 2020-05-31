@@ -108,7 +108,7 @@ namespace ADO.Net.Client.Core
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns the number of rows affected by this query</returns>
-        int ExecuteNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false);
+        Task<int> ExecuteNonQueryAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false);
         /// <summary>
         /// Utility method for executing a query or stored procedure in a SQL transaction
         /// </summary>
@@ -119,7 +119,7 @@ namespace ADO.Net.Client.Core
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="transact"></param>
         /// <returns>Returns the number of rows affected by this query</returns>
-        int ExecuteTransactedNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, DbTransaction transact, bool shouldBePrepared = false);
+        Task<int> ExecuteTransactedNonQueryAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, DbTransaction transact, bool shouldBePrepared = false);
         #endregion
     }
 }
