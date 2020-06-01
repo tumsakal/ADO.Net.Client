@@ -37,25 +37,25 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Reads the object asynchronous.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The <see cref="Type"/> the caller wants created</typeparam>
         /// <returns></returns>
         IEnumerable<T> ReadObjectsStream<T>();
         /// <summary>
         /// Reads the object list.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The <see cref="Type"/> the caller wants created</typeparam>
         /// <returns></returns>
         IEnumerable<T> ReadObjects<T>();
         /// <summary>
         /// Reads the object.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The <see cref="Type"/> the caller wants created</typeparam>
         /// <returns></returns>
         T ReadObject<T>();
         /// <summary>
-        /// Moves to next result.
+        /// Moves to the next result in the underlying data set
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns <c>true</c> if there's another result set in the underlying data set <c>false</c> otherwise</returns>
         bool MoveToNextResult();
         /// <summary>
         /// Closes this instances connection to the database
