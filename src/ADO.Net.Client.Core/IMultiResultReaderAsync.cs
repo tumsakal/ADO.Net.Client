@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,36 +38,35 @@ namespace ADO.Net.Client.Core
         #region Utility Methods
 #if !NET45
         /// <summary>
-        /// Reads the object asynchronously.
+        /// Gets an <see cref="IAsyncEnumerable{T}"/> based on the <typeparamref name="T"/> streamed from the server asynchronously
         /// </summary>
-        /// <param name="token"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>Returns a <see cref="IAsyncEnumerable{T}"/></returns>
         IAsyncEnumerable<T> ReadObjectsStreamAsync<T>(CancellationToken token = default);
 #endif
         /// <summary>
-        /// Reads the object list.
+        /// Reads an entire <see cref="IEnumerable{T}"/> of <typeparamref name="T"/> asynchronously
         /// </summary>
-        /// <param name="token"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
+        /// <returns>Returns an <see cref="IEnumerable{T}"/> as an entire collection of <typeparamref name="T"/></returns>
         Task<IEnumerable<T>> ReadObjectsAsync<T>(CancellationToken token = default);
         /// <summary>
-        /// Reads the object.
+        /// Gets a single instance of <typeparamref name="T"/> asynchronously
         /// </summary>
-        /// <param name="token"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>Gets an instance of <typeparamref name="T"/></returns>
         Task<T> ReadObjectAsync<T>(CancellationToken token = default);
         /// <summary>
-        /// Moves to next result.
+        /// Moves to next result set in the underlying data set asynchronously
         /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>Returns <c>true</c> if there's another result set in the dataset <c>false</c> otherwise</returns>
         Task<bool> MoveToNextResultAsync(CancellationToken token = default);
 #if !NET45 && !NET461 && !NETSTANDARD2_0
         /// <summary>
-        /// Closes the asynchronous.
+        /// Closes the underlying reader object that reads records from the database
         /// </summary>
         Task CloseAsync();
 #endif
