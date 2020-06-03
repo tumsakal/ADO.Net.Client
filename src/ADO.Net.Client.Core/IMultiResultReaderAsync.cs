@@ -46,9 +46,10 @@ namespace ADO.Net.Client.Core
         IAsyncEnumerable<T> ReadObjectsStreamAsync<T>(CancellationToken token = default);
 #endif
         /// <summary>
-        /// Reads an entire <see cref="IEnumerable{T}"/> of <typeparamref name="T"/> asynchronously
+        /// Gets an entire <see cref="IEnumerable{T}"/> of <typeparamref name="T"/> asynchronously
         /// </summary>
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Returns an <see cref="IEnumerable{T}"/> as an entire collection of <typeparamref name="T"/></returns>
         Task<IEnumerable<T>> ReadObjectsAsync<T>(CancellationToken token = default);
         /// <summary>

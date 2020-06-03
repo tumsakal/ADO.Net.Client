@@ -35,22 +35,23 @@ namespace ADO.Net.Client.Core
     {
         #region Utility Methods
         /// <summary>
-        /// Reads the object asynchronous.
+        /// Gets an <see cref="IEnumerable{T}"/> based on the <typeparamref name="T"/> streamed from the server
         /// </summary>
-        /// <typeparam name="T">The <see cref="Type"/> the caller wants created</typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>Returns a <see cref="IEnumerable{T}"/></returns>
         IEnumerable<T> ReadObjectsStream<T>();
         /// <summary>
-        /// Reads the object list.
+        /// Gets an entire <see cref="IEnumerable{T}"/> of <typeparamref name="T"/>
         /// </summary>
-        /// <typeparam name="T">The <see cref="Type"/> the caller wants created</typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
+        /// <returns>Returns an <see cref="IEnumerable{T}"/> as an entire collection of <typeparamref name="T"/></returns>
         IEnumerable<T> ReadObjects<T>();
         /// <summary>
-        /// Reads the object.
+        /// Gets a single instance of <typeparamref name="T"/>
         /// </summary>
-        /// <typeparam name="T">The <see cref="Type"/> the caller wants created</typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
+        /// <returns>Gets an instance of <typeparamref name="T"/></returns>
         T ReadObject<T>();
         /// <summary>
         /// Moves to the next result in the underlying data set
