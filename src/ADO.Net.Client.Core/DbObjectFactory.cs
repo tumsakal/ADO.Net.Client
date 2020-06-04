@@ -91,11 +91,26 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Instantiates a new instance with the passed in <paramref name="factory"/>
         /// </summary>
+        /// <param name="factory">An instance of the <see cref="DbProviderFactory"/> client class</param>
+        public DbObjectFactory(DbProviderFactory factory) : this(factory, new DbParameterFormatter())
+        {
+        }
+        /// <summary>
+        /// Instantiates a new instance with the passed in <paramref name="factory"/>
+        /// </summary>
         /// <param name="formatter"></param>
         /// <param name="factory">An instance of the <see cref="DbProviderFactory"/> client class</param>
         public DbObjectFactory(DbProviderFactory factory, IDbParameterFormatter formatter) : this(formatter)
         {
             _dbProviderFactory = factory;
+        }
+        /// <summary>
+        /// Instantiates a new instance with the passed in <paramref name="providerInvariantName"/>
+        /// </summary>
+        /// <param name="providerInvariantName">The name of the data provider that the should be used to query a data store</param>
+        public DbObjectFactory(string providerInvariantName) : this(providerInvariantName, new DbParameterFormatter())
+        {
+
         }
         /// <summary>
         /// Instantiates a new instance with the passed in <paramref name="providerInvariantName"/>
@@ -120,6 +135,13 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Instantiates a new instance with the passed in <paramref name="connection"/>
         /// </summary>
+        /// <param name="connection">An instance of <see cref="DbConnection"/> </param>
+        public DbObjectFactory(DbConnection connection) : this(connection, new DbParameterFormatter())
+        {
+        }
+        /// <summary>
+        /// Instantiates a new instance with the passed in <paramref name="connection"/>
+        /// </summary>
         /// <param name="formatter"></param>
         /// <param name="connection">An instance of <see cref="DbConnection"/> </param>
         public DbObjectFactory(DbConnection connection, IDbParameterFormatter formatter) : this(formatter)
@@ -132,6 +154,13 @@ namespace ADO.Net.Client.Core
 #endif
         }
 #if !NETSTANDARD2_0
+        /// <summary>
+        /// Instantiates a new instance with the passed in <paramref name="row"/>
+        /// </summary>
+        /// <param name="row">An instance of <see cref="DataRow"/> that has the necessary information to create an instance of <see cref="DbProviderFactory"/></param>
+        public DbObjectFactory(DataRow row) : this(row, new DbParameterFormatter())
+        {
+        }
         /// <summary>
         /// Instantiates a new instance with the passed in <paramref name="row"/>
         /// </summary>
