@@ -1,6 +1,12 @@
 Version History
 ===============
 
+### 1.1.0
+
+* ISqlExecutorAsync .NET standard 2.1+ build executetransactednonquery/nonquery now take in a cancellation token
+* DbObjectFactory now has constructors that don't require an instance of IDbParameterFormatter
+
+
 ### 1.0.9
 
 * IDbParamaeterUtility now has Contains function that takes in an instance of DbParameter
