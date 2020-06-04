@@ -53,7 +53,7 @@ namespace ADO.Net.Client.Core.Tests
             DataRow row = (from a in table.Rows.Cast<DataRow>()
                            where a.ItemArray[2].ToString() == "MySqlConnector"
                            select a).FirstOrDefault();
-            _factory = new DbObjectFactory(row, new DbParameterFormatter());
+            _factory = new DbObjectFactory(row);
         }
         #endregion
     }
