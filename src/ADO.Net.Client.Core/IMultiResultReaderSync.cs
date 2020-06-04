@@ -38,7 +38,6 @@ namespace ADO.Net.Client.Core
         /// Gets an <see cref="IEnumerable{T}"/> based on the <typeparamref name="T"/> streamed from the server
         /// </summary>
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Returns a <see cref="IEnumerable{T}"/></returns>
         IEnumerable<T> ReadObjectsStream<T>();
         /// <summary>
