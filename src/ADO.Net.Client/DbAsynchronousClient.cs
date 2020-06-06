@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using ADO.Net.Client.Core;
+using ADO.Net.Client.Implementation;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -120,6 +121,18 @@ namespace ADO.Net.Client
             //Return this back to the caller
             return await _executor.GetScalarValueAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, token).ConfigureAwait(false);
         }
+        /// <summary>
+        /// Gets an instance of <see cref="IMultiResultReader" />
+        /// </summary>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <returns>
+        /// Returns an instance of <see cref="IMultiResultReader" />
+        /// </returns>
+        public async override Task<IMultiResultReader> GetMultiResultReaderAsync(ISqlQuery query, CancellationToken token = default)
+        {
+            return new MultiResultReader(await _executor.GetDbDataReaderAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared), new DataMapper());
+        }
 #else
         /// <summary>
         /// Gets an instance of <see cref="DataTable"/> asynchronously
@@ -182,6 +195,18 @@ namespace ADO.Net.Client
             yield break;
         }
 #endif
+        /// <summary>
+        /// Gets an instance of <see cref="IMultiResultReader" />
+        /// </summary>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <returns>
+        /// Returns an instance of <see cref="IMultiResultReader" />
+        /// </returns>
+        public async override Task<IMultiResultReader> GetMultiResultReaderAsync(ISqlQuery query, CancellationToken token = default)
+        {
+            return new MultiResultReader(await _executor.GetDbDataReaderAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout), new DataMapper());
+        }
         /// <summary>
         /// Utility method for returning a <see cref="Task{DbDataReader}"/> object created from the passed in query
         /// </summary>

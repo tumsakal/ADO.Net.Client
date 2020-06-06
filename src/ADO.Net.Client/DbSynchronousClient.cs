@@ -113,6 +113,20 @@ namespace ADO.Net.Client
             {
                 yield return type;
             }
+
+            //Nothing to do here
+            yield break;
+        }
+        /// <summary>
+        /// Gets an instance of <see cref="IMultiResultReader" />
+        /// </summary>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <returns>
+        /// Returns an instance of <see cref="IMultiResultReader" />
+        /// </returns>
+        public override IMultiResultReader GetMultiResultReader(ISqlQuery query)
+        {
+            return new MultiResultReader(_executor.GetDbDataReader(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared), new DataMapper());
         }
         #endregion
         #region Data Modifications
