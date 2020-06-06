@@ -35,7 +35,7 @@ namespace ADO.Net.Client
 {
     public partial class DbClient
     {
-#region Data Retrieval
+        #region Data Retrieval
 #if !NET45 && !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Gets an instance of <see cref="DataTable"/> asynchronously
@@ -92,6 +92,9 @@ namespace ADO.Net.Client
             {
                 yield return type;
             }
+
+            //Nothing to do here
+            yield break;
         }
         /// <summary>
         /// Utility method for returning a <see cref="Task{DbDataReader}"/> object created from the passed in query
@@ -174,6 +177,9 @@ namespace ADO.Net.Client
             {
                 yield return type;
             }
+
+            //Nothing to do here
+            yield break;
         }
 #endif
         /// <summary>
@@ -201,8 +207,8 @@ namespace ADO.Net.Client
             return await _executor.GetScalarValueAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, token).ConfigureAwait(false);
         }
 #endif
-#endregion
-#region Data Modification        
+        #endregion
+        #region Data Modification        
 #if !NET45 && !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction
@@ -243,6 +249,6 @@ namespace ADO.Net.Client
             return await _executor.ExecuteNonQueryAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, token).ConfigureAwait(false);
         }
 #endif
-#endregion
+        #endregion
     }
 }
