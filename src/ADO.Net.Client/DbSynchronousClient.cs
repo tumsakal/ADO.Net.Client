@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using ADO.Net.Client.Core;
+using ADO.Net.Client.Implementation;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -67,12 +68,13 @@ namespace ADO.Net.Client
         /// <summary>
         /// Utility method for returning a scalar value as an <see cref="object"/> from the database
         /// </summary>
+        /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns the value of the first column in the first row as an object</returns>
-        public override object GetScalarValue(ISqlQuery query)
+        public override object GetScalarValue<T>(ISqlQuery query)
         {
             //Return this back to the caller
-            return _executor.GetScalarValue(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared);
+            return _executor.GetScalarValue<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared);
         }
         /// <summary>
         /// Gets a single instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine
@@ -88,15 +90,26 @@ namespace ADO.Net.Client
             return _executor.GetDataObject<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared);
         }
         /// <summary>
-        /// Gets a list of the type parameter object that creates an object based on the query passed into the routine
+        /// Gets an instance of <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
+        /// </summary>
+        /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <returns>Returns a <see cref="List{T}"/> based on the results of the passed in <paramref name="query"/></returns>
+        public override IEnumerable<T> GetDataObjects<T>(ISqlQuery query) where T : class
+        {
+            //Return this back to the caller
+            return _executor.GetDataObjects<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared);
+        }
+        /// <summary>
+        /// Gets an instance of <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine streamed from the server
         /// </summary>
         /// <typeparam name="T">An instance of the type the caller wants create to from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        public override IEnumerable<T> GetDataObjectEnumerable<T>(ISqlQuery query) where T : class
+        public override IEnumerable<T> GetDataObjectsStream<T>(ISqlQuery query) where T : class
         {
             //Return this back to the caller
-            foreach(T type in _executor.GetDataObjectEnumerable<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared))
+            foreach(T type in _executor.GetDataObjectsStream<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared))
             {
                 yield return type;
             }

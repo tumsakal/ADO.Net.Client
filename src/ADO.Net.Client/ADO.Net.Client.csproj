@@ -11,11 +11,11 @@
     <Authors>Robert Garrison</Authors>
     <Company>Robert Garrison</Company>
     <Product>ADO.Net.Client</Product>
-    <Title>ADO.NET.Client</Title>
+    <Title>ADO.Net.Client</Title>
     <PackageId>ADO.Net.Client</PackageId>
     <Description>High level ADO.Net client library to agnostically query a relational database using a given ADO.Net driver</Description>
     <PackageReleaseNotes>
-      Uppdating to ADO.Net.Client.Implementation 1.0.6
+      Release Notes https://github.com/rgarrison12345/ADO.Net.Client/blob/master/static/client/ReleaseNotes.md
     </PackageReleaseNotes>
     <PackageIcon>icon.png</PackageIcon>
     <IncludeSource>true</IncludeSource>
@@ -23,7 +23,6 @@
     <AssemblyName>ADO.Net.Client</AssemblyName>
     <RootNamespace>ADO.Net.Client</RootNamespace>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <NeutralLanguage>en-us</NeutralLanguage>
     <DefineConstants>TRACE;</DefineConstants>
     <Prefer32Bit>false</Prefer32Bit>
     <Copyright>Copyright © Robert Garrison 2020</Copyright>
@@ -58,6 +57,6 @@
     <ProjectReference Include="..\ADO.Net.Client.Implementation\ADO.Net.Client.Implementation.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="ADO.Net.Client.Implementation" Version="1.0.8" />
+    <PackageReference Include="ADO.Net.Client.Implementation" Version="1.0.9" />
   </ItemGroup>
 </Project>
