@@ -1,6 +1,10 @@
 Version History
 ===============
 
+### 1.1.1
+
+* Adding GetMultiResultReader async/sync on ISqlExectourSync/Async
+
 ### 1.1.0
 
 * ISqlExecutorAsync .NET standard 2.1+ build executetransactednonquery/nonquery now take in a cancellation token
