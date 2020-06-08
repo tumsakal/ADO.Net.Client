@@ -158,6 +158,19 @@ namespace ADO.Net.Client.Implementation
                 return Utilities.GetTypeFromValue<T>(await command.ExecuteScalarAsync(token).ConfigureAwait(false));
             }
         }
+        /// <summary>
+        /// Utility method for returning an instance of <see cref="IMultiResultReader"/> asynchronously
+        /// </summary>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <param name="parameters">The query database parameters that are associated with a query</param>
+        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <returns>An instance of <see cref="IMultiResultReader"/> object</returns>
+        public async Task<IMultiResultReader> GetMultiResultReaderAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, CancellationToken token = default)
+        {
+            return new MultiResultReader(await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, CommandBehavior.Default, token), _mapper);
+        }
         #endregion
         #region Data Modification
         /// <summary>

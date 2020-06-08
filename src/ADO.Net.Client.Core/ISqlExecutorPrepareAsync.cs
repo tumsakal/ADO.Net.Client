@@ -86,7 +86,7 @@ namespace ADO.Net.Client.Core
         /// <returns>A <see cref="DbDataReader"/> object, the caller is responsible for handling closing the DataReader.  Once the data reader is closed, the Database Connection will be closed as well</returns>
         Task<DbDataReader> GetDbDataReaderAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false, CommandBehavior behavior = CommandBehavior.Default, CancellationToken token = default);
         /// <summary>
-        /// Utility method for returning a <see cref="Task{Object}"/> from the database
+        /// Utility method for returning a <see cref="Task{T}"/> from the database
         /// </summary>
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
@@ -107,7 +107,7 @@ namespace ADO.Net.Client.Core
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>An instance of <see cref="IMultiResultReader"/> object</returns>
-        IMultiResultReader GetMultiResultReaderAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false, CancellationToken token = default);
+        Task<IMultiResultReader> GetMultiResultReaderAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false, CancellationToken token = default);
         #endregion
         #region Data Modification
         /// <summary>

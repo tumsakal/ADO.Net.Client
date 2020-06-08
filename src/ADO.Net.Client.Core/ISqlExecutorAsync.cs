@@ -103,7 +103,7 @@ namespace ADO.Net.Client.Core
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>An instance of <see cref="IMultiResultReader"/> object</returns>
-        IMultiResultReader GetMultiResultReaderAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, CancellationToken token = default);
+        Task<IMultiResultReader> GetMultiResultReaderAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, CancellationToken token = default);
         #endregion
         #region Data Modification
         /// <summary>

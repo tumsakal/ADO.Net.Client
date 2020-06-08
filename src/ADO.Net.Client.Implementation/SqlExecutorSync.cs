@@ -213,6 +213,19 @@ namespace ADO.Net.Client.Implementation
                 return Utilities.GetTypeFromValue<T>(command.ExecuteScalar());
             }
         }
+        /// <summary>
+        /// Utility method for returning an instance of <see cref="IMultiResultReader"/>
+        /// </summary>
+        /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <param name="parameters">The query database parameters that are associated with a query</param>
+        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <returns>An instance of <see cref="IMultiResultReader"/> object</returns>
+        public IMultiResultReader GetMultiResultReader(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false)
+        {
+            return new MultiResultReader(GetDbDataReader(query, queryCommandType, parameters, commandTimeout, shouldBePrepared), _mapper);
+        }
         #endregion
         #region Data Modification
         /// <summary>
