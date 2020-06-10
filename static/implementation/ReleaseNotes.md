@@ -1,6 +1,15 @@
 Version History
 ===============
 
+### 1.1.0
+
+* Updating to ADO.Net.Client.Core 1.1.1
+* Adding GetMultiResultReader async/sync on SqlExecutor
+ 
+### 1.0.9
+
+* Updating to ADO.Net.Client.Core 1.1.0
+
 ### 1,0.8
 
 * Updating to ADO.Net.Client.Core 1.0.9
