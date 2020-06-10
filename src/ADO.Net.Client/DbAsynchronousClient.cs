@@ -131,7 +131,7 @@ namespace ADO.Net.Client
         /// </returns>
         public async override Task<IMultiResultReader> GetMultiResultReaderAsync(ISqlQuery query, CancellationToken token = default)
         {
-            return new MultiResultReader(await _executor.GetDbDataReaderAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared), new DataMapper());
+            return await _executor.GetMultiResultReaderAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared).ConfigureAwait(false);
         }
 #else
         /// <summary>
@@ -205,7 +205,7 @@ namespace ADO.Net.Client
         /// </returns>
         public async override Task<IMultiResultReader> GetMultiResultReaderAsync(ISqlQuery query, CancellationToken token = default)
         {
-            return new MultiResultReader(await _executor.GetDbDataReaderAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout), new DataMapper());
+            return await _executor.GetMultiResultReaderAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, token).ConfigureAwait(false);
         }
         /// <summary>
         /// Utility method for returning a <see cref="Task{DbDataReader}"/> object created from the passed in query

@@ -126,7 +126,7 @@ namespace ADO.Net.Client
         /// </returns>
         public override IMultiResultReader GetMultiResultReader(ISqlQuery query)
         {
-            return new MultiResultReader(_executor.GetDbDataReader(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared), new DataMapper());
+            return _executor.GetMultiResultReader(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared);
         }
         #endregion
         #region Data Modifications
