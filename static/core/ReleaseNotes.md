@@ -1,6 +1,10 @@
 Version History
 ===============
 
+### 1.1.2
+
+* GetScalarValue sync/async now returns T instead of object
+
 ### 1.1.1
 
 * Adding GetMultiResultReader async/sync on ISqlExectourSync/Async

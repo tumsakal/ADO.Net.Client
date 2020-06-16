@@ -71,7 +71,7 @@ namespace ADO.Net.Client
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns the value of the first column in the first row as an object</returns>
-        public override object GetScalarValue<T>(ISqlQuery query)
+        public override T GetScalarValue<T>(ISqlQuery query)
         {
             //Return this back to the caller
             return _executor.GetScalarValue<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared);
