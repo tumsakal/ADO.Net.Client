@@ -1,6 +1,11 @@
 Version History
 ===============
 
+### 1.1.1
+
+* Updating to ADO.Net.Client.Core 1.1.2
+* All SqlExecutor GetScalarValue asyn/sync return T instead of object
+
 ### 1.1.0
 
 * Updating to ADO.Net.Client.Core 1.1.1
