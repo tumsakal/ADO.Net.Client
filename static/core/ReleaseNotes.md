@@ -3,7 +3,12 @@ Version History
 
 ### 1.1.2
 
-* GetScalarValue sync/async now returns T instead of object
+* GetScalarValue sync/async now returns T instead of object on following objects
+  * ISqlExector
+  * IDbProvider
+  * DbProvider
+  * IAsynchronousClient
+  * ISynchronousClient
 
 ### 1.1.1
 
