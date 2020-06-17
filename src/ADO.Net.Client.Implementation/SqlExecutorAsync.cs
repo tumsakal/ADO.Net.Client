@@ -23,7 +23,6 @@ SOFTWARE.*/
 #endregion
 #region Using Declarations
 using ADO.Net.Client.Core;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
