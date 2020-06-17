@@ -36,21 +36,13 @@ namespace ADO.Net.Client.Implementation
     public class ConnectionManager : IConnectionManager
     {
         #region Fields/Properties
-        private readonly DbConnection _connection;
-
         /// <summary>
         /// Gets the connection that is being used by this instance
         /// </summary>
         /// <value>
         /// An instance of <see cref="T:System.Data.Common.DbConnection" />
         /// </value>
-        public DbConnection Connection
-        {
-            get
-            {
-                return _connection;
-            }
-        }
+        public DbConnection Connection { get; private set; }
         #endregion
         #region Constructors		        
         /// <summary>
@@ -59,7 +51,7 @@ namespace ADO.Net.Client.Implementation
         /// <param name="connection">The connection.</param>
         public ConnectionManager(DbConnection connection)
         {
-            _connection = connection;
+            Connection = connection;
         }
         #endregion
     }
