@@ -32,6 +32,7 @@ namespace ADO.Net.Client.Core
     /// </summary>
     public interface IConnectionStringUtility
     {
+        #region Utility Methods
         /// <summary>
         /// Adds a property name and value to the current connection string
         /// </summary>
@@ -64,5 +65,6 @@ namespace ADO.Net.Client.Core
         /// <param name="keyword">The keyword to check in the providers allowable connection string keywords</param>
         /// <returns>Returns a <see cref="bool"/> indicating if the providers connection string allows the passed in keyword</returns>
         bool ConnectionStringAllowsKey(string keyword);
+        #endregion
     }
 }

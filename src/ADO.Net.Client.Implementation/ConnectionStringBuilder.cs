@@ -30,7 +30,7 @@ using System.Data.Common;
 namespace ADO.Net.Client.Implementation
 {
     /// <summary>
-    /// 
+    /// Utility class that assists with building out a standard connection string for a given database provder
     /// </summary>
     /// <seealso cref="IConnectionStringUtility" />
     public class ConnectionStringBuilder : IConnectionStringUtility
