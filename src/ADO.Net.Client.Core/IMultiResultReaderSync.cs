@@ -38,13 +38,13 @@ namespace ADO.Net.Client.Core
         /// Gets an <see cref="IEnumerable{T}"/> based on the <typeparamref name="T"/> streamed from the server
         /// </summary>
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
-        /// <returns>Returns a <see cref="IEnumerable{T}"/></returns>
+        /// <returns>Returns an instance of <see cref="IEnumerable{T}"/></returns>
         IEnumerable<T> ReadObjectsStream<T>();
         /// <summary>
         /// Gets an entire <see cref="IEnumerable{T}"/> of <typeparamref name="T"/>
         /// </summary>
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
-        /// <returns>Returns an <see cref="IEnumerable{T}"/> as an entire collection of <typeparamref name="T"/></returns>
+        /// <returns>Returns an instance of <see cref="IEnumerable{T}"/> as an entire collection of <typeparamref name="T"/></returns>
         IEnumerable<T> ReadObjects<T>();
         /// <summary>
         /// Gets a single instance of <typeparamref name="T"/>
@@ -58,7 +58,7 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns <c>true</c> if there's another result set in the underlying data set <c>false</c> otherwise</returns>
         bool MoveToNextResult();
         /// <summary>
-        /// Closes this instances connection to the database
+        /// Closes the underlying reader object that reads records from the database synchronously
         /// </summary>
         void Close();
         #endregion

@@ -59,10 +59,11 @@ namespace ADO.Net.Client.Implementation
         #endregion
         #region Async Methods
         /// <summary>
-        /// Reads the object.
+        /// Gets an entire <see cref="IEnumerable{T}"/> of <typeparamref name="T"/> asynchronously
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>Returns an instance of <see cref="IEnumerable{T}"/> as an entire collection of <typeparamref name="T"/></returns>
         public async Task<IEnumerable<T>> ReadObjectsAsync<T>(CancellationToken token = default)
         {
             //Keep looping through each object in enumerator
@@ -70,10 +71,11 @@ namespace ADO.Net.Client.Implementation
         }
 #if !NET45
         /// <summary>
-        /// Reads the object.
+        /// Gets an <see cref="IAsyncEnumerable{T}"/> based on the <typeparamref name="T"/> streamed from the server asynchronously
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>Returns an instance of <see cref="IAsyncEnumerable{T}"/></returns>
         public async IAsyncEnumerable<T> ReadObjectsStreamAsync<T>([EnumeratorCancellation] CancellationToken token = default)
         {
             //Keep looping through each object in enumerator
@@ -88,11 +90,11 @@ namespace ADO.Net.Client.Implementation
         }
 #endif
         /// <summary>
-        /// Reads the object asynchronous.
+        /// Gets a single instance of <typeparamref name="T"/> asynchronously
         /// </summary>
-        /// <param name="token"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>Gets an instance of <typeparamref name="T"/></returns>
         public async Task<T> ReadObjectAsync<T>(CancellationToken token = default)
         {
             await _reader.ReadAsync(token).ConfigureAwait(false);
@@ -100,10 +102,10 @@ namespace ADO.Net.Client.Implementation
             return _mapper.MapRecord<T>(_reader);
         }
         /// <summary>
-        /// Moves the next to result asynchronous.
+        /// Moves to next result set in the underlying data set asynchronously
         /// </summary>
-        /// <param name="token">The token.</param>
-        /// <returns></returns>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>Returns <c>true</c> if there's another result set in the dataset <c>false</c> otherwise</returns>
         public async Task<bool> MoveToNextResultAsync(CancellationToken token = default)
         {
             //Move to next result set
@@ -112,10 +114,10 @@ namespace ADO.Net.Client.Implementation
         #endregion
         #region Sync Methods        
         /// <summary>
-        /// Reads the object asynchronous.
+        /// Gets an <see cref="IEnumerable{T}"/> based on the <typeparamref name="T"/> streamed from the server
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
+        /// <returns>Returns an instance of <see cref="IEnumerable{T}"/></returns>
         public IEnumerable<T> ReadObjectsStream<T>()
         {
             //Keep looping through each object in enumerator
@@ -129,19 +131,19 @@ namespace ADO.Net.Client.Implementation
             yield break;
         }
         /// <summary>
-        /// Reads the object list.
+        /// Gets an entire <see cref="IEnumerable{T}"/> of <typeparamref name="T"/>
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
+        /// <returns>Returns an instance of <see cref="IEnumerable{T}"/> as an entire collection of <typeparamref name="T"/></returns>
         public IEnumerable<T> ReadObjects<T>()
         {
             return _mapper.MapResultSet<T>(_reader);
         }
         /// <summary>
-        /// Reads the object.
+        /// Gets a single instance of <typeparamref name="T"/>
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
+        /// <returns>Gets an instance of <typeparamref name="T"/></returns>
         public T ReadObject<T>()
         {
             //Move to the next record
@@ -150,9 +152,9 @@ namespace ADO.Net.Client.Implementation
             return _mapper.MapRecord<T>(_reader);
         }
         /// <summary>
-        /// Moves to next result.
+        /// Moves to the next result in the underlying data set
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns <c>true</c> if there's another result set in the underlying data set <c>false</c> otherwise</returns>
         public bool MoveToNextResult()
         {
             //Move to next result set
@@ -161,7 +163,7 @@ namespace ADO.Net.Client.Implementation
         #endregion
         #region Helper Methods
         /// <summary>
-        /// Closes this instances connection to the database
+        /// Closes the underlying reader object that reads records from the database synchronously
         /// </summary>
         public void Close()
         {
@@ -169,7 +171,7 @@ namespace ADO.Net.Client.Implementation
         }
 #if !NET45 && !NET461 && !NETSTANDARD2_0
         /// <summary>
-        /// Closes the asynchronous.
+        /// Closes the underlying reader object that reads records from the database asynchronously
         /// </summary>
         public async Task CloseAsync()
         {

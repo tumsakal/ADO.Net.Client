@@ -42,7 +42,7 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <returns>Returns a <see cref="IAsyncEnumerable{T}"/></returns>
+        /// <returns>Returns an instance of <see cref="IAsyncEnumerable{T}"/></returns>
         IAsyncEnumerable<T> ReadObjectsStreamAsync<T>(CancellationToken token = default);
 #endif
         /// <summary>
@@ -50,7 +50,7 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <returns>Returns an <see cref="IEnumerable{T}"/> as an entire collection of <typeparamref name="T"/></returns>
+        /// <returns>Returns an instance of <see cref="IEnumerable{T}"/> as an entire collection of <typeparamref name="T"/></returns>
         Task<IEnumerable<T>> ReadObjectsAsync<T>(CancellationToken token = default);
         /// <summary>
         /// Gets a single instance of <typeparamref name="T"/> asynchronously
