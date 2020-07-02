@@ -34,6 +34,9 @@ namespace ADO.Net.Client.Core
     /// Contract class for a reader that performs asynchronous read operations against a database
     /// </summary>
     public interface IMultiResultReaderAsync
+#if !NET45 && !NET461 && !NETSTANDARD2_0
+        : IAsyncDisposable
+#endif
     {
         #region Utility Methods
 #if !NET45
@@ -67,7 +70,7 @@ namespace ADO.Net.Client.Core
         Task<bool> MoveToNextResultAsync(CancellationToken token = default);
 #if !NET45 && !NET461 && !NETSTANDARD2_0
         /// <summary>
-        /// Closes the underlying reader object that reads records from the database
+        /// Closes the underlying reader object that reads records from the database asynchronously
         /// </summary>
         Task CloseAsync();
 #endif
