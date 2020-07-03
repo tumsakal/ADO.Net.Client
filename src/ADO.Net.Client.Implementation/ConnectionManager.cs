@@ -30,7 +30,7 @@ using System.Data.Common;
 namespace ADO.Net.Client.Implementation
 {
     /// <summary>
-    /// 
+    /// Class that manages a database connection
     /// </summary>
     /// <seealso cref="IConnectionManager" />
     public class ConnectionManager : IConnectionManager
