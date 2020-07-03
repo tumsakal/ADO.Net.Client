@@ -1,6 +1,9 @@
 Version History
 ===============
 
+### 1.1.3
+
+* IMultiResultReaderAsync now implements IAsyncDisposable for .NET Standard 2.1 and above
 ### 1.1.2
 
 * GetScalarValue sync/async now returns T instead of object on following objects
