@@ -26,7 +26,6 @@ using ADO.Net.Client.Core;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 #endregion
@@ -139,7 +138,7 @@ namespace ADO.Net.Client.Implementation
             }
         }
         /// <summary>
-        /// Utility method for returning a <see cref="Task{Object}"/> value from the database
+        /// Utility method for returning a <see cref="Task"/> of <typeparamref name="T"/> from the database
         /// </summary>
         /// <param name="commandTimeout">Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an errors</param>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>

@@ -120,7 +120,7 @@ namespace ADO.Net.Client.Implementation
             }
         }
         /// <summary>
-        /// Utility method for returning a <see cref="Task{DbDataReader}"/> object
+        /// Utility method for returning a <see cref="Task"/> of <see cref="DbDataReader"/>
         /// </summary>
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error</param>
@@ -145,7 +145,7 @@ namespace ADO.Net.Client.Implementation
             }
         }
         /// <summary>
-        /// Utility method for returning a <see cref="Task{Object}"/> value from the database
+        /// Utility method for returning a <see cref="Task"/> of the <typeparamref name="T"/> value from the database
         /// </summary>
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an errors</param>
