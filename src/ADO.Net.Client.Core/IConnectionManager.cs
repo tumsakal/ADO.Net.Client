@@ -28,7 +28,7 @@ using System.Data.Common;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// 
+    /// Contract class for managing a database connection
     /// </summary>
     public interface IConnectionManager
     {

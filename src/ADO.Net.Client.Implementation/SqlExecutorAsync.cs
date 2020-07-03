@@ -26,6 +26,9 @@ using ADO.Net.Client.Core;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+#if !NET45
+using System.Runtime.CompilerServices;
+#endif
 using System.Threading;
 using System.Threading.Tasks;
 #endregion
@@ -34,7 +37,7 @@ namespace ADO.Net.Client.Implementation
 {
     public partial class SqlExecutor
     {
-        #region Data Retrieval
+#region Data Retrieval
         /// <summary>
         /// Gets an instance of the <typeparamref name="T"/> parameter object that creates an object based on the query passed into the routine
         /// </summary>
@@ -169,8 +172,8 @@ namespace ADO.Net.Client.Implementation
         {
             return new MultiResultReader(await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, CommandBehavior.Default, token), _mapper);
         }
-        #endregion
-        #region Data Modification
+#endregion
+#region Data Modification
         /// <summary>
         /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction
         /// </summary>
@@ -189,8 +192,8 @@ namespace ADO.Net.Client.Implementation
                 return await command.ExecuteNonQueryAsync(token).ConfigureAwait(false);
             }
         }
-        #endregion
-        #region Helper Methods
-        #endregion
+#endregion
+#region Helper Methods
+#endregion
     }
 }
