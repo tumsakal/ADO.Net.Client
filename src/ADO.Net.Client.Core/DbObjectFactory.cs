@@ -30,7 +30,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-#if NETSTANDARD2_1
+#if !NET45 && !NET461 && !NETSTANDARD2_0
 using System.Threading.Tasks;
 #endif
 #endregion
