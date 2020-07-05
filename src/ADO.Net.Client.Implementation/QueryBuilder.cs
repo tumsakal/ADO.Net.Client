@@ -40,8 +40,9 @@ namespace ADO.Net.Client.Implementation
     public class QueryBuilder : IQueryBuilder
     {
         #region Fields/Properties
-        private List<DbParameter> _parameters;
-        private StringBuilder _sqlQuery;
+        private readonly List<DbParameter> _parameters;
+        private readonly StringBuilder _sqlQuery;
+        private readonly IDbObjectFactory _factory;
 
         /// <summary>
         /// The database parameters associated with a query
@@ -70,29 +71,33 @@ namespace ADO.Net.Client.Implementation
             }
         }
         #endregion
-        #region Constructors        
+        #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="QueryBuilder"/> class.
         /// </summary>
+        /// <param name="factory"></param>
         /// <param name="queryText">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="parameters">The database parameters associated with <paramref name="queryText"/></param>
-        public QueryBuilder(string queryText, IEnumerable<DbParameter> parameters) : this(queryText)
+        public QueryBuilder(string queryText, IEnumerable<DbParameter> parameters, IDbObjectFactory factory) : this(queryText, factory)
         {
             AddParameterRange(parameters);
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="QueryBuilder"/> class.
         /// </summary>
+        /// <param name="factory"></param>
         /// <param name="queryText">The query command text or name of stored procedure to execute against the data store</param>
-        public QueryBuilder(string queryText) : this()
+        public QueryBuilder(string queryText, IDbObjectFactory factory) : this(factory)
         {
             Append(queryText);
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="QueryBuilder"/> class.
         /// </summary>
-        public QueryBuilder()
+        /// <param name="factory"></param>
+        public QueryBuilder(IDbObjectFactory factory)
         {
+            _factory = factory;
             _parameters = new List<DbParameter>();
             _sqlQuery = new StringBuilder();
         }
@@ -134,6 +139,26 @@ namespace ADO.Net.Client.Implementation
             AddParameterRange(parameters);
         }
         /// <summary>
+        /// Appends the specified SQL to the existing SQL statement being built
+        /// </summary>
+        /// <param name="sql">The SQL statement to append</param>
+        /// <param name="paramerterName">Name of the paramerter.</param>
+        /// <param name="parmaeterValue">The parmaeter value.</param>
+        public void Append(string sql, string paramerterName, object parmaeterValue)
+        {
+            throw new NotImplementedException();
+        }
+        /// <summary>
+        /// Appends the specified SQL to the existing SQL statement being built.
+        /// </summary>
+        /// <param name="sql">The SQL statement to append</param>
+        /// <param name="parameters">The database parameters associated with this query</param>
+        public void Append(string sql, params object[] parameters)
+        {
+            Append(sql);
+            AddParameterRange(parameters);
+        }
+        /// <summary>
         /// Create an instance of <see cref="ISqlQuery"/> using the existing <see cref="Parameters"/> and built sql query
         /// </summary>
         /// <param name="shouldBePrepared">Indicates if the current sql string needs to be prepared (or compiled) version of the command on the data source.</param>
@@ -162,6 +187,23 @@ namespace ADO.Net.Client.Implementation
                 //Add this parameter
                 _parameters.Add(param);
             }
+        }
+        /// <summary>
+        /// Adds the passed in parameter to the parameters collection
+        /// </summary>
+        /// <param name="parameterName">The name of the parameter to identify the parameter</param>
+        /// <param name="parameterValue">The value of the parameter as an <see cref="object"/></param>
+        public void AddParameter(string parameterName, object parameterValue)
+        {
+            AddParameter(_factory.GetDbParameter(parameterName, parameterValue));
+        }
+        /// <summary>
+        /// Adds the passed in parameter to the parameters collection
+        /// </summary>
+        /// <param name="parameters">The parameters that are associated with a database query</param>
+        public void AddParameterRange(params object[] parameters)
+        {
+            AddParameterRange(_factory.GetDbParameters(parameters));
         }
         /// <summary>
         /// Adds an <see cref="IEnumerable{T}" /> of <see cref="DbParameter"/> objects to the helpers underlying db parameter collection
