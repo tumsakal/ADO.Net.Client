@@ -30,6 +30,8 @@
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <ContinuousIntegrationBuild>false</ContinuousIntegrationBuild>
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\static\icon.png" Pack="true" PackagePath="icon.png" />

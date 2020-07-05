@@ -41,17 +41,20 @@ namespace ADO.Net.Client.Implementation.Tests
     public class QueryBuilderTests 
     {
         #region Fields/Properties
+        private readonly IDbObjectFactory _factory;
+        private IQueryBuilder _builder;
         #endregion
         #region Constructors
         public QueryBuilderTests()
         {
-           
+            _factory = new DbObjectFactory(MySqlClientFactory.Instance);
         }
         #endregion
         #region Setup/Teardown
         [SetUp]
         public void Setup()
         {
+            _builder = new QueryBuilder(_factory);
         }
         #endregion
         #region Tests    
@@ -61,7 +64,6 @@ namespace ADO.Net.Client.Implementation.Tests
         public void CanBuildSQLQuery(CommandType commandType, int commandTimeout, bool shouldBePrepared)
         {
             string queryString = "Query Text to check";
-            QueryBuilder builder = new QueryBuilder(queryString);
             List<DbParameter> parameters = new List<DbParameter>()
             {
                 new MySqlParameter() { ParameterName = "@Param3" },
@@ -69,9 +71,10 @@ namespace ADO.Net.Client.Implementation.Tests
                 new MySqlParameter() { ParameterName = "@Param1" }
             };
 
-            builder.AddParameterRange(parameters);
+            _builder.Append(queryString);
+            _builder.AddParameterRange(parameters);
 
-            ISqlQuery query = builder.CreateSQLQuery(commandType, commandTimeout, shouldBePrepared);
+            ISqlQuery query = _builder.CreateSQLQuery(commandType, commandTimeout, shouldBePrepared);
 
             Assert.IsNotNull(query);
             Assert.AreEqual(commandTimeout, query.CommandTimeout);
@@ -87,11 +90,10 @@ namespace ADO.Net.Client.Implementation.Tests
         public void ContainsParameterFalse()
         {
             MySqlParameter param = new MySqlParameter() { ParameterName = "Param", Value = 12321, DbType = DbType.Int32 };
-            QueryBuilder builder = new QueryBuilder();
 
-            builder.AddParameter(param);
+            _builder.AddParameter(param);
 
-            Assert.IsFalse(builder.Contains(new MySqlParameter()));
+            Assert.IsFalse(_builder.Contains(new MySqlParameter()));
         }
         /// <summary>
         /// Determines whether [contains parameter true].
@@ -100,11 +102,10 @@ namespace ADO.Net.Client.Implementation.Tests
         public void ContainsParameterTrue()
         {
             MySqlParameter param = new MySqlParameter() { ParameterName = "Param", Value = 12321, DbType = DbType.Int32 };
-            QueryBuilder builder = new QueryBuilder();
 
-            builder.AddParameter(param);
+            _builder.AddParameter(param);
 
-            Assert.IsTrue(builder.Contains(param));
+            Assert.IsTrue(_builder.Contains(param));
         }
         /// <summary>
         /// Determines whether [contains parameter name false].
@@ -112,7 +113,6 @@ namespace ADO.Net.Client.Implementation.Tests
         [Test]
         public void ContainsParameterNameFalse()
         {
-            QueryBuilder builder = new QueryBuilder();
             List<DbParameter> parameters = new List<DbParameter>()
             {
                 new MySqlParameter() { ParameterName = "@Param3" },
@@ -120,14 +120,13 @@ namespace ADO.Net.Client.Implementation.Tests
                 new MySqlParameter() { ParameterName = "@Param1" }
             };
 
-            builder.AddParameterRange(parameters);
+            _builder.AddParameterRange(parameters);
 
-            Assert.That(builder.Contains("@Param4") == false);
+            Assert.That(_builder.Contains("@Param4") == false);
         }
         [Test]
         public void ContainsParameterNameTrue()
         {
-            QueryBuilder builder = new QueryBuilder();
             List<DbParameter> parameters = new List<DbParameter>()
             {
                 new MySqlParameter() { ParameterName = "@Param3" },
@@ -135,26 +134,24 @@ namespace ADO.Net.Client.Implementation.Tests
                 new MySqlParameter() { ParameterName = "@Param1" }
             };
 
-            builder.AddParameterRange(parameters);
+            _builder.AddParameterRange(parameters);
 
-            Assert.That(builder.Contains("@Param1"));
-            Assert.That(builder.Contains("@Param3"));
-            Assert.That(builder.Contains("@Param2"));
+            Assert.That(_builder.Contains("@Param1"));
+            Assert.That(_builder.Contains("@Param3"));
+            Assert.That(_builder.Contains("@Param2"));
         }
         [Test]
         public void RejectsDuplicateParameterName()
         {
-            QueryBuilder builder = new QueryBuilder();
             MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1" };
 
-            builder.AddParameter(parameter);
+            _builder.AddParameter(parameter);
 
-            Assert.Throws<ArgumentException>(() => builder.AddParameter(new MySqlParameter() { ParameterName = "@Param1" }));
+            Assert.Throws<ArgumentException>(() => _builder.AddParameter(new MySqlParameter() { ParameterName = "@Param1" }));
         }
         [Test]
         public void RejectsDuplicateParameterNamesInEnumerable()
         {
-            QueryBuilder builder = new QueryBuilder();
             List<DbParameter> parameters = new List<DbParameter>()
             {
                 new MySqlParameter() { ParameterName = "@Param1" },
@@ -162,12 +159,11 @@ namespace ADO.Net.Client.Implementation.Tests
                 new MySqlParameter() { ParameterName = "@Param1" }
             };
 
-            Assert.Throws<ArgumentException>(() => builder.AddParameterRange(parameters));
+            Assert.Throws<ArgumentException>(() => _builder.AddParameterRange(parameters));
         }
         [Test]
         public void RejectsDuplicateParameterNames()
         {
-            QueryBuilder builder = new QueryBuilder();
             MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1" };
             List<DbParameter> parameters = new List<DbParameter>()
             {
@@ -176,9 +172,9 @@ namespace ADO.Net.Client.Implementation.Tests
                 new MySqlParameter() { ParameterName = "@Param1" }
             };
 
-            builder.AddParameter(parameter);
+            _builder.AddParameter(parameter);
 
-            Assert.Throws<ArgumentException>(() => builder.AddParameterRange(parameters));
+            Assert.Throws<ArgumentException>(() => _builder.AddParameterRange(parameters));
         }
         /// <summary>
         /// Determines whether this instance [can append string].
@@ -186,13 +182,12 @@ namespace ADO.Net.Client.Implementation.Tests
         [Test]
         public void CanAppendString()
         {
-            QueryBuilder builder = new QueryBuilder();
             string valueToAppend = "Value To Append";
 
-            builder.Append(valueToAppend);
+            _builder.Append(valueToAppend);
 
-            Assert.That(!string.IsNullOrWhiteSpace(builder.QueryText));
-            Assert.That(valueToAppend == builder.QueryText);
+            Assert.That(!string.IsNullOrWhiteSpace(_builder.QueryText));
+            Assert.That(valueToAppend == _builder.QueryText);
         }
         /// <summary>
         /// 
@@ -201,15 +196,14 @@ namespace ADO.Net.Client.Implementation.Tests
         public void CanAppendStringAndParameter()
         {
             string valueToAppend = "Value To Append";
-            QueryBuilder builder = new QueryBuilder();
             MySqlParameter parameter = new MySqlParameter() { ParameterName = "Param1" };
 
-            builder.Append(valueToAppend, parameter);
+            _builder.Append(valueToAppend, parameter);
 
-            Assert.IsNotNull(builder.Parameters);
-            Assert.That(!string.IsNullOrWhiteSpace(builder.QueryText));
-            Assert.That(valueToAppend == builder.QueryText);
-            Assert.That(builder.Parameters.Count() == 1);
+            Assert.IsNotNull(_builder.Parameters);
+            Assert.That(!string.IsNullOrWhiteSpace(_builder.QueryText));
+            Assert.That(valueToAppend == _builder.QueryText);
+            Assert.That(_builder.Parameters.Count() == 1);
         }
         /// <summary>
         /// 
@@ -218,7 +212,6 @@ namespace ADO.Net.Client.Implementation.Tests
         public void CanAppendStringAndParameters()
         {
             string valueToAppend = "Value To Append";
-            QueryBuilder builder = new QueryBuilder();
             List<DbParameter> parameters = new List<DbParameter>() 
             { 
                 new MySqlParameter() { ParameterName = "Param1" },
@@ -226,12 +219,12 @@ namespace ADO.Net.Client.Implementation.Tests
                 new MySqlParameter() { ParameterName = "Param3" }
             };
 
-            builder.Append(valueToAppend, parameters);
+            _builder.Append(valueToAppend, parameters);
 
-            Assert.IsNotNull(builder.Parameters);
-            Assert.That(!string.IsNullOrWhiteSpace(builder.QueryText));
-            Assert.That(valueToAppend == builder.QueryText);
-            Assert.That(builder.Parameters.Count() == 3);
+            Assert.IsNotNull(_builder.Parameters);
+            Assert.That(!string.IsNullOrWhiteSpace(_builder.QueryText));
+            Assert.That(valueToAppend == _builder.QueryText);
+            Assert.That(_builder.Parameters.Count() == 3);
         }
         /// <summary>
         /// 
@@ -239,7 +232,6 @@ namespace ADO.Net.Client.Implementation.Tests
         [Test]
         public void CanClearParameters()
         {
-            QueryBuilder builder = new QueryBuilder();
             List<DbParameter> parameters = new List<DbParameter>()
             {
                 new MySqlParameter() { ParameterName = "Param1" },
@@ -247,15 +239,15 @@ namespace ADO.Net.Client.Implementation.Tests
                 new MySqlParameter() { ParameterName = "Param3" }
             };
 
-            builder.AddParameterRange(parameters);
+            _builder.AddParameterRange(parameters);
 
-            Assert.IsNotNull(builder.Parameters);
-            Assert.That(builder.Parameters.Count() == 3);
+            Assert.IsNotNull(_builder.Parameters);
+            Assert.That(_builder.Parameters.Count() == 3);
 
-            builder.ClearParameters();
+            _builder.ClearParameters();
 
-            Assert.IsNotNull(builder.Parameters);
-            Assert.That(builder.Parameters.Count() == 0);
+            Assert.IsNotNull(_builder.Parameters);
+            Assert.That(_builder.Parameters.Count() == 0);
         }
         /// <summary>
         /// Determines whether this instance [can clear SQL string].
@@ -263,15 +255,13 @@ namespace ADO.Net.Client.Implementation.Tests
         [Test]
         public void CanClearSqlString()
         {
-            QueryBuilder builder = new QueryBuilder();
-
-            builder.Append("A value to append \n");
-            builder.Append("A second value to append");
+            _builder.Append("A value to append \n");
+            _builder.Append("A second value to append");
 
             //Clear the sql string
-            builder.ClearSQL();
+            _builder.ClearSQL();
 
-            Assert.That(string.IsNullOrWhiteSpace(builder.QueryText) == true);
+            Assert.That(string.IsNullOrWhiteSpace(_builder.QueryText) == true);
         }
         /// <summary>
         /// 
@@ -279,16 +269,15 @@ namespace ADO.Net.Client.Implementation.Tests
         [Test]
         public void CanFindParameterByName()
         {
-            QueryBuilder builder = new QueryBuilder();
             MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1", Value = 1};
 
-            builder.AddParameter(parameter);
+            _builder.AddParameter(parameter);
 
-            DbParameter param = builder.GetParameter(parameter.ParameterName);
+            DbParameter param = _builder.GetParameter(parameter.ParameterName);
 
             Assert.IsNotNull(param);
             Assert.AreEqual(typeof(MySqlParameter), param.GetType());
-            Assert.That(builder.Parameters.Count() == 1);
+            Assert.That(_builder.Parameters.Count() == 1);
             Assert.That(param.ParameterName == parameter.ParameterName);
             Assert.That(param.Value == parameter.Value);
         }
@@ -298,16 +287,15 @@ namespace ADO.Net.Client.Implementation.Tests
         [Test]
         public void CanRemoveParameterByName()
         {
-            QueryBuilder builder = new QueryBuilder();
             MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1", Value = 1 };
 
-            builder.AddParameter(parameter);
+            _builder.AddParameter(parameter);
 
-            builder.RemoveParameter(parameter.ParameterName);
+            _builder.RemoveParameter(parameter.ParameterName);
 
-            Assert.IsNotNull(builder.Parameters);
-            Assert.That(builder.Contains(parameter.ParameterName) == false);
-            Assert.That(builder.Parameters.Count() == 0);
+            Assert.IsNotNull(_builder.Parameters);
+            Assert.That(_builder.Contains(parameter.ParameterName) == false);
+            Assert.That(_builder.Parameters.Count() == 0);
         }
         /// <summary>
         /// 
@@ -315,16 +303,15 @@ namespace ADO.Net.Client.Implementation.Tests
         [Test]
         public void CanReplaceParameterByName()
         {
-            QueryBuilder builder = new QueryBuilder();
             MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1", Value = 1 };
             MySqlParameter newParam = new MySqlParameter() { ParameterName="@Param2", Value = "SomeValue" };
             
-            builder.AddParameter(parameter);
+            _builder.AddParameter(parameter);
 
-            builder.ReplaceParameter(parameter.ParameterName, newParam);
+            _builder.ReplaceParameter(parameter.ParameterName, newParam);
 
-            Assert.IsNotNull(builder.Parameters);
-            Assert.That(builder.Parameters.Count() == 1);
+            Assert.IsNotNull(_builder.Parameters);
+            Assert.That(_builder.Parameters.Count() == 1);
             Assert.AreNotEqual(parameter, newParam);
             Assert.AreNotEqual(parameter.Value, newParam.Value);
             Assert.AreNotEqual(parameter.ParameterName, newParam.ParameterName);
@@ -335,15 +322,14 @@ namespace ADO.Net.Client.Implementation.Tests
         [Test]
         public void CanSetParameterValueByName()
         {
-            QueryBuilder builder = new QueryBuilder();
             MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1", Value = 1 };
 
-            builder.AddParameter(parameter);
-            builder.SetParamaterValue(parameter.ParameterName, 333);
-            DbParameter param = builder.GetParameter(parameter.ParameterName);
+            _builder.AddParameter(parameter);
+            _builder.SetParamaterValue(parameter.ParameterName, 333);
+            DbParameter param = _builder.GetParameter(parameter.ParameterName);
 
-            Assert.IsNotNull(builder.Parameters);
-            Assert.That(builder.Parameters.Count() == 1);
+            Assert.IsNotNull(_builder.Parameters);
+            Assert.That(_builder.Parameters.Count() == 1);
             Assert.That(param.ParameterName == parameter.ParameterName);
             Assert.That(333 == (int)param.Value);
         }
