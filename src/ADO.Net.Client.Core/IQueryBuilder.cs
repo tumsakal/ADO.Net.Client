@@ -71,6 +71,19 @@ namespace ADO.Net.Client.Core
         /// Appends the specified SQL to the existing SQL statement being built
         /// </summary>
         /// <param name="sql">The SQL statement to append</param>
+        /// <param name="paramerterName">Name of the paramerter.</param>
+        /// <param name="parmaeterValue">The parmaeter value.</param>
+        void Append(string sql, string paramerterName, object parmaeterValue);
+        /// <summary>
+        /// Appends the specified SQL to the existing SQL statement being built.
+        /// </summary>
+        /// <param name="sql">The SQL statement to append</param>
+        /// <param name="parameters">The database parameters associated with this query</param>
+        void Append(string sql, params object[] parameters);
+        /// <summary>
+        /// Appends the specified SQL to the existing SQL statement being built
+        /// </summary>
+        /// <param name="sql">The SQL statement to append</param>
         /// <param name="parameters">The database parameters associated with this query</param>
         void Append(string sql, IEnumerable<DbParameter> parameters);
         /// <summary>

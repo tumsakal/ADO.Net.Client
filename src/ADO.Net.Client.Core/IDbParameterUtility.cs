@@ -57,24 +57,35 @@ namespace ADO.Net.Client.Core
         /// </summary>
         void ClearParameters();
         /// <summary>
-        /// Adds the passed in parameter to the parameters collection
-        /// </summary>
-        /// <param name="param">An instance of the <see cref="DbParameter"/> object, that is created the by the caller</param>
-        /// <returns>Returns a <see cref="DbParameter"/></returns>
-        void AddParameter(DbParameter param);
-        /// <summary>
         /// Sets the value of an existing <see cref="DbParameter"/> by using the <paramref name="parameterName"/> and passed in <paramref name="value"/>
         /// </summary>
         /// <param name="parameterName">The name of the parameter to identify the parameter</param>
         /// <param name="value">The value of the parameter as an <see cref="object"/></param>
         void SetParamaterValue(string parameterName, object value);
         /// <summary>
-        /// Adds an <see cref="IEnumerable{DbParameter}"/> of <see cref="DbParameter"/> objects to the helpers underlying db parameter collection
+        /// Adds the passed in parameter to the parameters collection
         /// </summary>
-        /// <param name="dbParams">An <see cref="IEnumerable{DbParameter}"/> to add to the underlying db parameter collection for the connection</param>
+        /// <param name="param">An instance of the <see cref="DbParameter"/> object, that is created the by the caller</param>
+        /// <returns>Returns a <see cref="DbParameter"/></returns>
+        void AddParameter(DbParameter param);
+        /// <summary>
+        /// Adds the passed in parameter to the parameters collection
+        /// </summary>
+        /// <param name="parameterName">The name of the parameter to identify the parameter</param>
+        /// <param name="parameterValue">The value of the parameter as an <see cref="object"/></param>
+        void AddParameter(string parameterName, object parameterValue);
+        /// <summary>
+        /// Adds the passed in parameter to the parameters collection
+        /// </summary>
+        /// <param name="parameters">The parameters that are associated with a database query</param>
+        void AddParameterRange(params object[] parameters);
+        /// <summary>
+        /// Adds an <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/> objects to the helpers underlying db parameter collection
+        /// </summary>
+        /// <param name="dbParams">An <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/> to add to the underlying db parameter collection for the connection</param>
         void AddParameterRange(IEnumerable<DbParameter> dbParams);
         /// <summary>
-        /// Checks for a paremeter in the parameters list with the passed in name
+        /// Checks for a parameter in the parameters collection with the passed in name
         /// </summary>
         /// <param name="parameterName">The name of the parameter to use when searching the Parameters list</param>
         /// <returns>True if this parameter exists in the parameters collection, false otherwise</returns>

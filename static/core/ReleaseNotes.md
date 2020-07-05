@@ -1,6 +1,12 @@
 Version History
 ===============
 
+### 1.1.4
+
+* Adding AddParameterRange overload to [IDbParameterUtility](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbParameterUtility.cs) that takes in a parameter array of objects
+* Adding Append overload to [IQueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IQueryBuilder.cs) that takes in a SQL string in a parameter array of objects
+* Adding append overload to [IQueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IQueryBuilder.cs) that takes in a parameter name and value
+
 ### 1.1.3
 
 * IMultiResultReaderAsync now implements IAsyncDisposable for .NET Standard 2.1 and above
