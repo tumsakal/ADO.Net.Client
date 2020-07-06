@@ -9,6 +9,7 @@ Version History
 
 ### 1.1.3
 
+* [QueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/QueryBuilder.cs) Constructor now takes in an instance of [IDbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbObjectFactory.cs)
 * Adding AddParameterRange overload to [QueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/QueryBuilder.cs) that takes in a parameter array of objects
 * Adding Append overload to [QueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/QueryBuilder.cs) that takes in a SQL string in a parameter array of objects
 * Adding append overload to [QueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/QueryBuilder.cs) that takes in a parameter name and value
