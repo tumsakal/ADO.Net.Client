@@ -1,6 +1,13 @@
 Version History
 ===============
 
+### 1.1.3
+
+* Adding AddParameterRange overload to [QueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/QueryBuilder.cs) that takes in a parameter array of objects
+* Adding Append overload to [QueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/QueryBuilder.cs) that takes in a SQL string in a parameter array of objects
+* Adding append overload to [QueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/QueryBuilder.cs) that takes in a parameter name and value
+* Updating to ADO.Net.Client.Core 1.1.4
+
 ### 1.1.2
 
 * Updating to ADO.Net.Client.Core 1.1.3

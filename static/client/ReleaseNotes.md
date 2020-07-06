@@ -13,7 +13,7 @@ Version History
 
 * Updating to ADO.Net.Client.Implementation 1.1.1
 * All DbClient GetScalarValue asyn/sync return T instead of object
-* 
+
 ### 1.0.8
 
 * Uppdating to ADO.Net.Client.Implementation 1.1.0
