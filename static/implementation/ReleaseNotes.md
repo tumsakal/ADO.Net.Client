@@ -1,6 +1,12 @@
 Version History
 ===============
 
+### 1.1.4
+
+* Updating to ADO.Net.Client.Core 1.1.5
+* [QueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/QueryBuilder.cs) CreateSQLQuery now has optional parameter to clear 
+  parameters and query text used to buld an instance of [ISqlQuery](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/ISqlQuery.cs)
+
 ### 1.1.3
 
 * Adding AddParameterRange overload to [QueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/QueryBuilder.cs) that takes in a parameter array of objects
