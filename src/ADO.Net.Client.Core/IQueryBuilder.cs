@@ -89,10 +89,11 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Create an instance of <see cref="ISqlQuery"/> using the existing <see cref="Parameters"/> and built sql query
         /// </summary>
+        /// <param name="clearContents">If <c>true</c> when building the query the current <see cref="Parameters"/> and <see cref="QueryText"/> will be cleared</param>
         /// <param name="shouldBePrepared">Indicates if the current sql string needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <param name="type">Represents how a command should be interpreted by the data provider</param>
-        ISqlQuery CreateSQLQuery(CommandType type, int commandTimeout = 30, bool shouldBePrepared = false);
+        ISqlQuery CreateSQLQuery(CommandType type, int commandTimeout = 30, bool shouldBePrepared = false, bool clearContents = true);
         #endregion
     }
 }

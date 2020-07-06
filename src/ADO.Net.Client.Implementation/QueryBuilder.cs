@@ -50,7 +50,7 @@ namespace ADO.Net.Client.Implementation
         /// <value>
         /// The parameters associated with a query as a <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/>
         /// </value>
-        public IEnumerable<DbParameter> Parameters 
+        public IEnumerable<DbParameter> Parameters
         {
             get
             {
@@ -161,12 +161,23 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Create an instance of <see cref="ISqlQuery"/> using the existing <see cref="Parameters"/> and built sql query
         /// </summary>
+        /// <param name="clearContents">If <c>true</c> when building the query the current <see cref="Parameters"/> and <see cref="QueryText"/> will be cleared</param>
         /// <param name="shouldBePrepared">Indicates if the current sql string needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <param name="type">Represents how a command should be interpreted by the data provider</param>
-        public ISqlQuery CreateSQLQuery(CommandType type, int commandTimeout = 30, bool shouldBePrepared = false)
+        public ISqlQuery CreateSQLQuery(CommandType type, int commandTimeout = 30, bool shouldBePrepared = false, bool clearContents = true)
         {
-            return new SQLQuery(_sqlQuery.ToString(), type, _parameters) { CommandTimeout = commandTimeout, ShouldBePrepared = shouldBePrepared };
+            SQLQuery query = new SQLQuery(_sqlQuery.ToString(), type, _parameters) { CommandTimeout = commandTimeout, ShouldBePrepared = shouldBePrepared };
+
+            //Check if we need to clear any state
+            if (clearContents == true)
+            {
+                //Clear out any existing state
+                _parameters.Clear();
+                _sqlQuery.Clear();
+            }
+
+            return query;
         }
         #endregion
         #region Parameter Methods        
@@ -213,7 +224,7 @@ namespace ADO.Net.Client.Implementation
         public void AddParameterRange(IEnumerable<DbParameter> dbParams)
         {
             //Check incoming parameters for duplicate parameters
-            if(dbParams.GroupBy(x => x.ParameterName).Any(g => g.Count() > 1) == true)
+            if (dbParams.GroupBy(x => x.ParameterName).Any(g => g.Count() > 1) == true)
             {
                 throw new ArgumentException($"The passed in {dbParams} contains duplicate parameter names");
             }

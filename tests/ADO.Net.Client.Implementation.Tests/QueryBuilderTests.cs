@@ -59,9 +59,9 @@ namespace ADO.Net.Client.Implementation.Tests
         #endregion
         #region Tests    
         [Test]
-        [TestCase(CommandType.StoredProcedure, 60,false)]
-        [TestCase(CommandType.Text, 10, true)]
-        public void CanBuildSQLQuery(CommandType commandType, int commandTimeout, bool shouldBePrepared)
+        [TestCase(CommandType.StoredProcedure, 60, false, true)]
+        [TestCase(CommandType.Text, 10, true, false)]
+        public void CanBuildSQLQuery(CommandType commandType, int commandTimeout, bool shouldBePrepared, bool shouldClearContents)
         {
             string queryString = "Query Text to check";
             List<DbParameter> parameters = new List<DbParameter>()
@@ -74,14 +74,15 @@ namespace ADO.Net.Client.Implementation.Tests
             _builder.Append(queryString);
             _builder.AddParameterRange(parameters);
 
-            ISqlQuery query = _builder.CreateSQLQuery(commandType, commandTimeout, shouldBePrepared);
+            ISqlQuery query = _builder.CreateSQLQuery(commandType, commandTimeout, shouldBePrepared, shouldClearContents);
 
             Assert.IsNotNull(query);
             Assert.AreEqual(commandTimeout, query.CommandTimeout);
             Assert.AreEqual(queryString, query.QueryText);
             Assert.AreEqual(shouldBePrepared, query.ShouldBePrepared);
             Assert.AreEqual(commandType, query.QueryType);
-            Assert.That(query.Parameters.Count() == parameters.Count);
+            Assert.IsTrue(_builder.Parameters.Count() == ((shouldClearContents == false) ? parameters.Count : 0));
+            Assert.IsTrue(_builder.QueryText == ((shouldClearContents == false) ? queryString : string.Empty));
         }
         /// <summary>
         /// Containtses the parameter false.
