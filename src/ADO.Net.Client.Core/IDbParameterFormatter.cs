@@ -72,6 +72,12 @@ namespace ADO.Net.Client.Core
         /// <param name="info">The information.</param>
         /// <returns></returns>
         void MapDbParameter(IDbDataParameter parameter, object parameterValue, PropertyInfo info);
+        /// <summary>
+        /// Maps the parameter direction.
+        /// </summary>
+        /// <param name="info">The information.</param>
+        /// <returns></returns>
+        ParameterDirection MapParameterDirection(PropertyInfo info);
         #endregion
     }
 }

@@ -24,6 +24,8 @@ SOFTWARE.*/
 #region Using Statements
 using ADO.Net.Client.Annotations;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
@@ -209,6 +211,32 @@ namespace ADO.Net.Client.Core
             return value;
         }
         /// <summary>
+        /// Maps the parameter direction.
+        /// </summary>
+        /// <param name="info">The information.</param>
+        /// <returns></returns>
+        public ParameterDirection MapParameterDirection(PropertyInfo info)
+        {
+            object[] custom = info.GetCustomAttributes(false);
+
+            if(custom.Where(x => x.GetType() == typeof(Input)).Count() == 1)
+            {
+                return ParameterDirection.Input;
+            }
+            else if(custom.Where(x => x.GetType() == typeof(Output)).Count() == 1)
+            {
+                return ParameterDirection.Output;
+            }
+            else if (custom.Where(x => x.GetType() == typeof(ReturnValue)).Count() == 1)
+            {
+                return ParameterDirection.ReturnValue;
+            }
+            else
+            {
+                return ParameterDirection.InputOutput;
+            }
+        }
+        /// <summary>
         /// Maps an instance of a <see cref="IDbDataParameter"/>
         /// </summary>
         /// <param name="parameter"></param>
@@ -219,6 +247,7 @@ namespace ADO.Net.Client.Core
             parameter.ParameterName = string.Concat(ParameterNamePrefix, info.Name);
             parameter.Value = MapParameterValue(parameterValue, info);
             parameter.DbType = MapDbType(info);
+            parameter.Direction = MapParameterDirection(info);
 
             //Help query plan caching by using common size if this is a string or Guid Type
             if (info == typeof(Guid) && HasNativeGuidSupport == false)
