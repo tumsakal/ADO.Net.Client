@@ -1,6 +1,13 @@
 Version History
 ===============
 
+### 1.1.3
+
+* Adding attribute [Input](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/Input.cs) class to indicate an input database parameter
+* Adding attribute [Output](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/Output.cs) to indicate an output database parameter
+* Adding attribute [InputOutput](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/InputOutput.cs) to indicate an input output database parameter
+* Adding attribute [ReturnValue](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/ReturnValue.cs) to indicate a return value database parameter
+
 ### 1.1.2
 
 * Correcting DateTim2 attribute to be DateTime2
