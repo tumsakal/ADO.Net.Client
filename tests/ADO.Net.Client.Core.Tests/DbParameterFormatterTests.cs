@@ -22,7 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using ADO.Net.Client.Core.Tests.Models;
 using NUnit.Framework;
+using System.Collections.Specialized;
 using System.Data;
 using System.Reflection;
 #endregion
@@ -54,6 +56,52 @@ namespace ADO.Net.Client.Core.Tests
         public void MapsTimeCorrectly()
         {
             
+        }
+        /// <summary>
+        /// Getses the return value direction.
+        /// </summary>
+        [Test]
+        public void GetsReturnValueDirection()
+        {
+            PropertyInfo info = typeof(DirectionModel).GetProperty(nameof(DirectionModel.ReturnValue));
+
+            Assert.That(_formatter.MapParameterDirection(info) == ParameterDirection.ReturnValue);
+        }
+        /// <summary>
+        /// Getses the input direcion.
+        /// </summary>
+        [Test]
+        public void GetsInputDirecion()
+        {
+            PropertyInfo info = typeof(DirectionModel).GetProperty(nameof(DirectionModel.Input));
+
+            Assert.That(_formatter.MapParameterDirection(info) == ParameterDirection.Input);
+        }
+        /// <summary>
+        /// Getses the output direction.
+        /// </summary>
+        [Test]
+        public void GetsOutputDirection()
+        {
+            PropertyInfo info = typeof(DirectionModel).GetProperty(nameof(DirectionModel.Output));
+
+            Assert.That(_formatter.MapParameterDirection(info) == ParameterDirection.Output);
+        }
+        /// <summary>
+        /// Getses the output direction.
+        /// </summary>
+        [Test]
+        public void GetsInputOutputDirection()
+        {
+            PropertyInfo info = typeof(DirectionModel).GetProperty(nameof(DirectionModel.InputOutput));
+
+            Assert.That(_formatter.MapParameterDirection(info) == ParameterDirection.InputOutput);
+        }
+        public void GetNoSetDirection()
+        {
+            PropertyInfo info = typeof(DirectionModel).GetProperty(nameof(DirectionModel.NoDirection));
+
+            Assert.That(_formatter.MapParameterDirection(info) == ParameterDirection.InputOutput);
         }
         #endregion
     }
