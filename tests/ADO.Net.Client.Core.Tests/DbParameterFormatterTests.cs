@@ -52,9 +52,46 @@ namespace ADO.Net.Client.Core.Tests
         /// 
         /// </summary>
         [Test]
+        [Category("DbType")]
         public void MapsTimeCorrectly()
         {
-            
+            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Time))) == DbType.Time);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsStringCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.NormalString))) == DbType.String);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsANSIStringCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.AnsiString))) == DbType.AnsiString);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsDateTimeCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.NormalDateTime))) == DbType.DateTime);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsDateTime2Correctly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.DateTime2))) == DbType.DateTime2);
         }
         /// <summary>
         /// Getses the return value direction.
