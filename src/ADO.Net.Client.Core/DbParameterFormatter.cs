@@ -24,8 +24,6 @@ SOFTWARE.*/
 #region Using Statements
 using ADO.Net.Client.Annotations;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
@@ -70,10 +68,10 @@ namespace ADO.Net.Client.Core
         #endregion
         #region Utility Methods                
         /// <summary>
-        /// Maps the type of the database.
+        /// Maps the type value of a <see cref="DbType"/> from an instance of <paramref name="info"/>
         /// </summary>
-        /// <param name="info">The information.</param>
-        /// <returns></returns>
+        /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
+        /// <returns>Returns a value of <see cref="DbType"/></returns>
         public DbType MapDbType(PropertyInfo info)
         {
             object[] customAttributes = info.GetCustomAttributes(false);
@@ -86,7 +84,7 @@ namespace ADO.Net.Client.Core
             else if (info.PropertyType == typeof(DateTime))
             {
                 //Check which date type to map to
-                if (customAttributes.Contains(typeof(DateTime2)) == true)
+                if (customAttributes.Where(x => x.GetType() == typeof(DateTime2)).Count() == 1)
                 {
                     return DbType.DateTime2;
                 }
@@ -165,15 +163,15 @@ namespace ADO.Net.Client.Core
             else if (info.PropertyType == typeof(string))
             {
                 //Check which string type to map to
-                if (customAttributes.Contains(typeof(ANSIString)) == true)
+                if (customAttributes.Where(x => x.GetType() == typeof(ANSIString)).Count() == 1)
                 {
                     return DbType.AnsiString;
                 }
-                else if (customAttributes.Contains(typeof(ANSIStringFixedLength)) == true)
+                else if (customAttributes.Where(x => x.GetType() == typeof(ANSIStringFixedLength)).Count() == 1)
                 {
                     return DbType.AnsiStringFixedLength;
                 }
-                else if (customAttributes.Contains(typeof(StringFixedLength)) == true)
+                else if (customAttributes.Where(x => x.GetType() == typeof(StringFixedLength)).Count() == 1)
                 {
                     return DbType.StringFixedLength;
                 }
@@ -188,11 +186,11 @@ namespace ADO.Net.Client.Core
             }
         }
         /// <summary>
-        /// Maps the parameter value.
+        /// Maps the value for <see cref="DbParameter.Value"/> from a <paramref name="value"/> and an instance of <paramref name="info"/>
         /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="info"></param>
-        /// <returns></returns>
+        /// <param name="value">The value for the parameter</param>
+        /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
+        /// <returns>Returns the value for <see cref="DbParameter.Value"/></returns>
         public object MapParameterValue(object value, PropertyInfo info)
         {
             if (value == null)
@@ -211,10 +209,10 @@ namespace ADO.Net.Client.Core
             return value;
         }
         /// <summary>
-        /// Maps the parameter direction.
+        /// Maps the <see cref="ParameterDirection"/> from an instance of <paramref name="info"/>
         /// </summary>
-        /// <param name="info">The information.</param>
-        /// <returns></returns>
+        /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
+        /// <returns>Returns a value of <see cref="ParameterDirection"/></returns>
         public ParameterDirection MapParameterDirection(PropertyInfo info)
         {
             object[] custom = info.GetCustomAttributes(false);
@@ -237,11 +235,11 @@ namespace ADO.Net.Client.Core
             }
         }
         /// <summary>
-        /// Maps an instance of a <see cref="IDbDataParameter"/>
+        /// Maps an instance of a <see cref="IDbDataParameter"/> using the passed in <paramref name="info"/> <paramref name="parameterValue"/>
         /// </summary>
-        /// <param name="parameter"></param>
+        /// <param name="parameter">An instance of <see cref="IDbDataParameter"/></param>
         /// <param name="parameterValue">The value of the parameter</param>
-        /// <param name="info">The information.</param>
+        /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
         public void MapDbParameter(IDbDataParameter parameter, object parameterValue, PropertyInfo info)
         {
             parameter.ParameterName = string.Concat(ParameterNamePrefix, info.Name);

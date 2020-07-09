@@ -30,7 +30,7 @@ using System.Reflection;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class the defines the behavior of a <see cref="DbParameter"/> mapper class
+    /// Contract class the defines the behavior of a <see cref="DbParameter"/> formatter class
     /// </summary>
     public interface IDbParameterFormatter
     {
@@ -50,33 +50,32 @@ namespace ADO.Net.Client.Core
         /// </value>
         string ParameterNamePrefix { get; }
         #endregion
-        #region Utility Methods        
+        #region Utility Methods  
         /// <summary>
-        /// Maps the type of the database.
+        /// Maps an instance of a <see cref="IDbDataParameter"/> using the passed in <paramref name="info"/> <paramref name="parameterValue"/>
         /// </summary>
-        /// <param name="info">The information.</param>
-        /// <returns></returns>
-        DbType MapDbType(PropertyInfo info);
-        /// <summary>
-        /// Maps the parameter value.
-        /// </summary>
-        /// <param name="info"></param>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
-        object MapParameterValue(object value, PropertyInfo info);
-        /// <summary>
-        /// Maps an instance of a <see cref="IDbDataParameter"/>
-        /// </summary>
-        /// <param name="parameter"></param>
+        /// <param name="parameter">An instance of <see cref="IDbDataParameter"/></param>
         /// <param name="parameterValue">The value of the parameter</param>
-        /// <param name="info">The information.</param>
-        /// <returns></returns>
+        /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
         void MapDbParameter(IDbDataParameter parameter, object parameterValue, PropertyInfo info);
         /// <summary>
-        /// Maps the parameter direction.
+        /// Maps the type value of a <see cref="DbType"/> from an instance of <paramref name="info"/>
         /// </summary>
-        /// <param name="info">The information.</param>
-        /// <returns></returns>
+        /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
+        /// <returns>Returns a value of <see cref="DbType"/></returns>
+        DbType MapDbType(PropertyInfo info);
+        /// <summary>
+        /// Maps the value for <see cref="DbParameter.Value"/> from a <paramref name="value"/> and an instance of <paramref name="info"/>
+        /// </summary>
+        /// <param name="value">The value for the parameter</param>
+        /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
+        /// <returns>Returns the value for <see cref="DbParameter.Value"/></returns>
+        object MapParameterValue(object value, PropertyInfo info);
+        /// <summary>
+        /// Maps the <see cref="ParameterDirection"/> from an instance of <paramref name="info"/>
+        /// </summary>
+        /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
+        /// <returns>Returns a value of <see cref="ParameterDirection"/></returns>
         ParameterDirection MapParameterDirection(PropertyInfo info);
         #endregion
     }
