@@ -71,9 +71,27 @@ namespace ADO.Net.Client.Core.Tests
         /// </summary>
         [Test]
         [Category("DbType")]
+        public void MapStringFixedLengthCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.StringFixedLength))) == DbType.StringFixedLength);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
         public void MapsANSIStringCorrectly()
         {
             Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.AnsiString))) == DbType.AnsiString);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsANSIStringFixedLengthCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.AnsiStrinFixedLength))) == DbType.AnsiStringFixedLength);
         }
         /// <summary>
         /// 

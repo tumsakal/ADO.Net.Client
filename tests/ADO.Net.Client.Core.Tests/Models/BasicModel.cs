@@ -40,5 +40,9 @@ namespace ADO.Net.Client.Core.Tests.Models
         public string NormalString { get; set; }
         [ANSIString]
         public string AnsiString { get; set; }
+        [ANSIStringFixedLength]
+        public string AnsiStrinFixedLength { get; set; }
+        [StringFixedLength]
+        public string StringFixedLength { get; set; }
     }
 }
