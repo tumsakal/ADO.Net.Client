@@ -24,7 +24,6 @@ SOFTWARE.*/
 #region Using Statements
 using ADO.Net.Client.Core.Tests.Models;
 using NUnit.Framework;
-using System.Collections.Specialized;
 using System.Data;
 using System.Reflection;
 #endregion
@@ -61,6 +60,7 @@ namespace ADO.Net.Client.Core.Tests
         /// Getses the return value direction.
         /// </summary>
         [Test]
+        [Category("MapDirection")]
         public void GetsReturnValueDirection()
         {
             PropertyInfo info = typeof(DirectionModel).GetProperty(nameof(DirectionModel.ReturnValue));
@@ -71,6 +71,7 @@ namespace ADO.Net.Client.Core.Tests
         /// Getses the input direcion.
         /// </summary>
         [Test]
+        [Category("MapDirection")]
         public void GetsInputDirecion()
         {
             PropertyInfo info = typeof(DirectionModel).GetProperty(nameof(DirectionModel.Input));
@@ -81,6 +82,7 @@ namespace ADO.Net.Client.Core.Tests
         /// Getses the output direction.
         /// </summary>
         [Test]
+        [Category("MapDirection")]
         public void GetsOutputDirection()
         {
             PropertyInfo info = typeof(DirectionModel).GetProperty(nameof(DirectionModel.Output));
@@ -91,12 +93,15 @@ namespace ADO.Net.Client.Core.Tests
         /// Getses the output direction.
         /// </summary>
         [Test]
+        [Category("MapDirection")]
         public void GetsInputOutputDirection()
         {
             PropertyInfo info = typeof(DirectionModel).GetProperty(nameof(DirectionModel.InputOutput));
 
             Assert.That(_formatter.MapParameterDirection(info) == ParameterDirection.InputOutput);
         }
+        [Test]
+        [Category("MapDirection")]
         public void GetNoSetDirection()
         {
             PropertyInfo info = typeof(DirectionModel).GetProperty(nameof(DirectionModel.NoDirection));
