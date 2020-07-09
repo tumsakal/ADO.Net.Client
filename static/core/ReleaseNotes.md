@@ -3,6 +3,7 @@ Version History
 
 ### 1.1.6
 
+* [DbParameterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbParameterFormatter.cs) MapParameter now maps Parameter direction
 * [IDbParameterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbParameterFormatter.cs) now has method that maps an instance of PropertyInfo to ParameterDirection enum value
 * [DbParameterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbParameterFormatter.cs) now has method that maps an instance of PropertyInfo to ParameterDirection enum value
 * Intellisense updates
