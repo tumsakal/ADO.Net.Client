@@ -1,6 +1,12 @@
 Version History
 ===============
 
+### 1.1.6
+
+* [IDbParameterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbParameterFormatter.cs) now has method that maps an instance of PropertyInfo to ParameterDirection enum value
+* [DbParameterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbParameterFormatter.cs) now has method that maps an instance of PropertyInfo to ParameterDirection enum value
+* Intellisense updates
+
 ### 1.1.5
 
 * [IQueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IQueryBuilder.cs) CreateSQLQuery now has optional parameter to clear 
@@ -8,17 +14,18 @@ Version History
 
 ### 1.1.4
 
-* Adding AddParameterRange overload to [IDbParameterUtility](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbParameterUtility.cs) that takes in a parameter array of objects
-* Adding Append overload to [IQueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IQueryBuilder.cs) that takes in a SQL string in a parameter array of objects
-* Adding append overload to [IQueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IQueryBuilder.cs) that takes in a parameter name and value
+* Adding **new** AddParameterRange overload to [IDbParameterUtility](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbParameterUtility.cs) that takes in a parameter array of objects
+* Adding **new** Append overload to [IQueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IQueryBuilder.cs) that takes in a SQL string in a parameter array of objects
+* Adding **new** append overload to [IQueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IQueryBuilder.cs) that takes in a parameter name and value
 
 ### 1.1.3
 
 * IMultiResultReaderAsync now implements IAsyncDisposable for .NET Standard 2.1 and above
+
 ### 1.1.2
 
 * GetScalarValue sync/async now returns T instead of object on following objects
-  * ISqlExector
+  * [ISqlExecutor](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/ISqlExecutor.cs)
   * IDbProvider
   * DbProvider
   * IAsynchronousClient
@@ -26,7 +33,7 @@ Version History
 
 ### 1.1.1
 
-* Adding GetMultiResultReader async/sync on ISqlExectourSync/Async
+* Adding **new** GetMultiResultReader async/sync on ISqlExectourSync/Async
 
 ### 1.1.0
 
