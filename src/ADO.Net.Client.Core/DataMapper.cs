@@ -124,14 +124,20 @@ namespace ADO.Net.Client.Core
         {
             //Get an instance of the object passed in
             T returnType = Activator.CreateInstance<T>();
-            IEnumerable<PropertyInfo> writeableProperties = returnType.GetType().GetProperties().Where(x => x.CanWrite == true).Where(x => x.GetCustomAttributes(false).Contains(typeof(DbFieldIgnore)) == false);
+            IEnumerable<PropertyInfo> writeableProperties = returnType.GetType().GetProperties().Where(x => x.CanWrite == true);
 
             //Loop through all the properties
             foreach (PropertyInfo p in writeableProperties)
             {
                 object[] customAttributes = p.GetCustomAttributes(false);
-                DbField field = customAttributes.Where(x => x is DbField).FirstOrDefault() as DbField;
 
+                //Check if we need to pass this one
+                if(customAttributes.Any(x => x.GetType() == typeof(DbFieldIgnore)) == true)
+                {
+                    continue;
+                }
+
+                DbField field = customAttributes.Where(x => x is DbField).FirstOrDefault() as DbField;
                 string fieldName = (field != null && string.IsNullOrEmpty(field.DatabaseFieldName) == false) ? field.DatabaseFieldName : p.Name;
                 int ordinalIndex = record.GetOrdinal(fieldName);
                 object value = record.GetValue(ordinalIndex);
