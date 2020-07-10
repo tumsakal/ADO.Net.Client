@@ -55,7 +55,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsObjectCorrectlyy()
         {
-            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Object))) == DbType.Object);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Object))) == DbType.Object);
         }
         /// <summary>
         /// 
@@ -64,7 +64,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsTimeCorrectly()
         {
-            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Time))) == DbType.Time);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Time))) == DbType.Time);
         }
         /// <summary>
         /// 
@@ -73,7 +73,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsStringCorrectly()
         {
-            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.NormalString))) == DbType.String);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.NormalString))) == DbType.String);
         }
         /// <summary>
         /// 
@@ -82,7 +82,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapStringFixedLengthCorrectly()
         {
-            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.StringFixedLength))) == DbType.StringFixedLength);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.StringFixedLength))) == DbType.StringFixedLength);
         }
         /// <summary>
         /// 
@@ -91,7 +91,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsANSIStringCorrectly()
         {
-            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.AnsiString))) == DbType.AnsiString);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.AnsiString))) == DbType.AnsiString);
         }
         /// <summary>
         /// 
@@ -100,7 +100,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsANSIStringFixedLengthCorrectly()
         {
-            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.AnsiStrinFixedLength))) == DbType.AnsiStringFixedLength);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.AnsiStrinFixedLength))) == DbType.AnsiStringFixedLength);
         }
         /// <summary>
         /// 
@@ -109,7 +109,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsDateTimeCorrectly()
         {
-            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.NormalDateTime))) == DbType.DateTime);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.NormalDateTime))) == DbType.DateTime);
         }
         /// <summary>
         /// 
@@ -118,7 +118,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsDateTimeOffsetCorrectly()
         {
-            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.DateTimeOffset))) == DbType.DateTimeOffset);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.DateTimeOffset))) == DbType.DateTimeOffset);
         }
         /// <summary>
         /// 
@@ -127,7 +127,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsDateTime2Correctly()
         {
-            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.DateTime2))) == DbType.DateTime2);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.DateTime2))) == DbType.DateTime2);
         }
         /// <summary>
         /// 
@@ -136,7 +136,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsBinaryCorrectly()
         {
-            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.ByteArray))) == DbType.Binary);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.ByteArray))) == DbType.Binary);
         }
         /// <summary>
         /// 
@@ -145,7 +145,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsFloatCorrectly()
         {
-            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Float))) == DbType.Single);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Float))) == DbType.Single);
         }
         /// <summary>
         /// 
@@ -154,7 +154,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsBoolCorrectly()
         {
-            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Bool))) == DbType.Boolean);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Bool))) == DbType.Boolean);
         }
         /// <summary>
         /// 
@@ -163,7 +163,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsByteCorrectly()
         {
-            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Byte))) == DbType.Byte);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Byte))) == DbType.Byte);
         }
         /// <summary>
         /// 
@@ -172,7 +172,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsDecimalCorrectly()
         {
-            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Decimal))) == DbType.Decimal);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Decimal))) == DbType.Decimal);
         }
         /// <summary>
         /// 
@@ -181,7 +181,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsDoubleCorrectly()
         {
-            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Double))) == DbType.Double);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Double))) == DbType.Double);
         }
         /// <summary>
         /// 
@@ -190,7 +190,61 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsSByteCorrectly()
         {
-            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.SByte))) == DbType.SByte);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.SByte))) == DbType.SByte);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsShortCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Short))) == DbType.Int16);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsIntCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Int))) == DbType.Int32);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsLongCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Long))) == DbType.Int64);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsUShortCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.UShort))) == DbType.UInt16);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsUIntCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.UInt))) == DbType.UInt32);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsULongCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.ULong))) == DbType.UInt64);
         }
         /// <summary>
         /// 
@@ -201,7 +255,7 @@ namespace ADO.Net.Client.Core.Tests
         {
             DbParameterFormatter formatter = new DbParameterFormatter(true);
 
-            Assert.That(formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Guid))) == DbType.Guid);
+            Assert.That(formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Guid))) == DbType.Guid);
         }
         /// <summary>
         /// 
@@ -210,7 +264,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsNonNativeGuidCorrectly()
         {
-            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Guid))) == DbType.String);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Guid))) == DbType.String);
         }
         /// <summary>
         /// Getses the return value direction.

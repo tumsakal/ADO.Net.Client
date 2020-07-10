@@ -31,7 +31,7 @@ namespace ADO.Net.Client.Core.Tests.Models
     /// <summary>
     /// 
     /// </summary>
-    public class BasicModel
+    public class DbTypeModel
     {
         public TimeSpan Time { get; set; }
         public DateTime NormalDateTime { get; set; }
@@ -52,6 +52,12 @@ namespace ADO.Net.Client.Core.Tests.Models
         public decimal Decimal { get; set; }
         public double Double { get; set; }
         public sbyte SByte { get; set; }
+        public short Short { get; set; }
+        public uint Int { get; set; }
+        public ulong Long { get; set; }
+        public ushort UShort { get; set; }
+        public uint UInt { get; set; }
+        public ulong ULong { get; set; }
         public Guid Guid { get; set; }
         public object Object { get; set; }
     }

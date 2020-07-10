@@ -20,7 +20,7 @@ namespace ADO.Net.Client.Core.Tests
         [Test]
         public void CannotGetPropertyByName()
         {
-            PropertyInfo[] properties = typeof(BasicModel).GetProperties();
+            PropertyInfo[] properties = typeof(DbTypeModel).GetProperties();
             PropertyInfo property = properties.GetProperty("SomePropertyName");
 
             Assert.IsNull(property);
@@ -31,8 +31,8 @@ namespace ADO.Net.Client.Core.Tests
         [Test]
         public void GetPropertyByName()
         {
-            BasicModel model = new BasicModel();
-            PropertyInfo[] properties = typeof(BasicModel).GetProperties();
+            DbTypeModel model = new DbTypeModel();
+            PropertyInfo[] properties = typeof(DbTypeModel).GetProperties();
 
             PropertyInfo property = properties.GetProperty(nameof(model.NormalDateTime));
 
