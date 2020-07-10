@@ -139,7 +139,7 @@ namespace ADO.Net.Client.Core
             }
             else if (info.PropertyType == typeof(ushort))
             {
-                return DbType.Int16;
+                return DbType.UInt16;
             }
             else if (info.PropertyType == typeof(uint))
             {
