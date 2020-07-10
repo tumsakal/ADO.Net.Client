@@ -53,6 +53,15 @@ namespace ADO.Net.Client.Core.Tests
         /// </summary>
         [Test]
         [Category("DbType")]
+        public void MapsObjectCorrectlyy()
+        {
+            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Object))) == DbType.Object);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
         public void MapsTimeCorrectly()
         {
             Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Time))) == DbType.Time);

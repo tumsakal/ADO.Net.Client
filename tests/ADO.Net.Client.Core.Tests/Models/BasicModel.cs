@@ -53,5 +53,6 @@ namespace ADO.Net.Client.Core.Tests.Models
         public double Double { get; set; }
         public sbyte SByte { get; set; }
         public Guid Guid { get; set; }
+        public object Object { get; set; }
     }
 }
