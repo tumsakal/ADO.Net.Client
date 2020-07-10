@@ -44,5 +44,14 @@ namespace ADO.Net.Client.Core.Tests.Models
         public string AnsiStrinFixedLength { get; set; }
         [StringFixedLength]
         public string StringFixedLength { get; set; }
+        public DateTimeOffset DateTimeOffset { get; set; }
+        public byte[] ByteArray { get; set; }
+        public float Float { get; set; }
+        public bool Bool { get; set; }
+        public byte Byte { get; set; }
+        public decimal Decimal { get; set; }
+        public double Double { get; set; }
+        public sbyte SByte { get; set; }
+        public Guid Guid { get; set; }
     }
 }

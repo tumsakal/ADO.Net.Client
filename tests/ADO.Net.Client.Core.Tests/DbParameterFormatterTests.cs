@@ -107,9 +107,101 @@ namespace ADO.Net.Client.Core.Tests
         /// </summary>
         [Test]
         [Category("DbType")]
+        public void MapsDateTimeOffsetCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.DateTimeOffset))) == DbType.DateTimeOffset);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
         public void MapsDateTime2Correctly()
         {
             Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.DateTime2))) == DbType.DateTime2);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsBinaryCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.ByteArray))) == DbType.Binary);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsFloatCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Float))) == DbType.Single);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsBoolCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Bool))) == DbType.Boolean);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsByteCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Byte))) == DbType.Byte);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsDecimalCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Decimal))) == DbType.Decimal);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsDoubleCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Double))) == DbType.Double);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsSByteCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.SByte))) == DbType.SByte);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsNativeGuidCorrectly()
+        {
+            DbParameterFormatter formatter = new DbParameterFormatter(true);
+
+            Assert.That(formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Guid))) == DbType.Guid);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsNonNativeGuidCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(BasicModel).GetProperty(nameof(BasicModel.Guid))) == DbType.String);
         }
         /// <summary>
         /// Getses the return value direction.
