@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 using NUnit.Framework;
 using System;
 using System.Data;
@@ -58,7 +58,7 @@ namespace ADO.Net.Client.Core.Tests
 
             //Needs to be a mysql client factory
             Assert.IsNotNull(factory);
-            Assert.AreEqual(typeof(MySqlClientFactory), factory.GetType());
+            Assert.AreEqual(typeof(MySqlConnectorFactory), factory.GetType());
         }
         /// <summary>
         /// 
@@ -78,7 +78,7 @@ namespace ADO.Net.Client.Core.Tests
 
             //Needs to be a mysql client factory
             Assert.IsNotNull(factory);
-            Assert.AreEqual(typeof(MySqlClientFactory), factory.GetType());
+            Assert.AreEqual(typeof(MySqlConnectorFactory), factory.GetType());
         }
         /// <summary>
         /// 

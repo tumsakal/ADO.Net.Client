@@ -23,7 +23,7 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using ADO.Net.Client.Core;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -47,7 +47,7 @@ namespace ADO.Net.Client.Implementation.Tests
         #region Constructors
         public QueryBuilderTests()
         {
-            _factory = new DbObjectFactory(MySqlClientFactory.Instance);
+            _factory = new DbObjectFactory(MySqlConnectorFactory.Instance);
         }
         #endregion
         #region Setup/Teardown

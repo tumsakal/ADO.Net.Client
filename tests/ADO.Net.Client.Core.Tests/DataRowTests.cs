@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 using NUnit.Framework;
 using System.Data;
 using System.Data.Common;
@@ -46,7 +46,7 @@ namespace ADO.Net.Client.Core.Tests
         [OneTimeSetUp]
         public override void OneTimeSetup()
         {
-            DbProviderFactories.RegisterFactory("MySqlConnector", MySqlClientFactory.Instance);
+            DbProviderFactories.RegisterFactory("MySqlConnector", MySqlConnectorFactory.Instance);
 
             //For regular .NET framework the driver must be installed in the Global Assembly Cache
             DataTable table = DbProviderFactories.GetFactoryClasses();

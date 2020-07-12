@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 using NUnit.Framework;
 #endregion
 
