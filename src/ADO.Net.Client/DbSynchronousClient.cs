@@ -62,7 +62,7 @@ namespace ADO.Net.Client
         public override DbDataReader GetDbDataReader(ISqlQuery query, CommandBehavior behavior = CommandBehavior.Default)
         {
             //Return this back to the caller
-            return _executor.GetDbDataReader(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared);
+            return _executor.GetDbDataReader(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, behavior);
         }
         /// <summary>
         /// Utility method for returning a scalar value as an <see cref="object"/> from the database
