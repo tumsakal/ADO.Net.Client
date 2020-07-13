@@ -31,7 +31,7 @@ Only the core of ADO.NET is implemented, not EF or Designer types.
   take the assumption that you are aware of your targeted drivers abilities as well as any idiosyncraices and bugs.
   The means is provided to work around anything you need to at any level if you have a specific driver implementation.
 
-* Prepared Statements - Other Micro-ORMs do not allow the ability to call prepare queries when needed.  Since these libraries give you
+* Prepared Statements - Other Micro-ORMs do not allow the ability to prepare queries when needed.  Since these libraries give you
 more control you can optionally prepare a query when necessary.  Queries can be prepared asynchronously
 in .NET Standard 2.1 and above
 
