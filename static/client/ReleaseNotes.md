@@ -1,6 +1,10 @@
 Version History
 ===============
 
+### 1.1.5
+
+* [DbClient](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client/DbSynchronousClient.cs) GetDbDataReader sync version now correctly utilizes command behavior parameter
+
 ### 1.1.4.1
 
 * Updating to ADO.Net.Client.Implementation 1.1.5.1
