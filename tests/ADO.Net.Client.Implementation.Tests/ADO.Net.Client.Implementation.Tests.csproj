@@ -17,4 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\ADO.Net.Client.Implementation\ADO.Net.Client.Implementation.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Integration\" />
+  </ItemGroup>
 </Project>

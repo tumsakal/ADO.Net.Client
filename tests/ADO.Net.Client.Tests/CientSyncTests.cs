@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using ADO.Net.Client.Core;
+using ADO.Net.Client.Implementation;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -107,11 +108,10 @@ namespace ADO.Net.Client.Tests
             mockExecutor.Verify(x => x.GetDbDataReader(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior), Times.Once);
         }
         [Test]
-        public void WhenGetReader_IsCalled__ItShouldCallSqlExecutorGetScalar()
+        public void WhenGetScalar_IsCalled__ItShouldCallSqlExecutorGetScalar()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
 
-            
             //Need to setup the reader function
             mockExecutor.Setup(x => x.GetScalarValue<string>(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(string.Empty).Verifiable();
 
@@ -120,6 +120,20 @@ namespace ADO.Net.Client.Tests
 
             //Verify the executor was called
             mockExecutor.Verify(x => x.GetScalarValue<string>(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
+        }
+        [Test]
+        public void WhenGetMultiResultReader_IsCalled__ItShouldCallSqlExecutorGetMultiResultReader()
+        {
+            Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
+
+            //Need to setup the reader function
+            mockExecutor.Setup(x => x.GetMultiResultReader(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(new MultiResultReader(Mock.Of<DbDataReader>(), Mock.Of<IDataMapper>())).Verifiable();
+
+            //Make the call
+            IMultiResultReader value = new DbClient(mockExecutor.Object).GetMultiResultReader(realQuery);
+
+            //Verify the executor was called
+            mockExecutor.Verify(x => x.GetMultiResultReader(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
         }
         #endregion
         #region Write Test Methods
