@@ -92,7 +92,7 @@ namespace ADO.Net.Client.Tests
             mockExecutor.Verify(x => x.GetDataObject<string>(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
         }
         [Test]
-        public void WhenGetReaderIsCalled__ItShouldCallSqlExecutorGetReader()
+        public void WhenGetReader_IsCalled__ItShouldCallSqlExecutorGetReader()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
             CommandBehavior behavior = _faker.PickRandom(CommandBehavior.SequentialAccess, CommandBehavior.CloseConnection, CommandBehavior.SingleRow, CommandBehavior.Default, CommandBehavior.SchemaOnly, CommandBehavior.KeyInfo);
@@ -106,10 +106,25 @@ namespace ADO.Net.Client.Tests
             //Verify the executor was called
             mockExecutor.Verify(x => x.GetDbDataReader(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior), Times.Once);
         }
+        [Test]
+        public void WhenGetReader_IsCalled__ItShouldCallSqlExecutorGetScalar()
+        {
+            Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
+
+            
+            //Need to setup the reader function
+            mockExecutor.Setup(x => x.GetScalarValue<string>(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(string.Empty).Verifiable();
+
+            //Make the call
+            string value = new DbClient(mockExecutor.Object).GetScalarValue<string>(realQuery);
+
+            //Verify the executor was called
+            mockExecutor.Verify(x => x.GetScalarValue<string>(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
+        }
         #endregion
         #region Write Test Methods
         [Test]
-        public void WhenExecuteNonQueryIsCalled__ItShouldCallSqlExecutorExecuteNonQuery()
+        public void WhenExecuteNonQuery_IsCalled__ItShouldCallSqlExecutorExecuteNonQuery()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
  
