@@ -37,6 +37,7 @@ namespace ADO.Net.Client.Tests
     {
         #region Read Test Methods
         [Test]
+        [Category("Synchronous Read Tests")]
         public void WhenGetDataSet_IsCalled_ItShouldCallSqlExectuorGetDataSet()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
@@ -51,6 +52,7 @@ namespace ADO.Net.Client.Tests
             mockExecutor.Verify(x => x.GetDataSet(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
         }
         [Test]
+        [Category("Synchronous Read Tests")]
         public void WhenGetDataTable_IsCalled_ItShouldCallSqlExectuorGetDataTable()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
@@ -65,6 +67,7 @@ namespace ADO.Net.Client.Tests
             mockExecutor.Verify(x => x.GetDataTable(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
         }
         [Test]
+        [Category("Synchronous Read Tests")]
         public void WhenGetDataObjects_IsCalled_ItShouldCallSqlExectuorGetDataObjects()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
@@ -79,6 +82,8 @@ namespace ADO.Net.Client.Tests
             mockExecutor.Verify(x => x.GetDataObjects<string>(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
         }
         [Test]
+        [Category("Synchronous Read Tests")]
+
         public void WhenGetDataObject_IsCalled_ItShouldCallSqlExectuorGetDataObject()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
@@ -93,6 +98,7 @@ namespace ADO.Net.Client.Tests
             mockExecutor.Verify(x => x.GetDataObject<string>(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
         }
         [Test]
+        [Category("Synchronous Read Tests")]
         public void WhenGetReader_IsCalled__ItShouldCallSqlExecutorGetReader()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
@@ -108,6 +114,7 @@ namespace ADO.Net.Client.Tests
             mockExecutor.Verify(x => x.GetDbDataReader(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior), Times.Once);
         }
         [Test]
+        [Category("Synchronous Read Tests")]
         public void WhenGetScalar_IsCalled__ItShouldCallSqlExecutorGetScalar()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
@@ -122,6 +129,7 @@ namespace ADO.Net.Client.Tests
             mockExecutor.Verify(x => x.GetScalarValue<string>(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
         }
         [Test]
+        [Category("Synchronous Read Tests")]
         public void WhenGetMultiResultReader_IsCalled__ItShouldCallSqlExecutorGetMultiResultReader()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
@@ -138,6 +146,7 @@ namespace ADO.Net.Client.Tests
         #endregion
         #region Write Test Methods
         [Test]
+        [Category("Synchronous Write Tests")]
         public void WhenExecuteNonQuery_IsCalled__ItShouldCallSqlExecutorExecuteNonQuery()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
