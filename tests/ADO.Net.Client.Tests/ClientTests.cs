@@ -65,6 +65,20 @@ namespace ADO.Net.Client.Tests
         #endregion
         #region Test Methods
         [Test]
+        public void WhenGetDataObject_IsCalled_ItShouldCallSqlExectuorGetDataObject()
+        {
+            Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
+
+            //Need to setup the reader function
+            mockExecutor.Setup(x => x.GetDataObject<string>(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(string.Empty).Verifiable();
+
+            //Make the call
+            string value = new DbClient(mockExecutor.Object).GetDataObject<string>(realQuery);
+
+            //Verify the executor function was called
+            mockExecutor.Verify(x => x.GetDataObject<string>(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
+        }
+        [Test]
         public void WhenGetReaderIsCalled__ItShouldCallSqlExecutorGetReader()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
@@ -76,10 +90,11 @@ namespace ADO.Net.Client.Tests
             //Make the call
             DbDataReader reader = new DbClient(mockExecutor.Object).GetDbDataReader(realQuery, behavior);
 
+            //Verify the executor was called
             mockExecutor.Verify(x => x.GetDbDataReader(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior), Times.Once);
         }
         #endregion
         #region Helper Methods
         #endregion
-   }
+    }
 }
