@@ -1,7 +1,7 @@
 Version History
 ===============
 
-### 1,1,6.1
+### 1.1.6.1
 
 * [DbParameterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbParameterFormatter.cs) MapDbType map ushort correctly to uint16
 

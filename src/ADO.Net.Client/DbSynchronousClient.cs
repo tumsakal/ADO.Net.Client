@@ -93,7 +93,7 @@ namespace ADO.Net.Client
         /// </summary>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <returns>Returns an <see cref="IEnumerable{T}{T}"/> based on the results of the passed in <paramref name="query"/></returns>
+        /// <returns>Returns an <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
         public override IEnumerable<T> GetDataObjects<T>(ISqlQuery query) where T : class
         {
             //Return this back to the caller

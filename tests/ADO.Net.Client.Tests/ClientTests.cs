@@ -37,7 +37,7 @@ namespace ADO.Net.Client.Tests
     /// 
     /// </summary>
     [TestFixture]
-    public class ClientTests
+    public partial class ClientTests
     {
         #region Fields/Properties
         private ISqlQuery realQuery;
@@ -61,37 +61,6 @@ namespace ADO.Net.Client.Tests
             //mockQuery.Setup(x => x.Parameters).Returns(null);
 
             realQuery = mockQuery.Object;
-        }
-        #endregion
-        #region Test Methods
-        [Test]
-        public void WhenGetDataObject_IsCalled_ItShouldCallSqlExectuorGetDataObject()
-        {
-            Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
-
-            //Need to setup the reader function
-            mockExecutor.Setup(x => x.GetDataObject<string>(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(string.Empty).Verifiable();
-
-            //Make the call
-            string value = new DbClient(mockExecutor.Object).GetDataObject<string>(realQuery);
-
-            //Verify the executor function was called
-            mockExecutor.Verify(x => x.GetDataObject<string>(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
-        }
-        [Test]
-        public void WhenGetReaderIsCalled__ItShouldCallSqlExecutorGetReader()
-        {
-            Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
-            CommandBehavior behavior = _faker.PickRandom(CommandBehavior.SequentialAccess, CommandBehavior.CloseConnection, CommandBehavior.SingleRow, CommandBehavior.Default, CommandBehavior.SchemaOnly, CommandBehavior.KeyInfo);
-
-            //Need to setup the reader function
-            mockExecutor.Setup(x => x.GetDbDataReader(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior)).Returns(Mock.Of<DbDataReader>()).Verifiable();
-
-            //Make the call
-            DbDataReader reader = new DbClient(mockExecutor.Object).GetDbDataReader(realQuery, behavior);
-
-            //Verify the executor was called
-            mockExecutor.Verify(x => x.GetDbDataReader(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior), Times.Once);
         }
         #endregion
         #region Helper Methods
