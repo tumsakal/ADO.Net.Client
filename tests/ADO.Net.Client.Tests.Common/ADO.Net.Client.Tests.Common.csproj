@@ -3,4 +3,7 @@
     <TargetFrameworks>netstandard2.1;netstandard2.0;net461;net45;</TargetFrameworks>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ADO.Net.Client.Annotations\ADO.Net.Client.Annotations.csproj" />
+  </ItemGroup>
 </Project>

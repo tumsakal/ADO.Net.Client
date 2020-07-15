@@ -1,6 +1,5 @@
 ﻿#region Using Statements
-using ADO.Net.Client.Core.Tests.Models;
-using Castle.Core.Internal;
+using ADO.Net.Client.Tests.Common.Models;
 using NUnit.Framework;
 using System.Reflection;
 #endregion

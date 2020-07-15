@@ -26,7 +26,7 @@ using ADO.Net.Client.Annotations;
 using System;
 #endregion
 
-namespace ADO.Net.Client.Core.Tests.Models
+namespace ADO.Net.Client.Tests.Common.Models
 {
     /// <summary>
     /// 

@@ -25,7 +25,7 @@ SOFTWARE.*/
 using ADO.Net.Client.Annotations;
 #endregion
 
-namespace ADO.Net.Client.Core.Tests.Models
+namespace ADO.Net.Client.Tests.Common.Models
 {
     public class DirectionModel
     {

@@ -32,14 +32,20 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
     public partial class SqlExecutorTests
     {
         #region Read Test Methods
+        [Test]
+        public void WhenGetScalarValue_IsCalled__ItShouldCallsDbObjectFactory_GetDbCommand()
+        {
+            //Make the call
+            int records = new SqlExecutor(_factory.Object, _manager, _mapper).GetScalarValue<int>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared);
+
+            //Verify the executor was called
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, null, realQuery.CommandTimeout, null), Times.Once);
+        }
         #endregion
         #region Write Test Methods
         [Test]
         public void WhenExecuteNonQuery_IsCalled__ItShouldCallsDbObjectFactory_GetDbCommand()
         {
-            //Need to setup the reader function
-            _factory.Setup(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, null, realQuery.CommandTimeout, null)).Returns(Mock.Of<CustomDbCommand>()).Verifiable();
-
             //Make the call
             int records = new SqlExecutor(_factory.Object, _manager, _mapper).ExecuteNonQuery(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared);
 

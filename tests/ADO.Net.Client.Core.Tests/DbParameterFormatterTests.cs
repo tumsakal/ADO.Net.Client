@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
-using ADO.Net.Client.Core.Tests.Models;
+using ADO.Net.Client.Tests.Common.Models;
 using NUnit.Framework;
 using System.Data;
 using System.Reflection;
