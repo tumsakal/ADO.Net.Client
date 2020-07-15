@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADO.Net.Client.Tests", "tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADO.Net.Client.Annotations", "src\ADO.Net.Client.Annotations\ADO.Net.Client.Annotations.csproj", "{4782F643-90B4-4B42-908B-6A54E32D880A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADO.Net.Client.Tests.Common", "tests\ADO.Net.Client.Tests.Common\ADO.Net.Client.Tests.Common.csproj", "{8E2075B0-C75F-408C-AD47-93900B75153C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{4782F643-90B4-4B42-908B-6A54E32D880A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4782F643-90B4-4B42-908B-6A54E32D880A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4782F643-90B4-4B42-908B-6A54E32D880A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E2075B0-C75F-408C-AD47-93900B75153C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E2075B0-C75F-408C-AD47-93900B75153C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E2075B0-C75F-408C-AD47-93900B75153C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E2075B0-C75F-408C-AD47-93900B75153C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

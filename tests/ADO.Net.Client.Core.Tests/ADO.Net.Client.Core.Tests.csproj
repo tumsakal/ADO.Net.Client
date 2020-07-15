@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\ADO.Net.Client.Core\ADO.Net.Client.Core.csproj" />
+    <ProjectReference Include="..\ADO.Net.Client.Tests.Common\ADO.Net.Client.Tests.Common.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='net45' or '$(TargetFramework)'=='net461' or '$(TargetFramework)'=='netcoreapp2.1'">
     <Compile Remove="DataRowTests.cs" />
