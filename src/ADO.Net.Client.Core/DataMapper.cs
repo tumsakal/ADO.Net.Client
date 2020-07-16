@@ -131,13 +131,13 @@ namespace ADO.Net.Client.Core
             IEnumerable<PropertyInfo> writeableProperties = returnType.GetType().GetProperties().Where(x => x.CanWrite == true).Where(x => x.CustomAttributes.Any(x => x.AttributeType == typeof(DbFieldIgnore) == false));
 
             //Loop through all records in this record
-            for(int i = 0; i < record.FieldCount; i++)
+            for (int i = 0; i < record.FieldCount; i++)
             {
                 string name = record.GetName(i);
                 object value = record.GetValue(i);
-                PropertyInfo info = writeableProperties.GetProperty(name) ?? GetPropertyInfo(name, writeableProperties);
+                PropertyInfo info = writeableProperties.GetProperty(name) ?? GetPropertyInfoByDbField(name, writeableProperties);
                 object[] customAttributes = info.GetCustomAttributes(false);
-                DbField field = (DbField)customAttributes.Where(x => x.GetType() == typeof(DbField)).SingleOrDefault();
+                DbField field = customAttributes.Where(x => x.GetType() == typeof(DbField)).SingleOrDefault() as DbField;
 
                 //Check if this is the databae representation of null
                 if (value == DBNull.Value)
@@ -179,14 +179,14 @@ namespace ADO.Net.Client.Core
         }
         #region Helper Methods
         /// <summary>
-        /// 
+        /// Gets a signle instance of <see cref="PropertyInfo"/> where the <see cref="DbField.DatabaseFieldName"/> matches the passed in <paramref name="name"/>
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="infos"></param>
-        /// <returns></returns>
-        private PropertyInfo GetPropertyInfo(string name, IEnumerable<PropertyInfo> infos)
+        /// <param name="name">A property name as a value of <see cref="string"/></param>
+        /// <param name="infos">An instance of <see cref="PropertyInfo"/></param>
+        /// <returns>Returns an instance of <see cref="PropertyInfo"/></returns>
+        private PropertyInfo GetPropertyInfoByDbField(string name, IEnumerable<PropertyInfo> infos)
         {
-            return null;
+            return infos.Where(x => x.GetCustomAttributes(false).OfType<DbField>().Any(x => x.DatabaseFieldName == name)).FirstOrDefault();
         }
         #endregion
     }
