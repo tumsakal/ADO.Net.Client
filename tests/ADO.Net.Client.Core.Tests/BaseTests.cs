@@ -58,7 +58,7 @@ namespace ADO.Net.Client.Core.Tests
 
             //Needs to be a mysql client factory
             Assert.IsNotNull(factory);
-            Assert.AreEqual(typeof(CustomDbProviderFactory), factory.GetType());
+            Assert.IsInstanceOf(typeof(CustomDbProviderFactory), factory);
         }
         /// <summary>
         /// Determines whether this instance [can create database data source enumerator].
@@ -69,7 +69,7 @@ namespace ADO.Net.Client.Core.Tests
             DbDataSourceEnumerator dbDataSource = _factory.GetDataSourceEnumerator();
 
             Assert.IsNotNull(dbDataSource);
-            Assert.AreEqual(typeof(CustomDbDataSourceEnumerator), dbDataSource.GetType());
+            Assert.IsInstanceOf(typeof(CustomDbDataSourceEnumerator), dbDataSource);
         }
         /// <summary>
         /// 
@@ -89,7 +89,7 @@ namespace ADO.Net.Client.Core.Tests
 
             //Needs to be a mysql client factory
             Assert.IsNotNull(factory);
-            Assert.AreEqual(typeof(CustomDbProviderFactory), factory.GetType());
+            Assert.IsInstanceOf(typeof(CustomDbProviderFactory), factory);
         }
         /// <summary>
         /// 
@@ -100,7 +100,7 @@ namespace ADO.Net.Client.Core.Tests
             DbDataAdapter dbDataAdapter = _factory.GetDbDataAdapter();
 
             Assert.IsNotNull(dbDataAdapter);
-            Assert.AreEqual(typeof(CustomDataAdapter), dbDataAdapter.GetType());
+            Assert.IsInstanceOf(typeof(CustomDataAdapter), dbDataAdapter);
         }
         /// <summary>
         /// 
@@ -111,7 +111,7 @@ namespace ADO.Net.Client.Core.Tests
             DbConnection connection = _factory.GetDbConnection();
 
             Assert.IsNotNull(connection);
-            Assert.AreEqual(typeof(CustomDbConnection), connection.GetType());
+            Assert.IsInstanceOf(typeof(CustomDbConnection), connection);
         }
         /// <summary>
         /// 
@@ -122,7 +122,7 @@ namespace ADO.Net.Client.Core.Tests
             DbConnectionStringBuilder builder = _factory.GetDbConnectionStringBuilder();
 
             Assert.IsNotNull(builder);
-            Assert.AreEqual(typeof(CustomConnectionStringBuilder), builder.GetType());
+            Assert.IsInstanceOf(typeof(CustomConnectionStringBuilder), builder);
         }
         /// <summary>
         /// 
@@ -133,7 +133,7 @@ namespace ADO.Net.Client.Core.Tests
             DbCommandBuilder builder = _factory.GetDbCommandBuilder();
 
             Assert.IsNotNull(builder);
-            Assert.AreEqual(typeof(CustomCommandBuilder), builder.GetType());
+            Assert.IsInstanceOf(typeof(CustomDbCommandBuilder), builder);
         }
         /// <summary>
         /// 
@@ -145,7 +145,7 @@ namespace ADO.Net.Client.Core.Tests
             DbCommand command = _factory.GetDbCommand();
 
             Assert.IsNotNull(command);
-            Assert.AreEqual(typeof(CustomDbCommand), command.GetType());
+            Assert.IsInstanceOf(typeof(CustomDbCommand), command);
         }
         /// <summary>
         /// 
@@ -159,7 +159,7 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.IsNotNull(command);
             Assert.AreEqual(commandTimeout, command.CommandTimeout);
-            Assert.AreEqual(typeof(CustomDbCommand), command.GetType());
+            Assert.IsInstanceOf(typeof(CustomDbCommand), command);
         }
         [Test]
         [Category("DbParameterTests")]
@@ -183,7 +183,7 @@ namespace ADO.Net.Client.Core.Tests
             DbParameter parameter = _factory.GetDbParameter();
 
             Assert.IsNotNull(parameter);
-            Assert.AreEqual(typeof(CustomDbParameter), parameter.GetType());
+            Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
         }
         /// <summary>
         /// 
@@ -198,7 +198,7 @@ namespace ADO.Net.Client.Core.Tests
             DbParameter parameter = _factory.GetDbParameter(name, value);
 
             Assert.IsNotNull(parameter);
-            Assert.AreEqual(typeof(CustomDbParameter), parameter.GetType());
+            Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
             Assert.AreEqual(name, parameter.ParameterName);
             Assert.AreEqual(value, parameter.Value);
         }
@@ -221,7 +221,7 @@ namespace ADO.Net.Client.Core.Tests
             DbParameter parameter = _factory.GetDbParameter(name, value, dbType, direction);
 
             Assert.IsNotNull(parameter);
-            Assert.AreEqual(typeof(CustomDbParameter), parameter.GetType());
+            Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
             Assert.AreEqual(direction, parameter.Direction);
             Assert.AreEqual(dbType, parameter.DbType);
             Assert.AreEqual(name, parameter.ParameterName);
@@ -251,7 +251,7 @@ namespace ADO.Net.Client.Core.Tests
             DbParameter parameter = _factory.GetVariableSizeDbParameter(name, value, dbType, size, direction);
 
             Assert.IsNotNull(parameter);
-            Assert.AreEqual(typeof(CustomDbParameter), parameter.GetType());
+            Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
             Assert.AreEqual(size ?? 0, parameter.Size);
             Assert.AreEqual(direction, parameter.Direction);
             Assert.AreEqual(dbType, parameter.DbType);
@@ -288,7 +288,7 @@ namespace ADO.Net.Client.Core.Tests
             DbParameter parameter = _factory.GetFixedSizeDbParameter(name, value, dbType, scale, precision, direction);
 
             Assert.IsNotNull(parameter);
-            Assert.AreEqual(typeof(CustomDbParameter), parameter.GetType());
+            Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
             Assert.AreEqual(scale ?? 0, parameter.Scale);
             Assert.AreEqual(precision ?? 0, parameter.Precision);
             Assert.AreEqual(direction, parameter.Direction);

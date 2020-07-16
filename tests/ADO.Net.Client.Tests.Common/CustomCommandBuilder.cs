@@ -32,7 +32,7 @@ namespace ADO.Net.Client.Tests.Common
     /// 
     /// </summary>
     /// <seealso cref="DbCommandBuilder" />
-    public class CustomCommandBuilder : DbCommandBuilder
+    public class CustomDbCommandBuilder : DbCommandBuilder
     {
         protected override void ApplyParameterInfo(DbParameter parameter, DataRow row, StatementType statementType, bool whereClause)
         {

@@ -40,7 +40,7 @@ namespace ADO.Net.Client.Tests.Common
         }
         public override DbCommandBuilder CreateCommandBuilder()
         {
-            return new CustomCommandBuilder();
+            return new CustomDbCommandBuilder();
         }
         public override DbConnectionStringBuilder CreateConnectionStringBuilder()
         {
