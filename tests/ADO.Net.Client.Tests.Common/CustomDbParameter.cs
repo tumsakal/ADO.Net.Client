@@ -22,39 +22,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
-using ADO.Net.Client.Tests.Common;
-using NUnit.Framework;
+using System;
 using System.Data;
 using System.Data.Common;
-using System.Linq;
 #endregion
 
-namespace ADO.Net.Client.Core.Tests
+namespace ADO.Net.Client.Tests.Common
 {
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="BaseTests" />
-    [TestFixture]
-    [Category("DataRowTests")]
-    public class DataRowTests : BaseTests
+    /// <seealso cref="DbParameter" />
+    public class CustomDbParameter : DbParameter
     {
-        #region Setup/Teardown        
-        /// <summary>
-        /// Called when [time setup].
-        /// </summary>
-        [OneTimeSetUp]
-        public override void OneTimeSetup()
+        #region Fields/Properties
+        public override DataRowVersion SourceVersion { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override DbType DbType { get; set; }
+        public override ParameterDirection Direction { get; set; }
+        public override bool IsNullable { get => throw new System.NotImplementedException(); set => throw new NotImplementedException(); }
+        public override string ParameterName { get; set; }
+        public override int Size { get;  set; }
+        public override string SourceColumn { get => throw new System.NotImplementedException(); set => throw new NotImplementedException(); }
+        public override bool SourceColumnNullMapping { get => throw new System.NotImplementedException(); set => throw new NotImplementedException(); }
+        public override object Value { get; set; }
+#if !NET45
+        public override byte Precision { get; set; }
+        public override byte Scale { get ; set; }
+#endif
+#endregion
+        public override void ResetDbType()
         {
-            DbProviderFactories.RegisterFactory("ADO.Net.Client.Tests.Common", CustomDbProviderFactory.Instance);
-
-            //For regular .NET framework the driver must be installed in the Global Assembly Cache
-            DataTable table = DbProviderFactories.GetFactoryClasses();
-            DataRow row = (from a in table.Rows.Cast<DataRow>()
-                           where a.ItemArray[2].ToString() == "ADO.Net.Client.Tests.Common"
-                           select a).FirstOrDefault();
-            _factory = new DbObjectFactory(row);
+            throw new NotImplementedException();
         }
-        #endregion
     }
 }

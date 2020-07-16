@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
-using MySqlConnector;
+using ADO.Net.Client.Tests.Common;
 using NUnit.Framework;
 #endregion
 
@@ -40,7 +40,7 @@ namespace ADO.Net.Client.Core.Tests
         [OneTimeSetUp]
         public override void OneTimeSetup()
         {
-            _factory = new DbObjectFactory(MySqlConnectorFactory.Instance);
+            _factory = new DbObjectFactory(CustomDbProviderFactory.Instance);
         }
         #endregion
     }

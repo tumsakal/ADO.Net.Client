@@ -22,39 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
-using ADO.Net.Client.Tests.Common;
-using NUnit.Framework;
-using System.Data;
 using System.Data.Common;
-using System.Linq;
 #endregion
 
-namespace ADO.Net.Client.Core.Tests
+namespace ADO.Net.Client.Tests.Common
 {
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="BaseTests" />
-    [TestFixture]
-    [Category("DataRowTests")]
-    public class DataRowTests : BaseTests
+    /// <seealso cref="DbConnectionStringBuilder" />
+    public class CustomConnectionStringBuilder : DbConnectionStringBuilder
     {
-        #region Setup/Teardown        
-        /// <summary>
-        /// Called when [time setup].
-        /// </summary>
-        [OneTimeSetUp]
-        public override void OneTimeSetup()
-        {
-            DbProviderFactories.RegisterFactory("ADO.Net.Client.Tests.Common", CustomDbProviderFactory.Instance);
-
-            //For regular .NET framework the driver must be installed in the Global Assembly Cache
-            DataTable table = DbProviderFactories.GetFactoryClasses();
-            DataRow row = (from a in table.Rows.Cast<DataRow>()
-                           where a.ItemArray[2].ToString() == "ADO.Net.Client.Tests.Common"
-                           select a).FirstOrDefault();
-            _factory = new DbObjectFactory(row);
-        }
-        #endregion
     }
 }
