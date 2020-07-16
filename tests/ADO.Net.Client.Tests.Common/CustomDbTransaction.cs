@@ -31,41 +31,24 @@ namespace ADO.Net.Client.Tests.Common
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="DbConnection" />
-    public class CustomDbConnection : DbConnection
+    /// <seealso cref="DbTransaction" />
+    public class CustomDbTransaction : DbTransaction
     {
-        protected override DbProviderFactory DbProviderFactory => CustomDbProviderFactory.Instance;
-        public override string ConnectionString { get; set; }
+        public override IsolationLevel IsolationLevel { get; }
 
-        public override string Database => throw new System.NotImplementedException();
+        protected override DbConnection DbConnection { get; }
 
-        public override string DataSource => throw new System.NotImplementedException();
-
-        public override string ServerVersion => throw new System.NotImplementedException();
-
-        public override ConnectionState State => throw new System.NotImplementedException();
-
-        public override void ChangeDatabase(string databaseName)
+        internal CustomDbTransaction(DbConnection connection, IsolationLevel level)
+        {
+            DbConnection = connection;
+            IsolationLevel = level;
+        }
+        public override void Commit()
         {
             throw new System.NotImplementedException();
         }
 
-        public override void Close()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Open()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        protected override DbTransaction BeginDbTransaction(IsolationLevel isolationLevel)
-        {
-            return new CustomDbTransaction(this, isolationLevel);
-        }
-
-        protected override DbCommand CreateDbCommand()
+        public override void Rollback()
         {
             throw new System.NotImplementedException();
         }

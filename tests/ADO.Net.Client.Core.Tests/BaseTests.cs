@@ -161,6 +161,26 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(commandTimeout, command.CommandTimeout);
             Assert.IsInstanceOf(typeof(CustomDbCommand), command);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbCommandTests")]
+        public void DbCommandTimeoutConnectionTransaction()
+        {
+            int commandTimeout = 10;
+            CustomDbConnection connection = new CustomDbConnection() { ConnectionString = string.Empty};
+            CustomDbTransaction transaction = connection.BeginTransaction() as CustomDbTransaction;
+            DbCommand command = _factory.GetDbCommand(connection, transaction, commandTimeout);
+
+            Assert.IsNotNull(command);
+            Assert.AreEqual(commandTimeout, command.CommandTimeout);
+            Assert.AreEqual(connection, command.Connection);
+            Assert.AreEqual(transaction, command.Transaction);
+            Assert.IsInstanceOf(typeof(CustomDbTransaction), command.Transaction);
+            Assert.IsInstanceOf(typeof(CustomDbConnection), command.Connection);
+            Assert.IsInstanceOf(typeof(CustomDbCommand), command);
+        }
         [Test]
         [Category("DbParameterTests")]
         public void ThrowsArguementExceptionValueType()

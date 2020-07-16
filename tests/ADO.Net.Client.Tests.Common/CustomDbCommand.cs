@@ -36,11 +36,11 @@ namespace ADO.Net.Client.Tests.Common
         public override CommandType CommandType { get; set; }
         public override bool DesignTimeVisible { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override UpdateRowSource UpdatedRowSource { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        protected override DbConnection DbConnection { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        protected override DbConnection DbConnection { get; set; }
 
         protected override DbParameterCollection DbParameterCollection => throw new NotImplementedException();
 
-        protected override DbTransaction DbTransaction { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        protected override DbTransaction DbTransaction { get; set; }
 
         public override void Cancel()
         {
