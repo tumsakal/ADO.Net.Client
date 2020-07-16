@@ -58,6 +58,8 @@ namespace ADO.Net.Client.Core
                 //Return this object
                 yield return MapRecord<T>(reader);
             }
+
+            yield break;
         }
 #endif
         /// <summary>
@@ -94,6 +96,8 @@ namespace ADO.Net.Client.Core
                 //Return this object
                 yield return MapRecord<T>(reader);
             }
+
+            yield break;
         }
         /// <summary>
         /// Maps an entire result set in the <paramref name="reader"/>
@@ -124,26 +128,19 @@ namespace ADO.Net.Client.Core
         {
             //Get an instance of the object passed in
             T returnType = Activator.CreateInstance<T>();
-            IEnumerable<PropertyInfo> writeableProperties = returnType.GetType().GetProperties().Where(x => x.CanWrite == true);
+            IEnumerable<PropertyInfo> writeableProperties = returnType.GetType().GetProperties().Where(x => x.CanWrite == true).Where(x => x.CustomAttributes.Any(x => x.AttributeType == typeof(DbFieldIgnore) == false));
 
-            //Loop through all the properties
-            foreach (PropertyInfo p in writeableProperties)
+            //Loop through all records in this record
+            for(int i = 0; i < record.FieldCount; i++)
             {
-                object[] customAttributes = p.GetCustomAttributes(false);
-
-                //Check if we need to pass this one
-                if(customAttributes.Any(x => x.GetType() == typeof(DbFieldIgnore)) == true)
-                {
-                    continue;
-                }
-
-                DbField field = customAttributes.Where(x => x is DbField).FirstOrDefault() as DbField;
-                string fieldName = (field != null && string.IsNullOrEmpty(field.DatabaseFieldName) == false) ? field.DatabaseFieldName : p.Name;
-                int ordinalIndex = record.GetOrdinal(fieldName);
-                object value = record.GetValue(ordinalIndex);
+                string name = record.GetName(i);
+                object value = record.GetValue(i);
+                PropertyInfo info = writeableProperties.GetProperty(name) ?? GetPropertyInfo(name, writeableProperties);
+                object[] customAttributes = info.GetCustomAttributes(false);
+                DbField field = (DbField)customAttributes.Where(x => x.GetType() == typeof(DbField)).SingleOrDefault();
 
                 //Check if this is the databae representation of null
-                if(value == DBNull.Value)
+                if (value == DBNull.Value)
                 {
                     value = null;
                 }
@@ -154,26 +151,26 @@ namespace ADO.Net.Client.Core
                     //Set new value
                     value = field.DefaultValueIfNull;
                 }
-
-                if (p.PropertyType.IsNullableGenericType() == true)
+                if (info.PropertyType.IsNullableGenericType() == true)
                 {
                     if (value == null)
                     {
-                        p.SetValue(returnType, null, null);
+                        info.SetValue(returnType, null, null);
                     }
                     else
                     {
-                        p.SetValue(returnType, Convert.ChangeType(value, Nullable.GetUnderlyingType(p.PropertyType)), null);
+                        info.SetValue(returnType, Convert.ChangeType(value, Nullable.GetUnderlyingType(info.PropertyType)), null);
                     }
                 }
-                else if (p.PropertyType.GetTypeInfo().IsEnum == true && value != null)
+                else if (info.PropertyType.GetTypeInfo().IsEnum == true && value != null)
                 {
-                    p.SetValue(returnType, Enum.Parse(p.PropertyType, value.ToString()), null);
+                    //Property is an enum
+                    info.SetValue(returnType, Enum.Parse(info.PropertyType, value.ToString()), null);
                 }
                 else
                 {
                     //This is a normal property
-                    p.SetValue(returnType, Convert.ChangeType(value, p.PropertyType), null);
+                    info.SetValue(returnType, Convert.ChangeType(value, info.PropertyType), null);
                 }
             }
 
@@ -181,6 +178,16 @@ namespace ADO.Net.Client.Core
             return returnType;
         }
         #region Helper Methods
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="infos"></param>
+        /// <returns></returns>
+        private PropertyInfo GetPropertyInfo(string name, IEnumerable<PropertyInfo> infos)
+        {
+            return null;
+        }
         #endregion
     }
 }

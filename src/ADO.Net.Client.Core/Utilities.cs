@@ -24,6 +24,7 @@ SOFTWARE.*/
 #region Using Statements
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -44,10 +45,10 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Gets an instance of <see cref="PropertyInfo"/>
         /// </summary>
-        /// <param name="properties">An instance of <see cref="Array"/> of <see cref="PropertyInfo"/></param>
+        /// <param name="properties">An instance of <see cref="IEnumerable{T}"/> of <see cref="PropertyInfo"/></param>
         /// <param name="propertyName">The name of a property as a <see cref="string"/> in the <paramref name="properties"/></param>
         /// <returns>Returns an instance of <see cref="PropertyInfo"/>, null if one cannot be found</returns>
-        public static PropertyInfo GetProperty(this PropertyInfo[] properties, string propertyName)
+        public static PropertyInfo GetProperty(this IEnumerable<PropertyInfo> properties, string propertyName)
         { 
             //Get the property if it exists
             return properties.Where(x => x.Name == propertyName).FirstOrDefault();
