@@ -16,6 +16,9 @@ namespace ADO.Net.Client.Tests.Common
 
         public override object SyncRoot => throw new NotImplementedException();
 
+        public override bool IsFixedSize => true;
+        public override bool IsReadOnly => true;
+        public override bool IsSynchronized => true;
         public override int Add(object value)
         {
             throw new NotImplementedException();
