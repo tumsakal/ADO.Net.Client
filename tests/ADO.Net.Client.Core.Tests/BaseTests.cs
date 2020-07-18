@@ -225,6 +225,23 @@ namespace ADO.Net.Client.Core.Tests
         /// <summary>
         /// 
         /// </summary>
+        [Test]
+        [Category("DbParameterTests")]
+        public void CanCreateDbParameterNameNullValue()
+        {
+            string name = "@ParameterName";
+            object value = null;
+
+            DbParameter parameter = _factory.GetDbParameter(name, value);
+
+            Assert.IsNotNull(parameter);
+            Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
+            Assert.AreEqual(name, parameter.ParameterName);
+            Assert.AreEqual(DBNull.Value, parameter.Value);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="direction"></param>
         [Test]
         [TestCase(ParameterDirection.Input)]
