@@ -25,6 +25,7 @@ SOFTWARE.*/
 using ADO.Net.Client.Tests.Common;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 #endregion
@@ -166,7 +167,7 @@ namespace ADO.Net.Client.Core.Tests
         /// </summary>
         [Test]
         [Category("DbCommandTests")]
-        public void DbCommandTimeoutConnectionTransaction()
+        public void DbCommandTimeoutConnectionTransactionSame()
         {
             int commandTimeout = 10;
             CustomDbConnection connection = new CustomDbConnection() { ConnectionString = string.Empty};
@@ -180,6 +181,40 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsInstanceOf(typeof(CustomDbTransaction), command.Transaction);
             Assert.IsInstanceOf(typeof(CustomDbConnection), command.Connection);
             Assert.IsInstanceOf(typeof(CustomDbCommand), command);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbCommandTests")]
+        public void DbCommandTimeoutConnectionTransactionParametersSame()
+        {
+            List<CustomDbParameter> parameters = new List<CustomDbParameter>()
+            {
+                new CustomDbParameter() { ParameterName = "@Param3" },
+                new CustomDbParameter() { ParameterName = "@Param2" },
+                new CustomDbParameter() { ParameterName = "@Param1" }
+            };
+            int commandTimeout = 10;
+            string queryText = "Select * From Users";
+            CustomDbConnection connection = new CustomDbConnection() { ConnectionString = string.Empty };
+            CustomDbTransaction transaction = connection.BeginTransaction() as CustomDbTransaction;
+            CommandType type = CommandType.Text;
+            DbCommand command = _factory.GetDbCommand(type, queryText, parameters, connection, commandTimeout, transaction);
+
+            Assert.IsNotNull(command);
+            Assert.IsNotNull(command.Parameters);
+            Assert.IsNotNull(command.Connection);
+            Assert.AreEqual(queryText, command.CommandText);
+            Assert.AreEqual(type, command.CommandType);
+            Assert.AreEqual(commandTimeout, command.CommandTimeout);
+            Assert.AreEqual(connection, command.Connection);
+            Assert.AreEqual(transaction, command.Transaction);
+            Assert.AreEqual(parameters, command.Parameters);
+            Assert.IsInstanceOf(typeof(CustomDbTransaction), command.Transaction);
+            Assert.IsInstanceOf(typeof(CustomDbConnection), command.Connection);
+            Assert.IsInstanceOf(typeof(CustomDbCommand), command);
+            Assert.IsInstanceOf(typeof(List<CustomDbParameter>), command.Parameters);
         }
         [Test]
         [Category("DbParameterTests")]
