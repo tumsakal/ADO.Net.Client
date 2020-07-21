@@ -210,7 +210,7 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(commandTimeout, command.CommandTimeout);
             Assert.AreEqual(connection, command.Connection);
             Assert.AreEqual(transaction, command.Transaction);
-            Assert.AreEqual(parameters, command.Parameters);
+            Assert.IsTrue(parameters.Count == command.Parameters.Count);
             Assert.IsInstanceOf(typeof(CustomDbTransaction), command.Transaction);
             Assert.IsInstanceOf(typeof(CustomDbConnection), command.Connection);
             Assert.IsInstanceOf(typeof(CustomDbCommand), command);

@@ -24,6 +24,7 @@ SOFTWARE.*/
 #region Using Statements
 using ADO.Net.Client.Core;
 using ADO.Net.Client.Implementation;
+using ADO.Net.Client.Tests.Common.Models;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -37,20 +38,22 @@ namespace ADO.Net.Client.Tests
     {
         #region Read Test Methods
         [Test]
+        [Category("Asynchronous Read Tests")]
         public void WhenGetDataObjects_IsCalled_ItShouldCallSqlExectuorGetDataObjectsAsync()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
 
             //Need to setup the reader function
-            mockExecutor.Setup(x => x.GetDataObjectsAsync<string>(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(new string[1]).Verifiable();
+            mockExecutor.Setup(x => x.GetDataObjectsAsync<DbTypeModel>(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared)).ReturnsAsync(new string[1]).Verifiable();
 
             //Make the call
-            IEnumerable<string> value = new DbClient(mockExecutor.Object).GetDataObjects<string>(realQuery);
+            IEnumerable<DbTypeModel> values = new DbClient(mockExecutor.Object).GetDataObjects<DbTypeModel>(realQuery);
 
             //Verify the executor function was called
             mockExecutor.Verify(x => x.GetDataObjects<string>(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
         }
         [Test]
+        [Category("Asynchronous Read Tests")]
         public void WhenGetDataObject_IsCalled_ItShouldCallSqlExectuorGetDataObjectAsync()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
@@ -65,21 +68,23 @@ namespace ADO.Net.Client.Tests
             mockExecutor.Verify(x => x.GetDataObject<string>(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
         }
         [Test]
+        [Category("Asynchronous Read Tests")]
         public void WhenGetReader_IsCalled__ItShouldCallSqlExecutorGetReaderAsync()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
             CommandBehavior behavior = _faker.PickRandom(CommandBehavior.SequentialAccess, CommandBehavior.CloseConnection, CommandBehavior.SingleRow, CommandBehavior.Default, CommandBehavior.SchemaOnly, CommandBehavior.KeyInfo);
 
             //Need to setup the reader function
-            mockExecutor.Setup(x => x.GetDbDataReader(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior)).Returns(Mock.Of<DbDataReader>()).Verifiable();
+            mockExecutor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior)).Returns(Mock.Of<DbDataReader>()).Verifiable();
 
             //Make the call
-            DbDataReader reader = new DbClient(mockExecutor.Object).GetDbDataReader(realQuery, behavior);
+            DbDataReader reader = new DbClient(mockExecutor.Object).GetDbDataReaderAsync(realQuery, behavior);
 
             //Verify the executor was called
             mockExecutor.Verify(x => x.GetDbDataReader(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior), Times.Once);
         }
         [Test]
+        [Category("Asynchronous Read Tests")]
         public void WhenGetScalar_IsCalled__ItShouldCallSqlExecutorGetScalarAsync()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
@@ -94,15 +99,19 @@ namespace ADO.Net.Client.Tests
             mockExecutor.Verify(x => x.GetScalarValue<string>(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
         }
         [Test]
+        [Category("Asynchronous Read Tests")]
         public void WhenGetMultiResultReader_IsCalled__ItShouldCallSqlExecutorGetMultiResultReaderAsync()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
 
             //Need to setup the reader function
-            mockExecutor.Setup(x => x.GetMultiResultReader(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(new MultiResultReader(Mock.Of<DbDataReader>(), Mock.Of<IDataMapper>())).Verifiable();
+            mockExecutor.Setup(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(new MultiResultReader(Mock.Of<DbDataReader>(), Mock.Of<IDataMapper>())).Verifiable();
 
             //Make the call
-            IMultiResultReader value = new DbClient(mockExecutor.Object).GetMultiResultReader(realQuery);
+            IMultiResultReader reader = new DbClient(mockExecutor.Object).GetMultiResultReader(realQuery);
+
+            Assert.IsNotNull(reader);
+            Assert.IsInstanceOf(typeof(IMultiResultReader, reader);
 
             //Verify the executor was called
             mockExecutor.Verify(x => x.GetMultiResultReader(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
@@ -110,15 +119,18 @@ namespace ADO.Net.Client.Tests
         #endregion
         #region Write Test Methods
         [Test]
+        [Category("Asynchronous Write Tests")]
         public void WhenExecuteNonQuery_IsCalled__ItShouldCallSqlExecutorExecuteNonQueryAsync()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
 
             //Need to setup the reader function
-            mockExecutor.Setup(x => x.ExecuteNonQuery(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(1).Verifiable();
+            mockExecutor.Setup(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(1).Verifiable();
 
             //Make the call
-            int records = new DbClient(mockExecutor.Object).ExecuteNonQuery(realQuery);
+            int records = new DbClient(mockExecutor.Object).ExecuteNonQueryAsync(realQuery);
+
+            Assert.IsTrue(records == 1);
 
             //Verify the executor was called
             mockExecutor.Verify(x => x.ExecuteNonQuery(realQuery.QueryText, realQuery.QueryType, new List<DbParameter>(), realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);

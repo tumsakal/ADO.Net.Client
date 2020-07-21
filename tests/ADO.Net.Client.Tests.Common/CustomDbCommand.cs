@@ -31,6 +31,7 @@ namespace ADO.Net.Client.Tests.Common
 {
     public class CustomDbCommand : DbCommand
     {
+        private readonly CustomDbParameterCollection collection = new CustomDbParameterCollection();
         public override string CommandText { get; set; }
         public override int CommandTimeout { get; set; }
         public override CommandType CommandType { get; set; }
@@ -38,7 +39,7 @@ namespace ADO.Net.Client.Tests.Common
         public override UpdateRowSource UpdatedRowSource { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         protected override DbConnection DbConnection { get; set; }
 
-        protected override DbParameterCollection DbParameterCollection => throw new NotImplementedException();
+        protected override DbParameterCollection DbParameterCollection => collection;
 
         protected override DbTransaction DbTransaction { get; set; }
 

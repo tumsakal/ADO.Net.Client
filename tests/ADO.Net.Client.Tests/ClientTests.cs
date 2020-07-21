@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using ADO.Net.Client.Core;
+using ADO.Net.Client.Tests.Common;
 using Bogus;
 using Moq;
 using NUnit.Framework;
@@ -49,7 +50,10 @@ namespace ADO.Net.Client.Tests
             _faker = new Faker();
         }
         #endregion
-        #region Setup/Teardown
+        #region Setup/Teardown        
+        /// <summary>
+        /// Called when [time setup].
+        /// </summary>
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
@@ -58,12 +62,34 @@ namespace ADO.Net.Client.Tests
             mockQuery.Setup(x => x.CommandTimeout).Returns(_faker.Random.Int());
             mockQuery.Setup(x => x.QueryText).Returns(_faker.Random.String());
             mockQuery.Setup(x => x.QueryType).Returns(_faker.PickRandomParam(CommandType.StoredProcedure, CommandType.Text, CommandType.TableDirect));
-            //mockQuery.Setup(x => x.Parameters).Returns(null);
+            mockQuery.Setup(x => x.Parameters).Returns(GetDbParameters());
 
             realQuery = mockQuery.Object;
         }
         #endregion
-        #region Helper Methods
+        #region Helper Methods        
+        /// <summary>
+        /// Gets the database parameters.
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerable<DbParameter> GetDbParameters()
+        {
+            List<CustomDbParameter> parameters = new List<CustomDbParameter>();
+            int number = _faker.Random.Int(1, 10);
+            
+            //Loop through all numbers
+            for(int i = 0; i < number; i++)
+            {
+                CustomDbParameter param = new CustomDbParameter();
+
+                param.ParameterName = $"Parameter{i}";
+                param.Value = _faker.Random.AlphaNumeric(20);
+
+                parameters.Add(param);
+            }
+
+            return parameters;
+        }
         #endregion
     }
 }
