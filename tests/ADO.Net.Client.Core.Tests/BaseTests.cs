@@ -205,6 +205,8 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsNotNull(command);
             Assert.IsNotNull(command.Parameters);
             Assert.IsNotNull(command.Connection);
+            Assert.IsNotNull(command.Transaction);
+            Assert.IsNotNull(command.CommandText);
             Assert.AreEqual(queryText, command.CommandText);
             Assert.AreEqual(type, command.CommandType);
             Assert.AreEqual(commandTimeout, command.CommandTimeout);
@@ -214,7 +216,7 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsInstanceOf(typeof(CustomDbTransaction), command.Transaction);
             Assert.IsInstanceOf(typeof(CustomDbConnection), command.Connection);
             Assert.IsInstanceOf(typeof(CustomDbCommand), command);
-            Assert.IsInstanceOf(typeof(List<CustomDbParameter>), command.Parameters);
+            Assert.IsInstanceOf(typeof(CustomDbParameterCollection), command.Parameters);
         }
         [Test]
         [Category("DbParameterTests")]
