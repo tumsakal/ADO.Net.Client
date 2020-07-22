@@ -24,7 +24,6 @@ SOFTWARE.*/
 #region Using Statements
 using ADO.Net.Client.Core;
 using System.Data.Common;
-using System.Threading.Tasks;
 #endregion
 
 namespace ADO.Net.Client.Implementation
