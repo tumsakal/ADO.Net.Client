@@ -217,6 +217,15 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsInstanceOf(typeof(CustomDbConnection), command.Connection);
             Assert.IsInstanceOf(typeof(CustomDbCommand), command);
             Assert.IsInstanceOf(typeof(CustomDbParameterCollection), command.Parameters);
+
+            //Assert all parameters are equal
+            for(int i = 0; i < command.Parameters.Count; i++)
+            {
+                DbParameter parameter = command.Parameters[i];
+
+                Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
+                Assert.AreEqual(parameters[i], parameter);
+            }
         }
         [Test]
         [Category("DbParameterTests")]

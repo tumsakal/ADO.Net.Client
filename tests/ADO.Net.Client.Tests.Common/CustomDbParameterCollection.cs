@@ -114,7 +114,7 @@ namespace ADO.Net.Client.Tests.Common
 
         protected override DbParameter GetParameter(int index)
         {
-            throw new NotImplementedException();
+            return paramList[index];
         }
 
         protected override DbParameter GetParameter(string parameterName)
