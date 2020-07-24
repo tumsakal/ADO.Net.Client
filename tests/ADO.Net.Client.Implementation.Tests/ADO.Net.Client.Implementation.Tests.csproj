@@ -18,7 +18,4 @@
     <ProjectReference Include="..\..\src\ADO.Net.Client.Implementation\ADO.Net.Client.Implementation.csproj" />
     <ProjectReference Include="..\ADO.Net.Client.Tests.Common\ADO.Net.Client.Tests.Common.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Integration\" />
-  </ItemGroup>
 </Project>

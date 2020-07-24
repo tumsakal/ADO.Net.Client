@@ -27,31 +27,56 @@ using Moq;
 using NUnit.Framework;
 #endregion
 
-namespace ADO.Net.Client.Implementation.Tests.Unit
+namespace ADO.Net.Client.Implementation.Tests
 {
     public partial class SqlExecutorTests
     {
-        #region Read Test Methods
+        #region Read Test Methods                
+        /// <summary>
+        /// When the get scalar value is called it should calls database object factory get database command.
+        /// </summary>
         [Test]
         public void WhenGetScalarValue_IsCalled__ItShouldCallsDbObjectFactory_GetDbCommand()
         {
-            Assert.Inconclusive();
             //Make the call
-            //int records = new SqlExecutor(_factory.Object, _manager, _mapper).GetScalarValue<int>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared);
+            string value = new SqlExecutor(_factory.Object, _manager, _mapper).GetScalarValue<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared);
+
+            if (realQuery.ShouldBePrepared == true)
+            {
+                _command.Verify(x => x.Prepare(), Times.Once);
+            }
+            else
+            {
+                _command.Verify(x => x.Prepare(), Times.Never);
+            }
 
             //Verify the executor was called
-            //_factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, null, realQuery.CommandTimeout, null), Times.Once);
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, null, realQuery.CommandTimeout, null), Times.Once);
+            _command.Verify(x => x.ExecuteScalar(), Times.Once);
         }
         #endregion
-        #region Write Test Methods
+        #region Write Test Methods                
+        /// <summary>
+        /// Whens the execute non query is called it should calls database object factory get database command.
+        /// </summary>
         [Test]
         public void WhenExecuteNonQuery_IsCalled__ItShouldCallsDbObjectFactory_GetDbCommand()
         {
             //Make the call
             int records = new SqlExecutor(_factory.Object, _manager, _mapper).ExecuteNonQuery(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared);
 
+            if (realQuery.ShouldBePrepared == true)
+            {
+                _command.Verify(x => x.Prepare(), Times.Once);
+            }
+            else
+            {
+                _command.Verify(x => x.Prepare(), Times.Never);
+            }
+
             //Verify the executor was called
             _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, null, realQuery.CommandTimeout, null), Times.Once);
+            _command.Verify(x => x.ExecuteNonQuery(), Times.Once);
         }
         #endregion
     }

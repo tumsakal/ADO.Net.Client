@@ -22,38 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
-using ADO.Net.Client.Core;
-using System.Data.Common;
 #endregion
 
-namespace ADO.Net.Client.Implementation
+
+namespace ADO.Net.Client.Tests.Common.Models
 {
     /// <summary>
-    /// Reader object that reads through multiple result sets
+    /// 
     /// </summary>
-    /// <seealso cref="IMultiResultReader"/>
-    public partial class MultiResultReader : IMultiResultReader
+    public class BasicModel
     {
-        #region Variables
-        private bool disposedValue = false; // To detect redundant calls
-        #endregion
-        #region Fields/Properties
-        private readonly DbDataReader _reader = null;
-        private readonly IDataMapper _mapper = null;
-        #endregion
-        #region Constructors
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MultiResultReader"/> class.
-        /// </summary>
-        /// <param name="mapper"></param>
-        /// <param name="reader">The reader.</param>
-        public MultiResultReader(DbDataReader reader, IDataMapper mapper)
-        {
-            _reader = reader;
-            _mapper = mapper;
-        }
-        #endregion
-        #region Helper Methods
-        #endregion
     }
 }

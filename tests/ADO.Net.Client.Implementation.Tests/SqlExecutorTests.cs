@@ -30,7 +30,7 @@ using NUnit.Framework;
 using System.Data;
 #endregion
 
-namespace ADO.Net.Client.Implementation.Tests.Unit
+namespace ADO.Net.Client.Implementation.Tests
 {
     [TestFixture]
     public partial class SqlExecutorTests
@@ -41,8 +41,12 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         private IDataMapper _mapper;
         private Mock<IDbObjectFactory> _factory;
         private readonly Faker _faker = new Faker();
+        private Mock<CustomDbCommand> _command = new Mock<CustomDbCommand>();
         #endregion
-        #region Constructors
+        #region Constructors        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SqlExecutorTests"/> class.
+        /// </summary>
         public SqlExecutorTests()
         {
         }
@@ -51,24 +55,20 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         [SetUp]
         public void Setup()
         {
-            
-        }
-        [OneTimeSetUp]
-        public void OneTimeSetup()
-        {
             Mock<ISqlQuery> mockQuery = new Mock<ISqlQuery>();
             _mapper = new Mock<IDataMapper>().Object;
             _manager = new Mock<IConnectionManager>().Object;
             _factory = new Mock<IDbObjectFactory>();
+            _command = new Mock<CustomDbCommand>();
 
             mockQuery.Setup(x => x.CommandTimeout).Returns(_faker.Random.Int());
             mockQuery.Setup(x => x.QueryText).Returns(_faker.Random.String());
             mockQuery.Setup(x => x.QueryType).Returns(_faker.PickRandomParam(CommandType.StoredProcedure, CommandType.Text, CommandType.TableDirect));
+            mockQuery.Setup(x => x.ShouldBePrepared).Returns(_faker.Random.Bool());
             //mockQuery.Setup(x => x.Parameters).Returns(null);
 
             realQuery = mockQuery.Object;
 
-            //Now setup the db commands
             SetupDbCommand();
         }
         #endregion
@@ -76,7 +76,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         public void SetupDbCommand()
         {
             //Need to setup the reader function
-            _factory.Setup(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, null, realQuery.CommandTimeout, null)).Returns(Mock.Of<CustomDbCommand>()).Verifiable();
+            _factory.Setup(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, null, realQuery.CommandTimeout, null)).Returns(_command.Object).Verifiable();
         }
         #endregion
     }
