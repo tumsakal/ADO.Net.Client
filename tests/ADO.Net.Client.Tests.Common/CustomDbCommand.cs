@@ -45,7 +45,7 @@ namespace ADO.Net.Client.Tests.Common
 
         public override void Cancel()
         {
-            throw new NotImplementedException();
+            
         }
 
         public override int ExecuteNonQuery()
@@ -55,7 +55,7 @@ namespace ADO.Net.Client.Tests.Common
 
         public override object ExecuteScalar()
         {
-            throw new NotImplementedException();
+            return "Some String";
         }
 
         public override void Prepare()

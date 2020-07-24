@@ -26,7 +26,7 @@ using MySqlConnector;
 using NUnit.Framework;
 #endregion
 
-namespace ADO.Net.Client.Implementation.Tests.Unit
+namespace ADO.Net.Client.Implementation.Tests
 {
     /// <summary>
     /// 
