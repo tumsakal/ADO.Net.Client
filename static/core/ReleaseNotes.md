@@ -1,6 +1,10 @@
 Version History
 ===============
 
+### 1.1.6.3
+
+* Null check in [DbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbObjectFactory.cs) GetDbCommand overload that takes in IEnumerable of DbParameter
+
 ### 1.1.6.2
 
 * [DbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbObjectFactory.cs) correcctly utilize DbParameters in GetDbCommand
