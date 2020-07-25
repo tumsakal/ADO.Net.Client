@@ -79,7 +79,7 @@ namespace ADO.Net.Client.Tests.Common
 
         public override IEnumerator GetEnumerator()
         {
-            throw new NotImplementedException();
+            return paramList.GetEnumerator();
         }
 
         public override int IndexOf(object value)

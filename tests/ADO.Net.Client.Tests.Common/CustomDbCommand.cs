@@ -48,6 +48,10 @@ namespace ADO.Net.Client.Tests.Common
             
         }
 
+        public virtual new CustomDbReader ExecuteReader(CommandBehavior behavior)
+        {
+            return new CustomDbReader();
+        }
         public override int ExecuteNonQuery()
         {
             throw new NotImplementedException();

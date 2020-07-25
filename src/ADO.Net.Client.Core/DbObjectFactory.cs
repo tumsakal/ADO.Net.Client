@@ -232,8 +232,12 @@ namespace ADO.Net.Client.Core
             //Get the DbCommand object
             DbCommand dCommand = GetDbCommand(connection, transact, commandTimeout);
 
-            //Set query and command type
-            dCommand.Parameters.AddRange(parameters.ToArray());
+            if (parameters != null)
+            {
+                //Set query and command type
+                dCommand.Parameters.AddRange(parameters.ToArray());
+            }
+            
             dCommand.CommandType = queryCommandType;
             dCommand.CommandText = query;
 
