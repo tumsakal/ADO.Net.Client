@@ -54,8 +54,8 @@ namespace ADO.Net.Client.Tests
         /// <summary>
         /// Called when [time setup].
         /// </summary>
-        [OneTimeSetUp]
-        public void OneTimeSetup()
+        [SetUp]
+        public void Setup()
         {
             Mock<ISqlQuery> mockQuery = new Mock<ISqlQuery>();
 
