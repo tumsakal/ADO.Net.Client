@@ -1,6 +1,12 @@
 Version History
 ===============
 
+### 1.1.7
+
+* [IDataMapper](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDataMapper.cs) map methods now have generic constraint of class
+* [IMultResultReaderSync](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IMultiResultReaderSync.cs) read methods now have generic constraint of class
+* [IMultiResultReaderAsync](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IMultiResultReaderAsync.cs) read methods now have generic constraint of class
+
 ### 1.1.6.3
 
 * Null check in [DbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbObjectFactory.cs) GetDbCommand overload that takes in IEnumerable of DbParameter
