@@ -39,19 +39,19 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
         /// <returns>Returns an instance of <see cref="IEnumerable{T}"/></returns>
-        IEnumerable<T> ReadObjectsStream<T>();
+        IEnumerable<T> ReadObjectsStream<T>() where T : class;
         /// <summary>
         /// Gets an entire <see cref="IEnumerable{T}"/> of <typeparamref name="T"/>
         /// </summary>
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
         /// <returns>Returns an instance of <see cref="IEnumerable{T}"/> as an entire collection of <typeparamref name="T"/></returns>
-        IEnumerable<T> ReadObjects<T>();
+        IEnumerable<T> ReadObjects<T>() where T : class;
         /// <summary>
         /// Gets a single instance of <typeparamref name="T"/>
         /// </summary>
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
         /// <returns>Gets an instance of <typeparamref name="T"/></returns>
-        T ReadObject<T>();
+        T ReadObject<T>() where T : class;
         /// <summary>
         /// Moves to the next result in the underlying data set
         /// </summary>

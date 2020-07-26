@@ -46,7 +46,7 @@ namespace ADO.Net.Client.Core
         /// <typeparam name="T">The <see cref="Type"/> the caller wants created from the passed in <paramref name="reader"/></typeparam>
         /// <param name="reader">An instance of <see cref="DbDataReader"/> that contains a result set of records that needs to be mapped</param>
         /// <returns>Returns the instance of <typeparamref name="T"/> created from the passed in <paramref name="reader"/></returns>
-        IAsyncEnumerable<T> MapResultSetStreamAsync<T>(DbDataReader reader, CancellationToken token = default);
+        IAsyncEnumerable<T> MapResultSetStreamAsync<T>(DbDataReader reader, CancellationToken token = default) where T : class;
 #endif
         /// <summary>
         /// Maps an entire result set in the <paramref name="reader"/>
@@ -55,28 +55,28 @@ namespace ADO.Net.Client.Core
         /// <typeparam name="T">The <see cref="Type"/> the caller wants created from the passed in <paramref name="reader"/></typeparam>
         /// <param name="reader">An instance of <see cref="DbDataReader"/> that contains a result set of records that needs to be mapped</param>
         /// <returns>Returns the instance of <typeparamref name="T"/> created from the passed in <paramref name="reader"/></returns>
-        Task<IEnumerable<T>> MapResultSetAsync<T>(DbDataReader reader, CancellationToken token = default);
+        Task<IEnumerable<T>> MapResultSetAsync<T>(DbDataReader reader, CancellationToken token = default) where T : class;
         /// <summary>
         /// Maps the result set one at a time by streaming the result from the server
         /// </summary>
         /// <typeparam name="T">The <see cref="Type"/> the caller wants created from the passed in <paramref name="reader"/></typeparam>
         /// <param name="reader">An instance of <see cref="DbDataReader"/> that contains a result set of records that needs to be mapped</param>
         /// <returns>Returns the instance of <typeparamref name="T"/> created from the passed in <paramref name="reader"/></returns>
-        IEnumerable<T> MapResultSetStream<T>(DbDataReader reader);
+        IEnumerable<T> MapResultSetStream<T>(DbDataReader reader) where T : class;
         /// <summary>
         /// Maps an entire result set in the <paramref name="reader"/>
         /// </summary>
         /// <typeparam name="T">The <see cref="Type"/> the caller wants created from the passed in <paramref name="reader"/></typeparam>
         /// <param name="reader">An instance of <see cref="DbDataReader"/> that contains a result set of records that needs to be mapped</param>
         /// <returns>Returns the instance of <typeparamref name="T"/> created from the passed in <paramref name="reader"/></returns>
-        IEnumerable<T> MapResultSet<T>(DbDataReader reader);
+        IEnumerable<T> MapResultSet<T>(DbDataReader reader) where T : class;
         /// <summary>
         /// Maps the passed in <paramref name="record"/> to an instance of the <typeparamref name="T"/>
         /// </summary>
         /// <typeparam name="T">The <see cref="Type"/> the caller wants created from the passed in <paramref name="record"/></typeparam>
         /// <param name="record">A record from a result set of data</param>
         /// <returns>Returns the instance of <typeparamref name="T"/> created from the passed in <paramref name="record"/></returns>
-        T MapRecord<T>(IDataRecord record);
+        T MapRecord<T>(IDataRecord record) where T : class;
         #endregion
     }
 }
