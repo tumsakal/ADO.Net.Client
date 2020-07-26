@@ -12,7 +12,7 @@ namespace ADO.Net.Client.Implementation
         /// </summary>
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
         /// <returns>Returns an instance of <see cref="IEnumerable{T}"/></returns>
-        public IEnumerable<T> ReadObjectsStream<T>()
+        public IEnumerable<T> ReadObjectsStream<T>() where T : class
         {
             //Keep looping through each object in enumerator
             foreach (T type in _mapper.MapResultSetStream<T>(_reader))
@@ -29,7 +29,7 @@ namespace ADO.Net.Client.Implementation
         /// </summary>
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
         /// <returns>Returns an instance of <see cref="IEnumerable{T}"/> as an entire collection of <typeparamref name="T"/></returns>
-        public IEnumerable<T> ReadObjects<T>()
+        public IEnumerable<T> ReadObjects<T>() where T : class
         {
             return _mapper.MapResultSet<T>(_reader);
         }
@@ -38,7 +38,7 @@ namespace ADO.Net.Client.Implementation
         /// </summary>
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
         /// <returns>Gets an instance of <typeparamref name="T"/></returns>
-        public T ReadObject<T>()
+        public T ReadObject<T>() where T : class
         {
             //Move to the next record
             _reader.Read();

@@ -45,8 +45,15 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Initializes a new instance of the <see cref="MultiResultReader"/> class.
         /// </summary>
-        /// <param name="mapper"></param>
-        /// <param name="reader">The reader.</param>
+        /// <param name="reader">An instance of <see cref="DbDataReader"/> that contains data to read through</param>
+        public MultiResultReader(DbDataReader reader) : this(reader, new DataMapper())
+        {
+        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MultiResultReader"/> class.
+        /// </summary>
+        /// <param name="mapper">An instance of <see cref="IDataMapper"/> that will map data contained in the <paramref name="reader"/></param>
+        /// <param name="reader">An instance of <see cref="DbDataReader"/> that contains data to read through</param>
         public MultiResultReader(DbDataReader reader, IDataMapper mapper)
         {
             _reader = reader;
