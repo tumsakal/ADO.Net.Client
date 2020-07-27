@@ -39,7 +39,43 @@ namespace ADO.Net.Client.Tests
 {
     public partial class ClientTests
     {
-        #region Read Test Methods               
+        #region Read Test Methods       
+        /// <summary>
+        /// Whens the get data objects asynchronous is called it should call SQL executor get data objects asynchronous.
+        /// </summary>
+        [Test]
+        [Category("Asynchronous Read Tests")]
+        public async Task WhenGetMultiRestultReadersAsync_IsCalled__ItShouldCallSqlExecutorGetMultiResultReaderAsync()
+        {
+            int delay = _faker.Random.Int(1, 30);
+
+            //Wrap this in a using to automatically dispose of resources
+            using (CancellationTokenSource source = new CancellationTokenSource(delay))
+            {
+                Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
+                List<BasicModel> returnList = new List<BasicModel>();
+                MultiResultReader reader = new MultiResultReader(new CustomDbReader());
+
+#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+                mockExecutor.Setup(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(reader).Verifiable();
+#else
+                mockExecutor.Setup(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(reader).Verifiable();
+#endif
+
+                //Make the call
+                IMultiResultReader returnedValue = await new DbClient(mockExecutor.Object).GetMultiResultReaderAsync(realQuery, source.Token);
+
+                Assert.IsNotNull(returnedValue);
+
+#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+                //Verify the executor was called
+                mockExecutor.Verify(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
+#else
+                //Verify the executor was called
+                mockExecutor.Verify(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
+#endif
+            }
+        }
         /// <summary>
         /// Whens the get data objects asynchronous is called it should call SQL executor get data objects asynchronous.
         /// </summary>
