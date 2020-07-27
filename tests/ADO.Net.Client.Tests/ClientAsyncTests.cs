@@ -39,7 +39,43 @@ namespace ADO.Net.Client.Tests
 {
     public partial class ClientTests
     {
-        #region Read Test Methods        
+        #region Read Test Methods                
+        /// <summary>
+        /// Whens the get scalar vlue asynchronous is called it should call SQL executor get scalar value asynchronous.
+        /// </summary>
+        [Test]
+        [Category("Asynchronous Read Tests")]
+        public async Task WhenGetScalarVlueAsync_IsCalled__ItShouldCallSqlExecutorGetScalarValueAsync()
+        {
+            int delay = _faker.Random.Int(1, 30);
+
+            //Wrap this in a using to automatically dispose of resources
+            using (CancellationTokenSource source = new CancellationTokenSource(delay))
+            {
+                Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
+                string expectedValue = _faker.Random.AlphaNumeric(30);
+
+#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+                mockExecutor.Setup(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(expectedValue).Verifiable();
+#else
+                mockExecutor.Setup(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(expectedValue).Verifiable();
+#endif
+
+                //Make the call
+                string returnedValue = await new DbClient(mockExecutor.Object).GetScalarValueAsync<string>(realQuery, source.Token);
+
+                Assert.IsFalse(string.IsNullOrWhiteSpace(returnedValue));
+                Assert.IsTrue(returnedValue == expectedValue);
+
+#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+                //Verify the executor was called
+                mockExecutor.Verify(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
+#else
+                //Verify the executor was called
+                mockExecutor.Verify(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
+#endif
+            }
+        }
         /// <summary>
         /// Whens the get database data reader asynchronous is called it should call SQL executor get database data reader asynchronous.
         /// </summary>
