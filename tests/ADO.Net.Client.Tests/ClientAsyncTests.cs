@@ -39,13 +39,83 @@ namespace ADO.Net.Client.Tests
 {
     public partial class ClientTests
     {
-        #region Read Test Methods                
+        #region Read Test Methods               
+        /// <summary>
+        /// Whens the get data objects asynchronous is called it should call SQL executor get data objects asynchronous.
+        /// </summary>
+        [Test]
+        [Category("Asynchronous Read Tests")]
+        public async Task WhenGetDataObjectsAsync_IsCalled__ItShouldCallSqlExecutorGetDataObjectsAsync()
+        {
+            int delay = _faker.Random.Int(1, 30);
+
+            //Wrap this in a using to automatically dispose of resources
+            using (CancellationTokenSource source = new CancellationTokenSource(delay))
+            {
+                Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
+                List<BasicModel> returnList = new List<BasicModel>();
+
+#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+                mockExecutor.Setup(x => x.GetDataObjectsAsync<BasicModel>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(returnList).Verifiable();
+#else
+                mockExecutor.Setup(x => x.GetDataObjectsAsync<BasicModel>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(returnList).Verifiable();
+#endif
+               
+                //Make the call
+                IEnumerable<BasicModel> returnedValue = await new DbClient(mockExecutor.Object).GetDataObjectsAsync<BasicModel>(realQuery, source.Token);
+
+                Assert.IsNotNull(returnedValue);
+                Assert.IsInstanceOf(typeof(List<BasicModel>), returnedValue);
+
+#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+                //Verify the executor was called
+                mockExecutor.Verify(x => x.GetDataObjectsAsync<BasicModel>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
+#else
+                //Verify the executor was called
+                mockExecutor.Verify(x => x.GetDataObjectsAsync<BasicModel>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
+#endif
+            }
+        }
+        /// <summary>
+        /// Whens the get data object asynchronous is called it should call SQL executor get data object asynchronous.
+        /// </summary>
+        [Test]
+        [Category("Asynchronous Read Tests")]
+        public async Task WhenGetDataObjectAsync_IsCalled__ItShouldCallSqlExecutorGetDataObjectAsync()
+        {
+            int delay = _faker.Random.Int(1, 30);
+
+            //Wrap this in a using to automatically dispose of resources
+            using (CancellationTokenSource source = new CancellationTokenSource(delay))
+            {
+                Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
+
+#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+                mockExecutor.Setup(x => x.GetDataObjectAsync<BasicModel>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(new BasicModel()).Verifiable();
+#else
+                mockExecutor.Setup(x => x.GetDataObjectAsync<BasicModel>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(new BasicModel()).Verifiable();
+#endif
+
+                //Make the call
+                BasicModel returnedValue = await new DbClient(mockExecutor.Object).GetDataObjectAsync<BasicModel>(realQuery, source.Token);
+
+                Assert.IsNotNull(returnedValue);
+
+#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+                //Verify the executor was called
+                mockExecutor.Verify(x => x.GetDataObjectAsync<BasicModel>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
+#else
+                //Verify the executor was called
+                mockExecutor.Verify(x => x.GetDataObjectAsync<BasicModel>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
+#endif
+            }
+        }
         /// <summary>
         /// Whens the get scalar vlue asynchronous is called it should call SQL executor get scalar value asynchronous.
         /// </summary>
         [Test]
         [Category("Asynchronous Read Tests")]
-        public async Task WhenGetScalarVlueAsync_IsCalled__ItShouldCallSqlExecutorGetScalarValueAsync()
+        public async Task WhenGetScalarValueAsync_IsCalled__ItShouldCallSqlExecutorGetScalarValueAsync()
         {
             int delay = _faker.Random.Int(1, 30);
 
@@ -94,7 +164,7 @@ namespace ADO.Net.Client.Tests
 #if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
                 mockExecutor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, source.Token)).ReturnsAsync(new CustomDbReader()).Verifiable();
 #else
-                mockExecutor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout,behavior, source.Token)).ReturnsAsync(new CustomDbReader()).Verifiable();
+                mockExecutor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, source.Token)).ReturnsAsync(new CustomDbReader()).Verifiable();
 #endif
 
                 //Make the call
