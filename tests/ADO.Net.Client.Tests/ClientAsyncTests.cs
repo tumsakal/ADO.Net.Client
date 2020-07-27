@@ -24,6 +24,7 @@ SOFTWARE.*/
 #region Using Statements
 using ADO.Net.Client.Core;
 using ADO.Net.Client.Implementation;
+using ADO.Net.Client.Tests.Common;
 using ADO.Net.Client.Tests.Common.Models;
 using Moq;
 using NUnit.Framework;
@@ -38,7 +39,43 @@ namespace ADO.Net.Client.Tests
 {
     public partial class ClientTests
     {
-        #region Read Test Methods
+        #region Read Test Methods        
+        /// <summary>
+        /// Whens the get database data reader asynchronous is called it should call SQL executor get database data reader asynchronous.
+        /// </summary>
+        [Test]
+        [Category("Asynchronous Read Tests")]
+        public async Task WhenGetDbDataReaderAsync_IsCalled__ItShouldCallSqlExecutorGetDbDataReaderAsync()
+        {
+            int delay = _faker.Random.Int(1, 30);
+
+            //Wrap this in a using to automatically dispose of resources
+            using (CancellationTokenSource source = new CancellationTokenSource(delay))
+            {
+                Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
+                CommandBehavior behavior = _faker.PickRandom(CommandBehavior.SequentialAccess, CommandBehavior.CloseConnection, CommandBehavior.SingleRow, CommandBehavior.Default, CommandBehavior.SchemaOnly, CommandBehavior.KeyInfo);
+
+#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+                mockExecutor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, source.Token)).ReturnsAsync(new CustomDbReader()).Verifiable();
+#else
+                mockExecutor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout,behavior, source.Token)).ReturnsAsync(new CustomDbReader()).Verifiable();
+#endif
+
+                //Make the call
+                DbDataReader reader = await new DbClient(mockExecutor.Object).GetDbDataReaderAsync(realQuery, behavior, source.Token);
+
+                Assert.IsNotNull(reader);
+                Assert.IsInstanceOf(typeof(CustomDbReader), reader);
+
+#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+                //Verify the executor was called
+                mockExecutor.Verify(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, source.Token), Times.Once);
+#else
+                //Verify the executor was called
+                mockExecutor.Verify(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, source.Token), Times.Once);
+#endif
+            }
+        }
         #endregion
         #region Write Test Methods
         /// <summary>
