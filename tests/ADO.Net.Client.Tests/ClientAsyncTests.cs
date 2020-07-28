@@ -56,7 +56,7 @@ namespace ADO.Net.Client.Tests
                 List<BasicModel> returnList = new List<BasicModel>();
                 MultiResultReader reader = new MultiResultReader(new CustomDbReader());
 
-#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+#if !NET45 && !NET461 && !NETCOREAPP2_1
                 mockExecutor.Setup(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(reader).Verifiable();
 #else
                 mockExecutor.Setup(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(reader).Verifiable();
@@ -67,7 +67,7 @@ namespace ADO.Net.Client.Tests
 
                 Assert.IsNotNull(returnedValue);
 
-#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+#if !NET45 && !NET461 && !NETCOREAPP2_1
                 //Verify the executor was called
                 mockExecutor.Verify(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
 #else
@@ -91,7 +91,7 @@ namespace ADO.Net.Client.Tests
                 Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
                 List<BasicModel> returnList = new List<BasicModel>();
 
-#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+#if !NET45 && !NET461 && !NETCOREAPP2_1
                 mockExecutor.Setup(x => x.GetDataObjectsAsync<BasicModel>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(returnList).Verifiable();
 #else
                 mockExecutor.Setup(x => x.GetDataObjectsAsync<BasicModel>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(returnList).Verifiable();
@@ -103,7 +103,7 @@ namespace ADO.Net.Client.Tests
                 Assert.IsNotNull(returnedValue);
                 Assert.IsInstanceOf(typeof(List<BasicModel>), returnedValue);
 
-#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+#if !NET45 && !NET461 && !NETCOREAPP2_1
                 //Verify the executor was called
                 mockExecutor.Verify(x => x.GetDataObjectsAsync<BasicModel>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
 #else
@@ -126,7 +126,7 @@ namespace ADO.Net.Client.Tests
             {
                 Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
 
-#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+#if !NET45 && !NET461 && !NETCOREAPP2_1
                 mockExecutor.Setup(x => x.GetDataObjectAsync<BasicModel>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(new BasicModel()).Verifiable();
 #else
                 mockExecutor.Setup(x => x.GetDataObjectAsync<BasicModel>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(new BasicModel()).Verifiable();
@@ -137,7 +137,7 @@ namespace ADO.Net.Client.Tests
 
                 Assert.IsNotNull(returnedValue);
 
-#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+#if !NET45 && !NET461 && !NETCOREAPP2_1
                 //Verify the executor was called
                 mockExecutor.Verify(x => x.GetDataObjectAsync<BasicModel>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
 #else
@@ -161,7 +161,7 @@ namespace ADO.Net.Client.Tests
                 Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
                 string expectedValue = _faker.Random.AlphaNumeric(30);
 
-#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+#if !NET45 && !NET461 && !NETCOREAPP2_1
                 mockExecutor.Setup(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(expectedValue).Verifiable();
 #else
                 mockExecutor.Setup(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(expectedValue).Verifiable();
@@ -173,7 +173,7 @@ namespace ADO.Net.Client.Tests
                 Assert.IsFalse(string.IsNullOrWhiteSpace(returnedValue));
                 Assert.IsTrue(returnedValue == expectedValue);
 
-#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+#if !NET45 && !NET461 && !NETCOREAPP2_1
                 //Verify the executor was called
                 mockExecutor.Verify(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
 #else
@@ -197,7 +197,7 @@ namespace ADO.Net.Client.Tests
                 Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
                 CommandBehavior behavior = _faker.PickRandom(CommandBehavior.SequentialAccess, CommandBehavior.CloseConnection, CommandBehavior.SingleRow, CommandBehavior.Default, CommandBehavior.SchemaOnly, CommandBehavior.KeyInfo);
 
-#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+#if !NET45 && !NET461 && !NETCOREAPP2_1
                 mockExecutor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, source.Token)).ReturnsAsync(new CustomDbReader()).Verifiable();
 #else
                 mockExecutor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, source.Token)).ReturnsAsync(new CustomDbReader()).Verifiable();
@@ -209,7 +209,7 @@ namespace ADO.Net.Client.Tests
                 Assert.IsNotNull(reader);
                 Assert.IsInstanceOf(typeof(CustomDbReader), reader);
 
-#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+#if !NET45 && !NET461 && !NETCOREAPP2_1
                 //Verify the executor was called
                 mockExecutor.Verify(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, source.Token), Times.Once);
 #else
@@ -246,7 +246,7 @@ namespace ADO.Net.Client.Tests
 
                 Assert.IsTrue(records == returnNumber);
 
-#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+#if !NET45 && !NET461 && !NETCOREAPP2_1
                 //Verify the executor was called
                 mockExecutor.Verify(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
 #else
