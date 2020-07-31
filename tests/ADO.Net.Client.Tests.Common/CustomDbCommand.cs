@@ -54,13 +54,18 @@ namespace ADO.Net.Client.Tests.Common
         {
             return new CustomDbReader();
         }
-        public override Task<int> ExecuteNonQueryAsync(CancellationToken cancellationToken)
+        public override async Task<int> ExecuteNonQueryAsync(CancellationToken cancellationToken)
         {
-            return base.ExecuteNonQueryAsync(cancellationToken);
+            return await base.ExecuteNonQueryAsync(cancellationToken);
         }
         public override int ExecuteNonQuery()
         {
             return 1;
+        }
+
+        public object ExecuteReaderAsync(Func<CommandBehavior> isAny1, Func<CancellationToken> isAny2)
+        {
+            throw new NotImplementedException();
         }
 
         public override object ExecuteScalar()
@@ -78,6 +83,14 @@ namespace ADO.Net.Client.Tests.Common
             throw new NotImplementedException();
         }
 
+        public async virtual new Task<CustomDbReader> ExecuteReaderAsync(CommandBehavior behavior, CancellationToken token)
+        {
+            return await ExecuteDbDataReaderAsync(behavior, token).ConfigureAwait(false) as CustomDbReader;
+        }
+        protected override async Task<DbDataReader> ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+        {
+            return new CustomDbReader();
+        }
         protected override DbDataReader ExecuteDbDataReader(CommandBehavior behavior)
         {
             throw new NotImplementedException();
