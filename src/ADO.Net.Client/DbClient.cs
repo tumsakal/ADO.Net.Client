@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using ADO.Net.Client.Core;
+using ADO.Net.Client.Implementation;
 using System.Data.Common;
 #endregion
 
@@ -41,7 +42,7 @@ namespace ADO.Net.Client
         #region Fields/Properties
         private readonly ISqlExecutor _executor;
         #endregion
-        #region Constructors
+        #region Constructors    
         /// <summary>
         /// Instantiates a new instance of <see cref="DbClient"/> with an instance of <see cref="ISqlExecutor"/>
         /// </summary>
@@ -49,6 +50,25 @@ namespace ADO.Net.Client
         public DbClient(ISqlExecutor executor)
         {
             _executor = executor;
+        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DbClient"/> class.
+        /// </summary>
+        /// <param name="factory">An instance of <see cref="IDbObjectFactory"/></param>
+        /// <param name="manager">An instance of <see cref="IConnectionManager"/></param>
+        public DbClient(IDbObjectFactory factory, IConnectionManager manager) : this (factory, manager, new DataMapper())
+        {
+
+        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DbClient"/> class.
+        /// </summary>
+        /// <param name="factory">An instance of <see cref="IDbObjectFactory"/></param>
+        /// <param name="manager">An instance of <see cref="IConnectionManager"/></param>
+        /// <param name="mapper">An instance of <see cref="IDataMapper"/></param>
+        public DbClient(IDbObjectFactory factory, IConnectionManager manager, IDataMapper mapper) : this(new SqlExecutor(factory, manager, mapper))
+        {
+
         }
         #endregion
     }
