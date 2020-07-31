@@ -22,7 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using ADO.Net.Client.Tests.Common.Models;
+using Moq;
 using NUnit.Framework;
+using System;
 #endregion
 
 namespace ADO.Net.Client.Implementation.Tests
@@ -37,7 +40,28 @@ namespace ADO.Net.Client.Implementation.Tests
         [Category("MultiResultReader Sync Tests")]
         public void WhenReadObject_IsCalled_ShouldCall_ReaderRead()
         {
+            DateTime dateBirth = _faker.Person.DateOfBirth;
+            string firstName = _faker.Person.FirstName;
+            string lastName = _faker.Person.LastName;
+            int delay = _faker.Random.Int(0, 1000);
+            PersonModel expectedModel = new PersonModel()
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                DateOfBirth = dateBirth
+            };
+            _mockMapper.Setup(x => x.MapRecord<PersonModel>(_mockReader.Object)).Returns(expectedModel);
+
             MultiResultReader reader = new MultiResultReader(_mockReader.Object, _mockMapper.Object);
+            PersonModel returnedModel = reader.ReadObject<PersonModel>();
+
+            Assert.IsNotNull(returnedModel);
+            Assert.IsTrue(returnedModel.DateOfBirth == expectedModel.DateOfBirth);
+            Assert.IsTrue(returnedModel.FirstName == expectedModel.FirstName);
+            Assert.IsTrue(returnedModel.LastName == expectedModel.LastName);
+
+            _mockReader.Verify(x => x.Read(), Times.Once);
+            _mockMapper.Verify(x => x.MapRecord<PersonModel>(_mockReader.Object), Times.Once);
         }
         #endregion
     }
