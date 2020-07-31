@@ -25,21 +25,27 @@ SOFTWARE.*/
 using ADO.Net.Client.Tests.Common;
 using Moq;
 using NUnit.Framework;
+using System.Data;
+using System.Data.Common;
 #endregion
 
 namespace ADO.Net.Client.Implementation.Tests
 {
     public partial class SqlExecutorTests
     {
-        #region Read Test Methods                
+        #region Read Test Methods
         /// <summary>
-        /// When the get scalar value is called it should calls database object factory get database command.
+        /// When the get db data reader is called it should calls database object factory get database command.
         /// </summary>
         [Test]
-        public void WhenGetScalarValue_IsCalled__ItShouldCallsDbObjectFactory_GetDbCommand()
+        public void WhenGetDbDataReader_IsCalled__ItShouldCallsDbObjectFactory_GetDbCommand()
         {
+            CommandBehavior behavior = _faker.PickRandom(CommandBehavior.SequentialAccess, CommandBehavior.CloseConnection, CommandBehavior.SingleRow, CommandBehavior.Default, CommandBehavior.SchemaOnly, CommandBehavior.KeyInfo);
+
+            _command.Setup(x => x.ExecuteReader(behavior)).Returns(new CustomDbReader());
+
             //Make the call
-            string value = new SqlExecutor(_factory.Object, _manager, _mapper).GetScalarValue<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared);
+            DbDataReader reader = _executor.GetDbDataReader(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior);
 
             if (realQuery.ShouldBePrepared == true)
             {
@@ -50,8 +56,35 @@ namespace ADO.Net.Client.Implementation.Tests
                 _command.Verify(x => x.Prepare(), Times.Never);
             }
 
-            //Verify the executor was called
-            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, null, realQuery.CommandTimeout, null), Times.Once);
+            //Verify the calls were made
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Connection, realQuery.CommandTimeout, null), Times.Once);
+        }
+        /// <summary>
+        /// When the get scalar value is called it should calls database object factory get database command.
+        /// </summary>
+        [Test]
+        public void WhenGetScalarValue_IsCalled__ItShouldCallsDbObjectFactory_GetDbCommand()
+        {
+            string expected = _faker.Random.AlphaNumeric(30);
+
+            _command.Setup(x => x.ExecuteScalar()).Returns(expected);
+
+            //Make the call
+            string returned = _executor.GetScalarValue<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared);
+
+            if (realQuery.ShouldBePrepared == true)
+            {
+                _command.Verify(x => x.Prepare(), Times.Once);
+            }
+            else
+            {
+                _command.Verify(x => x.Prepare(), Times.Never);
+            }
+
+            Assert.IsTrue(expected == returned);
+
+            //Verify the calls were made
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Connection, realQuery.CommandTimeout, null), Times.Once);
             _command.Verify(x => x.ExecuteScalar(), Times.Once);
         }
         #endregion
@@ -62,8 +95,12 @@ namespace ADO.Net.Client.Implementation.Tests
         [Test]
         public void WhenExecuteNonQuery_IsCalled__ItShouldCallsDbObjectFactory_GetDbCommand()
         {
+            int expected = _faker.Random.Int();
+
+            _command.Setup(x => x.ExecuteNonQuery()).Returns(expected);
+
             //Make the call
-            int records = new SqlExecutor(_factory.Object, _manager, _mapper).ExecuteNonQuery(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared);
+            int returned = _executor.ExecuteNonQuery(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared);
 
             if (realQuery.ShouldBePrepared == true)
             {
@@ -74,8 +111,10 @@ namespace ADO.Net.Client.Implementation.Tests
                 _command.Verify(x => x.Prepare(), Times.Never);
             }
 
-            //Verify the executor was called
-            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, null, realQuery.CommandTimeout, null), Times.Once);
+            Assert.IsTrue(expected == returned);
+
+            //Verify the calls were made
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Connection, realQuery.CommandTimeout, null), Times.Once);
             _command.Verify(x => x.ExecuteNonQuery(), Times.Once);
         }
         #endregion

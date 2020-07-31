@@ -27,7 +27,9 @@ using ADO.Net.Client.Tests.Common;
 using Bogus;
 using Moq;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 #endregion
 
 namespace ADO.Net.Client.Implementation.Tests
@@ -41,7 +43,8 @@ namespace ADO.Net.Client.Implementation.Tests
         private IDataMapper _mapper;
         private Mock<IDbObjectFactory> _factory;
         private readonly Faker _faker = new Faker();
-        private Mock<CustomDbCommand> _command = new Mock<CustomDbCommand>();
+        private Mock<CustomDbCommand> _command;
+        private SqlExecutor _executor;
         #endregion
         #region Constructors        
         /// <summary>
@@ -51,32 +54,67 @@ namespace ADO.Net.Client.Implementation.Tests
         {
         }
         #endregion
-        #region Setup/Teardown
+        #region Setup/Teardown        
+        /// <summary>
+        /// Called when [time setup].
+        /// </summary>
+        [OneTimeSetUp]
+        public void OneTimeSetup()
+        {
+            Mock<ISqlQuery> mockQuery = new Mock<ISqlQuery>();
+            _manager = new ConnectionManager(new CustomDbConnection());
+            _mapper = new DataMapper();
+
+            mockQuery.Setup(x => x.CommandTimeout).Returns(_faker.Random.Int());
+            mockQuery.Setup(x => x.QueryText).Returns(_faker.Random.AlphaNumeric(30));
+            mockQuery.Setup(x => x.QueryType).Returns(_faker.PickRandomParam(CommandType.StoredProcedure, CommandType.Text, CommandType.TableDirect));
+            mockQuery.Setup(x => x.ShouldBePrepared).Returns(_faker.Random.Bool());
+            mockQuery.Setup(x => x.Parameters).Returns(GetDbParameters());
+
+            realQuery = mockQuery.Object;
+        }
+        /// <summary>
+        /// Setups this instance.
+        /// </summary>
         [SetUp]
         public void Setup()
         {
-            Mock<ISqlQuery> mockQuery = new Mock<ISqlQuery>();
-            _mapper = new Mock<IDataMapper>().Object;
-            _manager = new Mock<IConnectionManager>().Object;
             _factory = new Mock<IDbObjectFactory>();
             _command = new Mock<CustomDbCommand>();
 
-            mockQuery.Setup(x => x.CommandTimeout).Returns(_faker.Random.Int());
-            mockQuery.Setup(x => x.QueryText).Returns(_faker.Random.String());
-            mockQuery.Setup(x => x.QueryType).Returns(_faker.PickRandomParam(CommandType.StoredProcedure, CommandType.Text, CommandType.TableDirect));
-            mockQuery.Setup(x => x.ShouldBePrepared).Returns(_faker.Random.Bool());
-            //mockQuery.Setup(x => x.Parameters).Returns(null);
-
-            realQuery = mockQuery.Object;
-
-            SetupDbCommand();
+            SetupFactory();
+            _executor = new SqlExecutor(_factory.Object, _manager, _mapper);
         }
         #endregion
-        #region Helper Methods
-        public void SetupDbCommand()
+        #region Helper Methods        
+        /// <summary>
+        /// Setups the factory.
+        /// </summary>
+        private void SetupFactory()
         {
-            //Need to setup the reader function
-            _factory.Setup(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, null, realQuery.CommandTimeout, null)).Returns(_command.Object).Verifiable();
+            _factory.Setup(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Connection, realQuery.CommandTimeout, null)).Returns(_command.Object).Verifiable();
+        }
+        /// <summary>
+        /// Gets the database parameters.
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerable<DbParameter> GetDbParameters()
+        {
+            List<CustomDbParameter> parameters = new List<CustomDbParameter>();
+            int number = _faker.Random.Int(1, 10);
+
+            //Loop through all numbers
+            for (int i = 0; i < number; i++)
+            {
+                CustomDbParameter param = new CustomDbParameter();
+
+                param.ParameterName = $"Parameter{i}";
+                param.Value = _faker.Random.AlphaNumeric(20);
+
+                parameters.Add(param);
+            }
+
+            return parameters;
         }
         #endregion
     }

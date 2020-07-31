@@ -25,6 +25,8 @@ SOFTWARE.*/
 using System;
 using System.Data;
 using System.Data.Common;
+using System.Threading;
+using System.Threading.Tasks;
 #endregion
 
 namespace ADO.Net.Client.Tests.Common
@@ -52,9 +54,13 @@ namespace ADO.Net.Client.Tests.Common
         {
             return new CustomDbReader();
         }
+        public override Task<int> ExecuteNonQueryAsync(CancellationToken cancellationToken)
+        {
+            return base.ExecuteNonQueryAsync(cancellationToken);
+        }
         public override int ExecuteNonQuery()
         {
-            throw new NotImplementedException();
+            return 1;
         }
 
         public override object ExecuteScalar()

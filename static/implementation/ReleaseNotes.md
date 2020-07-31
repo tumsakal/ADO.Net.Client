@@ -1,6 +1,14 @@
 Version History
 ===============
 
+### 1.1.6.1
+
+* [SqlExecutor](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/SqlExecutor.cs) GetMultiResultReaderAsync now utilizes the passed in CancellationToken
+
+### 1.1.6
+
+* Updating to ADO.Net.Client.Core 1.1.7
+
 ### 1.1.5.3
 
 * Updating to ADO.Net.Client.Core 1.1.6.3
