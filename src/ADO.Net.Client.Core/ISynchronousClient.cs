@@ -98,13 +98,6 @@ namespace ADO.Net.Client.Core
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns the amount of records affected by the passed in query</returns>
         int ExecuteNonQuery(ISqlQuery query);
-        /// <summary>
-        /// Utility method for executing a query or stored procedure in a SQL transaction
-        /// </summary>
-        /// <param name="transact">An instance of a DbTransaction class</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <returns>Returns the number of rows affected by this query</returns>
-        int ExecuteTransactedNonQuery(ISqlQuery query, DbTransaction transact);
         #endregion
     }
 }

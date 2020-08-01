@@ -86,7 +86,7 @@ namespace ADO.Net.Client.Core
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <returns>Returns the value of the first column in the first row as <see cref="Task"/></returns>
+        /// <returns>Returns the value of the first column in the first row as <see cref="Task{T}"/></returns>
         Task<T> GetScalarValueAsync<T>(ISqlQuery query, CancellationToken token = default);
         /// <summary>
         /// Gets an instance of <see cref="IMultiResultReader"/> asynchronously
@@ -104,16 +104,6 @@ namespace ADO.Net.Client.Core
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns the number of rows affected by this query as a <see cref="Task{Int32}"/></returns>
         Task<int> ExecuteNonQueryAsync(ISqlQuery query, CancellationToken token = default);
-#if !NET45 && !NET461 && !NETSTANDARD2_0
-        /// <summary>
-        /// Utility method for executing an Ad-Hoc query or stored procedure with a transaction
-        /// </summary>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <param name="transact">An instance of a <see cref="DbTransaction"/> class</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <returns>Returns the number of rows affected by this query as a <see cref="Task{Int32}"/></returns>
-        Task<int> ExecuteTransactedNonQueryAsync(ISqlQuery query, DbTransaction transact, CancellationToken token = default);
-#endif
         #endregion
     }
 }

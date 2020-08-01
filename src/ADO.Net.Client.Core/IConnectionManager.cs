@@ -22,7 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using System.Data;
 using System.Data.Common;
+using System.Threading;
+using System.Threading.Tasks;
 #endregion
 
 namespace ADO.Net.Client.Core
@@ -40,8 +43,42 @@ namespace ADO.Net.Client.Core
         /// An instance of <see cref="DbConnection"/>
         /// </value>
         DbConnection Connection { get; }
+        /// <summary>
+        /// Gets the the <see cref="DbTransaction"/> that was created by the current <see cref="Connection"/>
+        /// </summary>
+        /// <value>
+        /// An instance of <see cref="DbTransaction"/>
+        /// </value>
+        DbTransaction Transaction { get; }
         #endregion
-        #region Utility Methods
+        #region Utility Methods        
+        /// <summary>
+        /// Replaces the connection.
+        /// </summary>
+        /// <param name="connection">The connection.</param>
+        void ReplaceConnection(DbConnection connection);
+        /// <summary>
+        /// Starts a database transaction
+        /// </summary>
+        void StartTransaction();
+        /// <summary>
+        /// Starts a database transaction with the specified <paramref name="level"/>
+        /// </summary>
+        /// <param name="level">Specifies the transaction locking behavior for the <see cref="Connection"/></param>
+        void StartTransaction(IsolationLevel level);
+#if !NET45 && !NET461 && !NETSTANDARD2_0                
+        /// <summary>
+        /// Starts a database transaction asynchronously with the specified <paramref name="level"/>
+        /// </summary>
+        /// <param name="level">Specifies the transaction locking behavior for the <see cref="Connection"/></param>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        Task StartTransactionAsync(IsolationLevel level, CancellationToken token = default);
+        /// <summary>
+        /// Starts a database transaction asynchronously
+        /// </summary>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        Task StartTransactionAsync(CancellationToken token = default);
+#endif
         #endregion
     }
 }

@@ -220,17 +220,17 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Gets an instance of a formatted <see cref="DbCommand"/> object based on the specified provider
         /// </summary>
-        ///<param name="transact">An instance of <see cref="DbTransaction"/></param>
+        ///<param name="trasaction">An instance of <see cref="DbTransaction"/></param>
         /// <param name="commandTimeout">Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.</param>
         /// <param name="connection">An instance of <see cref="DbConnection"/></param>
         /// <param name="parameters">The list of <see cref="IEnumerable{DbParameter}"/> associated with the query parameter</param>
         /// <param name="query">The SQL command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns an instance of <see cref="DbCommand"/> object based off the provider passed into the class</returns>
-        public DbCommand GetDbCommand(CommandType queryCommandType, string query, IEnumerable<DbParameter> parameters, DbConnection connection, int commandTimeout, DbTransaction transact = null)
+        public DbCommand GetDbCommand(CommandType queryCommandType, string query, IEnumerable<DbParameter> parameters, DbConnection connection, int commandTimeout, DbTransaction trasaction = null)
         {
             //Get the DbCommand object
-            DbCommand dCommand = GetDbCommand(connection, transact, commandTimeout);
+            DbCommand dCommand = GetDbCommand(connection, trasaction, commandTimeout);
 
             if (parameters != null)
             {
@@ -485,42 +485,6 @@ namespace ADO.Net.Client.Core
             //Return this back to the caller
             return connection.BeginTransaction();
         }
-        /// <summary>
-        /// Gets an instace of the <see cref="DbTransaction"/> object based on the <see cref="DbConnection"/> object passed in
-        /// </summary>
-        /// <param name="level">The transaction locking level for the passed in <paramref name="connection"/></param>
-        /// <param name="connection">An instance of <see cref="DbConnection"/></param>
-        /// <returns>An instance of the <see cref="DbTransaction"/> object</returns>
-        public DbTransaction GetDbTransaction(DbConnection connection, IsolationLevel level)
-        {
-            //Return this back to the caller
-            return connection.BeginTransaction(level);
-        }
-#if !NET45 && !NET461 && !NETSTANDARD2_0
-        /// <summary>
-        /// Asynchronously gets an instace of the <see cref="DbTransaction"/> object based on the <see cref="DbConnection"/> object passed in
-        /// </summary>
-        /// <param name="connection">An instance of <see cref="DbConnection"/></param>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <returns>An instance of the <see cref="DbTransaction"/> object</returns>
-        public async ValueTask<DbTransaction> GetDbTransactionAsync(DbConnection connection, CancellationToken token = default)
-        {
-            //Return this back to the caller
-            return await connection.BeginTransactionAsync(token).ConfigureAwait(false);
-        }
-        /// <summary>
-        /// Asynchronously gets an instace of the <see cref="DbTransaction"/> object based on the <see cref="DbConnection"/> object passed in
-        /// </summary>
-        /// <param name="level">The transaction locking level for the passed in <paramref name="connection"/></param>
-        /// <param name="connection">An instance of <see cref="DbConnection"/></param>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <returns>An instance of the <see cref="DbTransaction"/> object</returns>
-        public async ValueTask<DbTransaction> GetDbTransactionAsync(DbConnection connection, IsolationLevel level, CancellationToken token = default)
-        {
-            //Return this back to the caller
-            return await connection.BeginTransactionAsync(level, token).ConfigureAwait(false);
-        }
-#endif
         /// <summary>
         /// Gets an instance of <see cref="DbProviderFactory"/> based off a .NET drivers <paramref name="providerName"/>, such as System.Data.SqlClientt
         /// </summary>
