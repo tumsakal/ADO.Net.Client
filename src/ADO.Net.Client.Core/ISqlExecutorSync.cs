@@ -132,17 +132,6 @@ namespace ADO.Net.Client.Core
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns the number of rows affected by this query</returns>
         int ExecuteNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false);
-        /// <summary>
-        /// Utility method for executing a query or stored procedure in a SQL transaction
-        /// </summary>
-        /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
-        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
-        /// <param name="parameters">The query database parameters that are associated with a query</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="transact"></param>
-        /// <returns>Returns the number of rows affected by this query</returns>
-        int ExecuteTransactedNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, DbTransaction transact, bool shouldBePrepared = false);
         #endregion
     }
 }
