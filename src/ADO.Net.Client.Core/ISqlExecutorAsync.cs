@@ -1,4 +1,4 @@
-﻿#region Licenses
+#region Licenses
 /*MIT License
 Copyright(c) 2020
 Robert Garrison
