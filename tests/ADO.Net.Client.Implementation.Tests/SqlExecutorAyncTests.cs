@@ -23,8 +23,12 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using ADO.Net.Client.Tests.Common;
+using ADO.Net.Client.Tests.Common.Models;
+using Bogus.DataSets;
+using Bogus.Extensions;
 using Moq;
 using NUnit.Framework;
+using System;
 using System.Data;
 using System.Data.Common;
 using System.Threading;
@@ -36,6 +40,39 @@ namespace ADO.Net.Client.Implementation.Tests
     public partial class SqlExecutorTests
     {
         #region Read Test Methods
+        /// <summary>
+        /// When the get scalar value is called it should calls database object factory get database command.
+        /// </summary>
+        [Test]
+        public async Task WhenGetDbDataReadertAsync_IsCalled__ItShouldCallsDbObjectFactory_GetDbCommand()
+        {
+            CommandBehavior behavior = _faker.PickRandom<CommandBehavior>();
+            int delay = _faker.Random.Int(0, 1000);
+
+            //Wrap this in a using statement to automatically dispose of resources
+            using (CancellationTokenSource source = new CancellationTokenSource(delay))
+            {
+#if !NET45 && !NET461 && !NETCOREAPP2_1
+                DbDataReader returned = await _executor.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, source.Token);
+#else
+                DbDataReader returned = await _executor.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, source.Token);
+#endif
+
+#if !NET45 && !NET461 && !NETCOREAPP2_1
+                if (realQuery.ShouldBePrepared == true)
+                {
+                    _command.Verify(x => x.PrepareAsync(source.Token), Times.Once);
+                }
+                else
+                {
+                    _command.Verify(x => x.PrepareAsync(source.Token), Times.Never);
+                }   
+#endif
+
+                //Verify the calls were made
+                _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Object.Connection, realQuery.CommandTimeout, null), Times.Once);
+            }
+        }
         /// <summary>
         /// When the get scalar value is called it should calls database object factory get database command.
         /// </summary>
@@ -70,7 +107,7 @@ namespace ADO.Net.Client.Implementation.Tests
                 Assert.IsTrue(expected == returned);
 
                 //Verify the calls were made
-                _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Connection, realQuery.CommandTimeout, null), Times.Once);
+                _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Object.Connection, realQuery.CommandTimeout, null), Times.Once);
                 _command.Verify(x => x.ExecuteScalarAsync(source.Token), Times.Once);
             }
         }
@@ -91,7 +128,6 @@ namespace ADO.Net.Client.Implementation.Tests
                 _command.Setup(x => x.ExecuteNonQueryAsync(source.Token)).ReturnsAsync(expected);
 
 #if !NET45 && !NET461 && !NETCOREAPP2_1
-                //Make the call
                 int returned = await _executor.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token);
 #else
                 int returned = await _executor.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token);
@@ -111,7 +147,7 @@ namespace ADO.Net.Client.Implementation.Tests
                 Assert.IsTrue(expected == returned);
 
                 //Verify the calls were made
-                _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Connection, realQuery.CommandTimeout, null), Times.Once);
+                _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Object.Connection, realQuery.CommandTimeout, null), Times.Once);
                 _command.Verify(x => x.ExecuteNonQueryAsync(source.Token), Times.Once);
             }
         }

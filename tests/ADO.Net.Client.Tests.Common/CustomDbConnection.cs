@@ -70,7 +70,7 @@ namespace ADO.Net.Client.Tests.Common
 #if !NET45 && !NET461 && !NETSTANDARD2_0
         protected override ValueTask<DbTransaction> BeginDbTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
         {
-            return base.BeginDbTransactionAsync(isolationLevel, cancellationToken);
+            return new ValueTask<DbTransaction>(new CustomDbTransaction(this, isolationLevel));
         }
 #endif
         protected override DbCommand CreateDbCommand()

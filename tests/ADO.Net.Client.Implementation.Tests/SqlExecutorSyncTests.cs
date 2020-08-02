@@ -24,6 +24,7 @@ SOFTWARE.*/
 #region Using Statements
 using ADO.Net.Client.Tests.Common;
 using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 using System.Data;
 using System.Data.Common;
@@ -40,9 +41,7 @@ namespace ADO.Net.Client.Implementation.Tests
         [Test]
         public void WhenGetDbDataReader_IsCalled__ItShouldCallsDbObjectFactory_GetDbCommand()
         {
-            CommandBehavior behavior = _faker.PickRandom(CommandBehavior.SequentialAccess, CommandBehavior.CloseConnection, CommandBehavior.SingleRow, CommandBehavior.Default, CommandBehavior.SchemaOnly, CommandBehavior.KeyInfo);
-
-            _command.Setup(x => x.ExecuteReader(behavior)).Returns(new CustomDbReader());
+            CommandBehavior behavior = _faker.PickRandom<CommandBehavior>();
 
             //Make the call
             DbDataReader reader = _executor.GetDbDataReader(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior);
@@ -57,7 +56,7 @@ namespace ADO.Net.Client.Implementation.Tests
             }
 
             //Verify the calls were made
-            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Connection, realQuery.CommandTimeout, null), Times.Once);
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Object.Connection, realQuery.CommandTimeout, null), Times.Once);
         }
         /// <summary>
         /// When the get scalar value is called it should calls database object factory get database command.
@@ -84,7 +83,7 @@ namespace ADO.Net.Client.Implementation.Tests
             Assert.IsTrue(expected == returned);
 
             //Verify the calls were made
-            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Connection, realQuery.CommandTimeout, null), Times.Once);
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Object.Connection, realQuery.CommandTimeout, null), Times.Once);
             _command.Verify(x => x.ExecuteScalar(), Times.Once);
         }
         #endregion
@@ -114,7 +113,7 @@ namespace ADO.Net.Client.Implementation.Tests
             Assert.IsTrue(expected == returned);
 
             //Verify the calls were made
-            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Connection, realQuery.CommandTimeout, null), Times.Once);
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Object.Connection, realQuery.CommandTimeout, null), Times.Once);
             _command.Verify(x => x.ExecuteNonQuery(), Times.Once);
         }
         #endregion

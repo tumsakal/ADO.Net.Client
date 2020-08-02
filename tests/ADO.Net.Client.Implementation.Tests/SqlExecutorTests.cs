@@ -34,17 +34,20 @@ using System.Data.Common;
 
 namespace ADO.Net.Client.Implementation.Tests
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [TestFixture]
     public partial class SqlExecutorTests
     {
         #region Fields/Properties
         private ISqlQuery realQuery;
-        private IConnectionManager _manager;
-        private IDataMapper _mapper;
+        private Mock<IConnectionManager> _manager;
+        private Mock<IDataMapper> _mapper;
         private Mock<IDbObjectFactory> _factory;
-        private readonly Faker _faker = new Faker();
         private Mock<CustomDbCommand> _command;
         private SqlExecutor _executor;
+        private readonly Faker _faker = new Faker();
         #endregion
         #region Constructors        
         /// <summary>
@@ -62,8 +65,6 @@ namespace ADO.Net.Client.Implementation.Tests
         public void OneTimeSetup()
         {
             Mock<ISqlQuery> mockQuery = new Mock<ISqlQuery>();
-            _manager = new ConnectionManager(new CustomDbConnection());
-            _mapper = new DataMapper();
 
             mockQuery.Setup(x => x.CommandTimeout).Returns(_faker.Random.Int());
             mockQuery.Setup(x => x.QueryText).Returns(_faker.Random.AlphaNumeric(30));
@@ -81,9 +82,13 @@ namespace ADO.Net.Client.Implementation.Tests
         {
             _factory = new Mock<IDbObjectFactory>();
             _command = new Mock<CustomDbCommand>();
+            _manager = new Mock<IConnectionManager>();
+            _mapper = new Mock<IDataMapper>();
+
+            _manager.Setup(x => x.Connection).Returns(new CustomDbConnection());
 
             SetupFactory();
-            _executor = new SqlExecutor(_factory.Object, _manager, _mapper);
+            _executor = new SqlExecutor(_factory.Object, _manager.Object, _mapper.Object);
         }
         #endregion
         #region Helper Methods        
@@ -92,7 +97,7 @@ namespace ADO.Net.Client.Implementation.Tests
         /// </summary>
         private void SetupFactory()
         {
-            _factory.Setup(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Connection, realQuery.CommandTimeout, null)).Returns(_command.Object).Verifiable();
+            _factory.Setup(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Object.Connection, realQuery.CommandTimeout, _manager.Object.Transaction)).Returns(_command.Object).Verifiable();
         }
         /// <summary>
         /// Gets the database parameters.
