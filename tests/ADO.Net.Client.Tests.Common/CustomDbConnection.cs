@@ -34,6 +34,7 @@ namespace ADO.Net.Client.Tests.Common
     /// <seealso cref="DbConnection" />
     public class CustomDbConnection : DbConnection
     {
+        private ConnectionState _state = ConnectionState.Open;
         protected override DbProviderFactory DbProviderFactory => CustomDbProviderFactory.Instance;
         public override string ConnectionString { get; set; }
 
@@ -43,7 +44,7 @@ namespace ADO.Net.Client.Tests.Common
 
         public override string ServerVersion => throw new System.NotImplementedException();
 
-        public override ConnectionState State => throw new System.NotImplementedException();
+        public override ConnectionState State => _state;
 
         public override void ChangeDatabase(string databaseName)
         {
@@ -67,7 +68,17 @@ namespace ADO.Net.Client.Tests.Common
 
         protected override DbCommand CreateDbCommand()
         {
-            throw new System.NotImplementedException();
+            return new CustomDbCommand();
         }
+        #region Constructors
+        public CustomDbConnection()
+        {
+
+        }
+        public CustomDbConnection(ConnectionState state)
+        {
+            _state = state;
+        }
+        #endregion
     }
 }
