@@ -35,6 +35,7 @@ namespace ADO.Net.Client.Implementation.Tests
     /// 
     /// </summary>
     [TestFixture]
+    [Category("ConnectionManagerTests")]
     public class ConnectionManagerTests
     {
         #region Fields/Properties
@@ -49,7 +50,22 @@ namespace ADO.Net.Client.Implementation.Tests
 
         }
         #endregion
-        #region Tests        
+        #region Tests                
+        /// <summary>
+        /// Clears the transaction.
+        /// </summary>
+        [Test]
+        public void TestClearTransaction()
+        {
+            ConnectionManager manager = new ConnectionManager(new CustomDbConnection(), new CustomDbTransaction());
+
+            Assert.IsNotNull(manager.Connection);
+            Assert.IsNotNull(manager.Transaction);
+
+            manager.ClearTransaction();
+
+            Assert.IsNull(manager.Transaction);
+        }
         /// <summary>
         /// Throwses the invalid operation replace.
         /// </summary>

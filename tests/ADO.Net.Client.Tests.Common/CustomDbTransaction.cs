@@ -38,10 +38,14 @@ namespace ADO.Net.Client.Tests.Common
 
         protected override DbConnection DbConnection { get; }
 
-        internal CustomDbTransaction(DbConnection connection, IsolationLevel level)
+        public CustomDbTransaction(DbConnection connection, IsolationLevel level)
         {
             DbConnection = connection;
             IsolationLevel = level;
+        }
+        public CustomDbTransaction()
+        {
+
         }
         public override void Commit()
         {
