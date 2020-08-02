@@ -50,7 +50,35 @@ namespace ADO.Net.Client.Implementation.Tests
 
         }
         #endregion
-        #region Tests                
+        #region Tests                        
+        /// <summary>
+        /// Tests the start transaction.
+        /// </summary>
+        [Test]
+        public void TestStartTransaction()
+        {
+            ConnectionManager manager = new ConnectionManager(new CustomDbConnection()); 
+            IsolationLevel level = _faker.PickRandom<IsolationLevel>();
+
+            manager.StartTransaction(level);
+
+            Assert.IsNotNull(manager.Transaction);
+            Assert.IsInstanceOf(typeof(CustomDbTransaction), manager.Transaction);
+            Assert.AreEqual(manager.Transaction.IsolationLevel, level);
+        }
+        /// <summary>
+        /// Tests the start transaction.
+        /// </summary>
+        [Test]
+        public void TestStartTransactionIsolationLevel()
+        {
+            ConnectionManager manager = new ConnectionManager(new CustomDbConnection());
+
+            manager.StartTransaction();
+
+            Assert.IsNotNull(manager.Transaction);
+            Assert.IsInstanceOf(typeof(CustomDbTransaction), manager.Transaction);
+        }
         /// <summary>
         /// Clears the transaction.
         /// </summary>

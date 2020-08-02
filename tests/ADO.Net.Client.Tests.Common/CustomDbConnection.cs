@@ -24,6 +24,8 @@ SOFTWARE.*/
 #region Using Statements
 using System.Data;
 using System.Data.Common;
+using System.Threading;
+using System.Threading.Tasks;
 #endregion
 
 namespace ADO.Net.Client.Tests.Common
@@ -65,7 +67,12 @@ namespace ADO.Net.Client.Tests.Common
         {
             return new CustomDbTransaction(this, isolationLevel);
         }
-
+#if !NET45 && !NET461 && !NETSTANDARD2_0
+        protected override ValueTask<DbTransaction> BeginDbTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
+        {
+            return base.BeginDbTransactionAsync(isolationLevel, cancellationToken);
+        }
+#endif
         protected override DbCommand CreateDbCommand()
         {
             return new CustomDbCommand();
