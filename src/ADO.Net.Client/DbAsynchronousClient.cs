@@ -246,19 +246,6 @@ namespace ADO.Net.Client
         {
             return await _executor.ExecuteNonQueryAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, token).ConfigureAwait(false);
         }
-        /// <summary>
-        /// Utility method for executing an Ad-Hoc query or stored procedure with a transaction
-        /// </summary>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="transact">An instance of a <see cref="T:System.Data.Common.DbTransaction" /> class</param>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <returns>
-        /// Returns the number of rows affected by this query as a <see cref="T:System.Threading.Tasks.Task`1" />
-        /// </returns>
-        public override async Task<int> ExecuteTransactedNonQueryAsync(ISqlQuery query, DbTransaction transact, CancellationToken token = default)
-        {
-            return await _executor.ExecuteTransactedNonQueryAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, transact, query.ShouldBePrepared, token).ConfigureAwait(false);
-        }
 #else
         /// <summary>
         /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction

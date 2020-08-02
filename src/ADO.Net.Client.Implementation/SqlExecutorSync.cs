@@ -48,7 +48,7 @@ namespace ADO.Net.Client.Implementation
             using (DbDataAdapter adap = _factory.GetDbDataAdapter())
             {
                 //Wrap this automatically to dispose of resources
-                using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout))
+                using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, _manager.Transaction))
                 {
                     DataSet set = new DataSet();
 
@@ -176,7 +176,7 @@ namespace ADO.Net.Client.Implementation
         public DbDataReader GetDbDataReader(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false, CommandBehavior behavior = CommandBehavior.CloseConnection)
         {
             //Wrap this in a using statement to handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, _manager.Transaction))
             {
                 //Check if we should be prepared
                 if (shouldBePrepared == true)
@@ -201,7 +201,7 @@ namespace ADO.Net.Client.Implementation
         public T GetScalarValue<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false)
         {
             //Wrap this in a using statement to handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, _manager.Transaction))
             {
                 //Check if we should be prepared
                 if (shouldBePrepared == true)
@@ -240,7 +240,7 @@ namespace ADO.Net.Client.Implementation
         public int ExecuteNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false)
         {
             //Wrap this in a using statement to automatically handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, _manager.Transaction))
             {
                 //Check if we should be prepared
                 if (shouldBePrepared == true)
@@ -249,31 +249,6 @@ namespace ADO.Net.Client.Implementation
                 }
 
                 //Return the amount of records affected by this query back to the caller
-                return command.ExecuteNonQuery();
-            }
-        }
-        /// <summary>
-        /// Utility method for executing a query or stored procedure in a SQL transaction
-        /// </summary>
-        /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
-        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
-        /// <param name="transact">An instance of a <see cref="DbTransaction"/> class</param>
-        /// <param name="parameters">The parameters associated with a database query</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the number of rows affected by this query</returns>
-        public int ExecuteTransactedNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, DbTransaction transact, bool shouldBePrepared = false)
-        {
-            //Wrap this in a using statement to automatically handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, transact))
-            {
-                //Check if we should be prepared
-                if (shouldBePrepared == true)
-                {
-                    command.Prepare();
-                }
-
-                //Now execute the query
                 return command.ExecuteNonQuery();
             }
         }
