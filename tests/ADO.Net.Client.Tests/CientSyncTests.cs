@@ -122,7 +122,7 @@ namespace ADO.Net.Client.Tests
         public void WhenGetReader_IsCalled__ItShouldCallSqlExecutorGetReader()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
-            CommandBehavior behavior = _faker.PickRandom(CommandBehavior.SequentialAccess, CommandBehavior.CloseConnection, CommandBehavior.SingleRow, CommandBehavior.Default, CommandBehavior.SchemaOnly, CommandBehavior.KeyInfo);
+            CommandBehavior behavior = _faker.PickRandom<CommandBehavior>();
 
             //Need to setup the reader function
             mockExecutor.Setup(x => x.GetDbDataReader(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior)).Returns(Mock.Of<CustomDbReader>()).Verifiable();

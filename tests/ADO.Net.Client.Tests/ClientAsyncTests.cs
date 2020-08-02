@@ -195,7 +195,7 @@ namespace ADO.Net.Client.Tests
             using (CancellationTokenSource source = new CancellationTokenSource(delay))
             {
                 Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
-                CommandBehavior behavior = _faker.PickRandom(CommandBehavior.SequentialAccess, CommandBehavior.CloseConnection, CommandBehavior.SingleRow, CommandBehavior.Default, CommandBehavior.SchemaOnly, CommandBehavior.KeyInfo);
+                CommandBehavior behavior = _faker.PickRandom<CommandBehavior>();
 
 #if !NET45 && !NET461 && !NETCOREAPP2_1
                 mockExecutor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, source.Token)).ReturnsAsync(new CustomDbReader()).Verifiable();
