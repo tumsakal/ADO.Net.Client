@@ -51,18 +51,6 @@ namespace ADO.Net.Client.Core.Tests
         #endregion
         #region Basic Tests
         /// <summary>
-        /// 
-        /// </summary>
-        [Test]
-        public void CanCreateDbFactoryFromProviderName()
-        {
-            DbProviderFactory factory = DbObjectFactory.GetProviderFactory("ADO.Net.Client.Tests.Common");
-
-            //Needs to be a mysql client factory
-            Assert.IsNotNull(factory);
-            Assert.IsInstanceOf(typeof(CustomDbProviderFactory), factory);
-        }
-        /// <summary>
         /// Determines whether this instance [can create database data source enumerator].
         /// </summary>
         [Test]
@@ -72,26 +60,6 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.IsNotNull(dbDataSource);
             Assert.IsInstanceOf(typeof(CustomDbDataSourceEnumerator), dbDataSource);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        [Test]
-        public void ThrowsArugementExceptionCantFindProvider()
-        {
-            Assert.Throws<ArgumentException>(() => DbObjectFactory.GetProviderFactory("ADO.Net.Client.Core"));
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        [Test]
-        public void CanCreateDbFactoryFromAssembly()
-        {
-            DbProviderFactory factory = DbObjectFactory.GetProviderFactory(new CustomDbConnection().GetType().Assembly);
-
-            //Needs to be a mysql client factory
-            Assert.IsNotNull(factory);
-            Assert.IsInstanceOf(typeof(CustomDbProviderFactory), factory);
         }
         /// <summary>
         /// 
@@ -228,7 +196,7 @@ namespace ADO.Net.Client.Core.Tests
             };
             int commandTimeout = 10;
             string queryText = "Select * From Users";
-            CustomDbConnection connection = new CustomDbConnection() { ConnectionString = string.Empty };
+            CustomDbConnection connection = new CustomDbConnection() { ConnectionString = _connectionString };
             CustomDbTransaction transaction = connection.BeginTransaction() as CustomDbTransaction;
             CommandType type = CommandType.Text;
             DbCommand command = _factory.GetDbCommand(type, queryText, parameters, connection, commandTimeout, transaction);
@@ -250,7 +218,7 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsInstanceOf(typeof(CustomDbParameterCollection), command.Parameters);
 
             //Assert all parameters are equal
-            for(int i = 0; i < command.Parameters.Count; i++)
+            for (int i = 0; i < command.Parameters.Count; i++)
             {
                 DbParameter parameter = command.Parameters[i];
 

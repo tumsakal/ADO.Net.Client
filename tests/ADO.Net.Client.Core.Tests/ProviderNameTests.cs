@@ -22,7 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using ADO.Net.Client.Tests.Common;
 using NUnit.Framework;
+using System;
+using System.Data.Common;
 #endregion
 
 namespace ADO.Net.Client.Core.Tests
@@ -40,6 +43,28 @@ namespace ADO.Net.Client.Core.Tests
         public override void OneTimeSetup()
         {
             _factory = new DbObjectFactory("ADO.Net.Client.Tests.Common");
+        }
+        #endregion
+        #region Tests
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        public void CanCreateDbFactoryFromProviderName()
+        {
+            DbProviderFactory factory = DbObjectFactory.GetProviderFactory("ADO.Net.Client.Tests.Common");
+
+            //Needs to be a mysql client factory
+            Assert.IsNotNull(factory);
+            Assert.IsInstanceOf(typeof(CustomDbProviderFactory), factory);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        public void ThrowsArugementExceptionCantFindProvider()
+        {
+            Assert.Throws<ArgumentException>(() => DbObjectFactory.GetProviderFactory("ADO.Net.Client.Core"));
         }
         #endregion
     }
