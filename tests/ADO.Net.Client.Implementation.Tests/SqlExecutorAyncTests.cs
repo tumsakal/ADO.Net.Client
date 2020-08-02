@@ -107,7 +107,7 @@ namespace ADO.Net.Client.Implementation.Tests
                 Assert.IsTrue(expected == returned);
 
                 //Verify the calls were made
-                _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Object.Connection, realQuery.CommandTimeout, null), Times.Once);
+                _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Object.Connection, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
                 _command.Verify(x => x.ExecuteScalarAsync(source.Token), Times.Once);
             }
         }
@@ -147,7 +147,7 @@ namespace ADO.Net.Client.Implementation.Tests
                 Assert.IsTrue(expected == returned);
 
                 //Verify the calls were made
-                _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Object.Connection, realQuery.CommandTimeout, null), Times.Once);
+                _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Object.Connection, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
                 _command.Verify(x => x.ExecuteNonQueryAsync(source.Token), Times.Once);
             }
         }

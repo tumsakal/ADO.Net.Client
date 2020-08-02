@@ -140,7 +140,7 @@ namespace ADO.Net.Client.Implementation.Tests
             ConnectionManager manager = new ConnectionManager(new CustomDbConnection());
             IsolationLevel level = _faker.PickRandom<IsolationLevel>();
 
-            await manager.StartTransactionAsync();
+            await manager.StartTransactionAsync(level);
 
             Assert.IsNotNull(manager.Transaction);
             Assert.IsInstanceOf(typeof(CustomDbTransaction), manager.Transaction);
