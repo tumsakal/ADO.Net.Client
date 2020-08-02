@@ -476,16 +476,6 @@ namespace ADO.Net.Client.Core
             return _dbProviderFactory.CreateParameter();
         }
         /// <summary>
-        /// Gets an instace of the <see cref="DbTransaction"/> object based on the <see cref="DbConnection"/> object passed in
-        /// </summary>
-        /// <param name="connection">An instance of <see cref="DbConnection"/></param>
-        /// <returns>An instance of the <see cref="DbTransaction"/> object</returns>
-        public DbTransaction GetDbTransaction(DbConnection connection)
-        {
-            //Return this back to the caller
-            return connection.BeginTransaction();
-        }
-        /// <summary>
         /// Gets an instance of <see cref="DbProviderFactory"/> based off a .NET drivers <paramref name="providerName"/>, such as System.Data.SqlClientt
         /// </summary>
         /// <returns>Returns an instance of <see cref="DbProviderFactory"/></returns>
