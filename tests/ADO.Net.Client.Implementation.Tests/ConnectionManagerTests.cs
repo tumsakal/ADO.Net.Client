@@ -57,7 +57,7 @@ namespace ADO.Net.Client.Implementation.Tests
         /// Tests the start transaction.
         /// </summary>
         [Test]
-        public void TestStartTransaction()
+        public void TestStartTransactionIsolationLevel()
         {
             ConnectionManager manager = new ConnectionManager(new CustomDbConnection()); 
             IsolationLevel level = _faker.PickRandom<IsolationLevel>();
@@ -72,7 +72,7 @@ namespace ADO.Net.Client.Implementation.Tests
         /// Tests the start transaction.
         /// </summary>
         [Test]
-        public void TestStartTransactionIsolationLevel()
+        public void TestStartTransaction()
         {
             ConnectionManager manager = new ConnectionManager(new CustomDbConnection());
 
