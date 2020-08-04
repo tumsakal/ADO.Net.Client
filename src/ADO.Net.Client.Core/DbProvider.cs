@@ -37,21 +37,6 @@ namespace ADO.Net.Client.Core
     /// <seealso cref="IDbProvider" />
     public abstract class DbProvider : IDbProvider
     {
-        #region Data Modification
-        /// <summary>
-        /// Executes the non query.
-        /// </summary>
-        /// <param name="query">The query.</param>
-        /// <returns></returns>
-        public abstract int ExecuteNonQuery(ISqlQuery query);
-        /// <summary>
-        /// Executes the non query asynchronous.
-        /// </summary>
-        /// <param name="query">The query.</param>
-        /// <param name="token">The token.</param>
-        /// <returns></returns>
-        public abstract Task<int> ExecuteNonQueryAsync(ISqlQuery query, CancellationToken token = default);
-        #endregion
         #region Data Retrieval        
         /// <summary>
         /// Gets a single instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine
@@ -168,6 +153,21 @@ namespace ADO.Net.Client.Core
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns an instance of <see cref="IMultiResultReader"/></returns>
         public abstract IMultiResultReader GetMultiResultReader(ISqlQuery query);
+        #endregion
+        #region Data Modification
+        /// <summary>
+        /// Utility method for executing an Ad-Hoc query or stored procedure
+        /// </summary>
+        /// <param name="query">An instance of <see cref="ISqlQuery"/> used to query a data store</param>
+        /// <returns>Returns the amount of records affected by the passed in <paramref name="query"/></returns>
+        public abstract int ExecuteNonQuery(ISqlQuery query);
+        /// <summary>
+        /// Utility method for executing an Ad-Hoc query or stored procedure
+        /// </summary>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <param name="query">An instance of <see cref="ISqlQuery"/> used to query a data store</param>
+        /// <returns>Returns the number of rows affected by the passed in <paramref name="query"/></returns>
+        public abstract Task<int> ExecuteNonQueryAsync(ISqlQuery query, CancellationToken token = default);
         #endregion
     }
 }

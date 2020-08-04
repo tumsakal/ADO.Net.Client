@@ -168,13 +168,11 @@ namespace ADO.Net.Client
         #endregion
         #region Data Modification        
         /// <summary>
-        /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction
+        /// Utility method for executing an Ad-Hoc query or stored procedure
         /// </summary>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <returns>
-        /// Returns the number of rows affected by this query as a <see cref="T:System.Threading.Tasks.Task`1" />
-        /// </returns>
+        /// <param name="query">An instance of <see cref="ISqlQuery"/> used to query a data store</param>
+        /// <returns>Returns the number of rows affected by the passed in <paramref name="query"/></returns>
         public override async Task<int> ExecuteNonQueryAsync(ISqlQuery query, CancellationToken token = default)
         {
 #if !NET45 && !NET461 && !NETSTANDARD2_0

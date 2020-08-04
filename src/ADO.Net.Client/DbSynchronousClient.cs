@@ -130,10 +130,10 @@ namespace ADO.Net.Client
         #endregion
         #region Data Modifications
         /// <summary>
-        /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction
+        /// Utility method for executing an Ad-Hoc query or stored procedure
         /// </summary>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <returns>Returns the amount of records affected by the passed in query</returns>
+        /// <param name="query">An instance of <see cref="ISqlQuery"/> used to query a data store</param>
+        /// <returns>Returns the amount of records affected by the passed in <paramref name="query"/></returns>
         public override int ExecuteNonQuery(ISqlQuery query)
         {
             //Return this back to the caller
