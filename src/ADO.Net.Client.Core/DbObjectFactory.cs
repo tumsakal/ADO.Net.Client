@@ -237,7 +237,7 @@ namespace ADO.Net.Client.Core
                 //Set query and command type
                 dCommand.Parameters.AddRange(parameters.ToArray());
             }
-            
+
             dCommand.CommandType = queryCommandType;
             dCommand.CommandText = query;
 

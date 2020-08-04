@@ -240,7 +240,7 @@ namespace ADO.Net.Client.Core
         /// <param name="parameter">An instance of <see cref="IDbDataParameter"/></param>
         /// <param name="parameterValue">The value of the parameter</param>
         /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
-        public void MapDbParameter(IDbDataParameter parameter, object parameterValue, PropertyInfo info)
+        public void MapDbParameter(DbParameter parameter, object parameterValue, PropertyInfo info)
         {
             parameter.ParameterName = string.Concat(ParameterNamePrefix, info.Name);
             parameter.Value = MapParameterValue(parameterValue, info);
