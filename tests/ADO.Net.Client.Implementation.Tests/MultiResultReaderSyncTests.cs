@@ -38,6 +38,21 @@ namespace ADO.Net.Client.Implementation.Tests
         /// </summary>
         [Test]
         [Category("MultiResultReader Sync Tests")]
+        public void WhenClose_IsCalled_ShouldCall_ReaderClose()
+        {
+            _mockReader.Setup(x => x.Close());
+
+            MultiResultReader reader = new MultiResultReader(_mockReader.Object, _mockMapper.Object);
+
+            reader.Close();
+
+            _mockReader.Verify(x => x.Close(), Times.Once);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("MultiResultReader Sync Tests")]
         public void WhenReadObject_IsCalled_ShouldCall_ReaderRead()
         {
             DateTime dateBirth = _faker.Person.DateOfBirth;

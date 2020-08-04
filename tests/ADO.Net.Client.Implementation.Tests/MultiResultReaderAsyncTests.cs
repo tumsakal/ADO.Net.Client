@@ -38,6 +38,26 @@ namespace ADO.Net.Client.Implementation.Tests
     public partial class MultiResultReaderTests
     {
         #region Tests
+#if !NET45 && !NET461 && !NETCOREAPP2_1        
+        /// <summary>
+        /// Whens the close astnc is called should call reader close asynchronous.
+        /// </summary>
+        [Test]
+        [Category("MultiResultReader Async Tests")]
+        public void WhenCloseAstnc_IsCalled_ShouldCall_ReaderCloseAsync()
+        {
+            _mockReader.Setup(x => x.CloseAsync());
+
+            MultiResultReader reader = new MultiResultReader(_mockReader.Object, _mockMapper.Object);
+
+            reader.Close();
+
+            _mockReader.Verify(x => x.CloseAsync(), Times.Once);
+        }
+#endif        
+        /// <summary>
+        /// Whens the read object is called should call reader read asynchronous.
+        /// </summary>
         [Test]
         [Category("MultiResultReader Async Tests")]
         public async Task WhenReadObject_IsCalled_ShouldCall_ReaderReadAsync()
@@ -71,6 +91,9 @@ namespace ADO.Net.Client.Implementation.Tests
                 _mockReader.Verify(x => x.ReadAsync(source.Token), Times.Once);
             }
         }
+        /// <summary>
+        /// Whens the next restul asynchronous is called should call reader next result asynchronous.
+        /// </summary>
         [Test]
         [Category("MultiResultReader Async Tests")]
         public async Task WhenNextRestulAsync_IsCalled_ShouldCall_ReaderNextResultAsync()
