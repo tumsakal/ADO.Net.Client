@@ -35,29 +35,14 @@ namespace ADO.Net.Client.Annotations
     public class DbField : Attribute
     {
         #region Fields/Properties
-        private readonly object _valueIfNull = null;
-        private readonly string _databaseFielName = "";
-
         /// <summary>
         /// The default value as a <see cref="object"/> in the instance where a value from the database is <see cref="DBNull.Value"/>
         /// </summary>
-        public object DefaultValueIfNull
-        {
-            get
-            {
-                return _valueIfNull;
-            }
-        }
+        public object DefaultValueIfNull { get; private set; } = null;
         /// <summary>
         /// The name of a field that is being pulled from a query
         /// </summary>
-        public string DatabaseFieldName
-        {
-            get
-            {
-                return _databaseFielName;
-            }
-        }
+        public string DatabaseFieldName { get; private set; } = "";
         #endregion
         #region Constuctors
         /// <summary>
@@ -67,8 +52,8 @@ namespace ADO.Net.Client.Annotations
         /// <param name="valueIfNull">The default value if the field coming from a query has a value of <see cref="DBNull.Value"/></param>
         public DbField(string dbFieldName, object valueIfNull = null)
         {
-            _valueIfNull = valueIfNull;
-            _databaseFielName = dbFieldName;
+            DefaultValueIfNull = valueIfNull;
+            DatabaseFieldName = dbFieldName;
         }
         #endregion
     }
