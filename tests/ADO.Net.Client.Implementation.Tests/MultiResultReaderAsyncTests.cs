@@ -71,6 +71,29 @@ namespace ADO.Net.Client.Implementation.Tests
                 _mockReader.Verify(x => x.ReadAsync(source.Token), Times.Once);
             }
         }
+        [Test]
+        [Category("MultiResultReader Async Tests")]
+        public async Task WhenNextRestulAsync_IsCalled_ShouldCall_ReaderNextResultAsync()
+        {
+            int delay = _faker.Random.Int(0, 1000);
+
+            //Wrap in a using statement to dispose of resources automatically
+            using (CancellationTokenSource source = new CancellationTokenSource(delay))
+            {
+                bool expected = _faker.Random.Bool();
+
+                _mockReader.Setup(x => x.NextResultAsync(source.Token)).ReturnsAsync(expected);
+
+                MultiResultReader multiReader = new MultiResultReader(_mockReader.Object, _mockMapper.Object);
+
+                bool returned = await multiReader.MoveToNextResultAsync(source.Token).ConfigureAwait(false);
+
+                Assert.IsTrue(expected == returned);
+
+                //Verify the readers read method was called
+                _mockReader.Verify(x => x.NextResultAsync(source.Token), Times.Once);
+            }
+        }
         #endregion
     }
 }

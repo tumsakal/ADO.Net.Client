@@ -63,6 +63,24 @@ namespace ADO.Net.Client.Implementation.Tests
             _mockReader.Verify(x => x.Read(), Times.Once);
             _mockMapper.Verify(x => x.MapRecord<PersonModel>(_mockReader.Object), Times.Once);
         }
+        /// <summary>
+        /// Whens the next result is called should call reader next result.
+        /// </summary>
+        [Test]
+        [Category("MultiResultReader Sync Tests")]
+        public void WhenNextResult_IsCalled_ShouldCall_ReaderNextResult()
+        {
+            bool expected = _faker.Random.Bool();
+
+            _mockReader.Setup(x => x.NextResult()).Returns(expected);
+            
+            MultiResultReader reader = new MultiResultReader(_mockReader.Object, _mockMapper.Object);
+
+            bool returned = reader.MoveToNextResult();
+
+            Assert.IsTrue(expected == returned);
+            _mockReader.Verify(x => x.NextResult(), Times.Once);
+        }
         #endregion
     }
 }
