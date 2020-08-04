@@ -1,6 +1,10 @@
 Version History
 ===============
 
+### 1.1.8
+
+* [IConnectionManager](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IConnectionManager.cs) now has a read only property called Transaction of [DbTransaction](https://docs.microsoft.com/en-us/dotnet/api/system.data.common.dbtransaction?view=netcore-3.1)
+
 ### 1.1.7
 
 * [IDataMapper](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDataMapper.cs) map methods now have generic constraint of class
