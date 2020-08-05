@@ -38,6 +38,37 @@ namespace ADO.Net.Client.Implementation.Tests
         /// </summary>
         [Test]
         [Category("MultiResultReader Sync Tests")]
+        public void WhenDispose_IsCalled_ShouldCall_ReaderClose()
+        {
+            _mockReader.Setup(x => x.Close());
+
+            MultiResultReader reader = new MultiResultReader(_mockReader.Object, _mockMapper.Object);
+
+            reader.Dispose();
+
+            _mockReader.Verify(x => x.Close(), Times.Once);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("MultiResultReader Sync Tests")]
+        public void WhenDispose_IsCalledTwice_ShouldCall_ReaderCloseOnce()
+        {
+            _mockReader.Setup(x => x.Close());
+
+            MultiResultReader reader = new MultiResultReader(_mockReader.Object, _mockMapper.Object);
+
+            reader.Dispose();
+            reader.Dispose();
+
+            _mockReader.Verify(x => x.Close(), Times.Once);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("MultiResultReader Sync Tests")]
         public void WhenClose_IsCalled_ShouldCall_ReaderClose()
         {
             _mockReader.Setup(x => x.Close());
