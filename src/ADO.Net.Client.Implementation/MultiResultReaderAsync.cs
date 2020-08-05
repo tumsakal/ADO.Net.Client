@@ -44,26 +44,6 @@ namespace ADO.Net.Client.Implementation
             //Keep looping through each object in enumerator
             return await _mapper.MapResultSetAsync<T>(_reader, token).ConfigureAwait(false);
         }
-#if !NET45
-        /// <summary>
-        /// Gets an <see cref="IAsyncEnumerable{T}"/> based on the <typeparamref name="T"/> streamed from the server asynchronously
-        /// </summary>
-        /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <returns>Returns an instance of <see cref="IAsyncEnumerable{T}"/></returns>
-        public async IAsyncEnumerable<T> ReadObjectsStreamAsync<T>([EnumeratorCancellation] CancellationToken token = default) where T : class
-        {
-            //Keep looping through each object in enumerator
-            await foreach (T type in _mapper.MapResultSetStreamAsync<T>(_reader, token).ConfigureAwait(false))
-            {
-                //Keep yielding results
-                yield return type;
-            }
-
-            //Nothing to do here
-            yield break;
-        }
-#endif
         /// <summary>
         /// Gets a single instance of <typeparamref name="T"/> asynchronously
         /// </summary>
@@ -86,6 +66,26 @@ namespace ADO.Net.Client.Implementation
             //Move to next result set
             return await _reader.NextResultAsync(token).ConfigureAwait(false);
         }
+#if !NET45
+        /// <summary>
+        /// Gets an <see cref="IAsyncEnumerable{T}"/> based on the <typeparamref name="T"/> streamed from the server asynchronously
+        /// </summary>
+        /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>Returns an instance of <see cref="IAsyncEnumerable{T}"/></returns>
+        public async IAsyncEnumerable<T> ReadObjectsStreamAsync<T>([EnumeratorCancellation] CancellationToken token = default) where T : class
+        {
+            //Keep looping through each object in enumerator
+            await foreach (T type in _mapper.MapResultSetStreamAsync<T>(_reader, token).ConfigureAwait(false))
+            {
+                //Keep yielding results
+                yield return type;
+            }
+
+            //Nothing to do here
+            yield break;
+        }
+#endif
 #if !NET45 && !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Closes the underlying reader object that reads records from the database asynchronously
