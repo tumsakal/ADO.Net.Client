@@ -43,13 +43,21 @@ namespace ADO.Net.Client.Implementation
         private readonly IDbObjectFactory _factory;
         private readonly IConnectionManager _manager;
         #endregion
-        #region Constructors                
+        #region Constructors           
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlExecutor"/> class.
         /// </summary>
-        /// <param name="factory">The factory.</param>
-        /// <param name="manager">The manager.</param>
-        /// <param name="mapper">The mapper.</param>
+        /// <param name="factory">An instance of <see cref="IDbObjectFactory"/></param>
+        /// <param name="manager">An instance of <see cref="IConnectionManager"/></param>
+        public SqlExecutor(IDbObjectFactory factory, IConnectionManager manager) : this(factory, manager, new DataMapper())
+        {
+        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SqlExecutor"/> class.
+        /// </summary>
+        /// <param name="factory">An instance of <see cref="IDbObjectFactory"/></param>
+        /// <param name="manager">An instance of <see cref="IConnectionManager"/></param>
+        /// <param name="mapper">An instance of <see cref="IDataMapper"/></param>
         public SqlExecutor(IDbObjectFactory factory, IConnectionManager manager, IDataMapper mapper)
         {
             _manager = manager;
