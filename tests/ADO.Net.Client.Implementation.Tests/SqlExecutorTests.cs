@@ -86,8 +86,10 @@ namespace ADO.Net.Client.Implementation.Tests
             _mapper = new Mock<IDataMapper>();
 
             _manager.Setup(x => x.Connection).Returns(new CustomDbConnection());
+            _manager.Setup(x => x.Transaction).Returns(GetTransaction());
 
             SetupFactory();
+            
             _executor = new SqlExecutor(_factory.Object, _manager.Object, _mapper.Object);
         }
         #endregion
@@ -98,6 +100,10 @@ namespace ADO.Net.Client.Implementation.Tests
         private void SetupFactory()
         {
             _factory.Setup(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Object.Connection, realQuery.CommandTimeout, _manager.Object.Transaction)).Returns(_command.Object).Verifiable();
+        }
+        private DbTransaction GetTransaction()
+        {
+            return (_faker.Random.Bool() == true) ? new CustomDbTransaction() : null;
         }
         /// <summary>
         /// Gets the database parameters.

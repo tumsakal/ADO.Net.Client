@@ -70,7 +70,7 @@ namespace ADO.Net.Client.Implementation.Tests
 #endif
 
                 //Verify the calls were made
-                _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Object.Connection, realQuery.CommandTimeout, null), Times.Once);
+                _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Object.Connection, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
             }
         }
         /// <summary>

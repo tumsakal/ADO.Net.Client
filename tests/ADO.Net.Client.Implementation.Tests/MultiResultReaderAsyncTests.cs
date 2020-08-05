@@ -44,13 +44,13 @@ namespace ADO.Net.Client.Implementation.Tests
         /// </summary>
         [Test]
         [Category("MultiResultReader Async Tests")]
-        public void WhenCloseAstnc_IsCalled_ShouldCall_ReaderCloseAsync()
+        public async Task WhenCloseAsync_IsCalled_ShouldCall_ReaderCloseAsync()
         {
             _mockReader.Setup(x => x.CloseAsync());
 
             MultiResultReader reader = new MultiResultReader(_mockReader.Object, _mockMapper.Object);
 
-            reader.Close();
+            await reader.CloseAsync();
 
             _mockReader.Verify(x => x.CloseAsync(), Times.Once);
         }
