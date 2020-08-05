@@ -40,6 +40,21 @@ namespace ADO.Net.Client.Implementation.Tests
         #region Tests
 #if !NET45 && !NET461 && !NETCOREAPP2_1        
         /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("MultiResultReader Async Tests")]
+        public async Task WhenDisposeAsync_IsCalled_ShouldCall_ReaderCloseAsync()
+        {
+            _mockReader.Setup(x => x.CloseAsync());
+
+            MultiResultReader reader = new MultiResultReader(_mockReader.Object, _mockMapper.Object);
+
+            await reader.DisposeAsync();
+
+            _mockReader.Verify(x => x.CloseAsync(), Times.Once);
+        }
+        /// <summary>
         /// Whens the close astnc is called should call reader close asynchronous.
         /// </summary>
         [Test]
