@@ -38,38 +38,6 @@ namespace ADO.Net.Client.Implementation
     public partial class SqlExecutor
     {
         #region Data Retrieval
-        /// <summary>
-        /// Gets an instance of the <typeparamref name="T"/> parameter object that creates an object based on the query passed into the routine
-        /// </summary>
-        /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
-        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
-        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="parameters">The database parameters associated with a query</param>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <returns>Gets an instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine.
-        /// Or the default value of <typeparamref name="T"/> if there are no search results
-        /// </returns>
-        public async Task<T> GetDataObjectAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, CancellationToken token = default) where T : class
-        {
-            //Wrap this to automatically handle disposing of resources
-            using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, CommandBehavior.SingleRow, token).ConfigureAwait(false))
-            {
-                //Check if the reader has rows
-                if (reader.HasRows == true)
-                {
-                    //Move to the first record in the result set
-                    await reader.ReadAsync(token).ConfigureAwait(false);
-
-                    //Return this back to the caller
-                    return _mapper.MapRecord<T>(reader);
-                }
-                else
-                {
-                    return default;
-                }
-            }
-        }
 #if !NET45
         /// <summary>
         /// Gets an <see cref="IAsyncEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
@@ -103,6 +71,38 @@ namespace ADO.Net.Client.Implementation
         }
 #endif
         /// <summary>
+        /// Gets an instance of the <typeparamref name="T"/> parameter object that creates an object based on the query passed into the routine
+        /// </summary>
+        /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
+        /// <param name="parameters">The database parameters associated with a query</param>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>Gets an instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine.
+        /// Or the default value of <typeparamref name="T"/> if there are no search results
+        /// </returns>
+        public async Task<T> GetDataObjectAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, CancellationToken token = default) where T : class
+        {
+            //Wrap this to automatically handle disposing of resources
+            using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, CommandBehavior.SingleRow, token).ConfigureAwait(false))
+            {
+                //Check if the reader has rows
+                if (reader.HasRows == true)
+                {
+                    //Move to the first record in the result set
+                    await reader.ReadAsync(token).ConfigureAwait(false);
+
+                    //Return this back to the caller
+                    return _mapper.MapRecord<T>(reader);
+                }
+                else
+                {
+                    return default;
+                }
+            }
+        }
+        /// <summary>
         /// Gets a <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
@@ -134,7 +134,7 @@ namespace ADO.Net.Client.Implementation
         public async Task<DbDataReader> GetDbDataReaderAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, CommandBehavior behavior = CommandBehavior.Default, CancellationToken token = default)
         {
             //Wrap this in a using statement to handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, _manager.Transaction))
             {
                 //Get the data reader
                 return await command.ExecuteReaderAsync(behavior, token).ConfigureAwait(false);
@@ -153,7 +153,7 @@ namespace ADO.Net.Client.Implementation
         public async Task<T> GetScalarValueAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, CancellationToken token = default)
         {
             //Wrap this in a using statement to handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, _manager.Transaction))
             {
                 //Return this back to the caller
                 return Utilities.GetTypeFromValue<T>(await command.ExecuteScalarAsync(token).ConfigureAwait(false));
@@ -186,7 +186,7 @@ namespace ADO.Net.Client.Implementation
         public async Task<int> ExecuteNonQueryAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, CancellationToken token = default)
         {
             //Wrap this in a using statement to automatically handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, _manager.Transaction))
             {
                 //Return this back to the caller
                 return await command.ExecuteNonQueryAsync(token).ConfigureAwait(false);
